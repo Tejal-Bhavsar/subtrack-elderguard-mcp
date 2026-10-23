@@ -11,6 +11,8 @@ import {
   cancelSubscriptionAlert,
   getAllSubscriptions,
   resetSubscriptionsDatabase,
+  listActiveSubscriptions,
+  getCancellationReminders,
 } from "./mcp/subTrackTool.js";
 import { getBedrockStatus, isBedrockConfigured } from "./aws/bedrockScanner.js";
 
@@ -204,6 +206,31 @@ app.get("/api/tools", (_req: Request, res: Response) => {
           required: ["subscriptionId"],
         },
       },
+      {
+        name: "list_active_subscriptions",
+        description:
+          "Lists down every active subscription with its name, monthly price, and total household spend.",
+        inputSchema: {
+          type: "object",
+          properties: {},
+        },
+      },
+      {
+        name: "get_cancellation_reminders",
+        description:
+          "Provides proactive warnings and reminders about expiring free trials and subscriptions that must be cancelled before getting charged.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            timeframeDays: {
+              type: "number",
+              default: 7,
+              description:
+                "Number of days ahead to look for upcoming charges and trial expirations (default 7 days).",
+            },
+          },
+        },
+      },
     ],
   });
 });
@@ -224,9 +251,13 @@ app.get("/api/subscriptions", (req: Request, res: Response) => {
   const days = req.query.days ? parseInt(req.query.days as string, 10) : 7;
   const report = getActiveSubscriptions(days);
   const all = getAllSubscriptions();
+  const reminders = getCancellationReminders(days);
+  const activeList = listActiveSubscriptions();
   res.json({
     report,
     all,
+    reminders,
+    activeList,
   });
 });
 
@@ -280,7 +311,6 @@ app.post("/api/simulate/voice-prompt", async (req: Request, res: Response) => {
       lower.includes("gift card")
     ) {
       toolInvoked = "analyze_suspicious_message";
-      // Extract the text to check or use the prompt directly
       let cleanText = prompt
         .replace(/^alexa,?\s*/i, "")
         .replace(/^check (if )?(this )?(text|message)( is a scam)?:?/i, "")
@@ -291,6 +321,32 @@ app.post("/api/simulate/voice-prompt", async (req: Request, res: Response) => {
       }
       toolArgs = { messageText: cleanText };
       toolResult = await analyzeSuspiciousMessage(cleanText);
+    } else if (
+      lower.includes("remind me which subscription") ||
+      lower.includes("cancel before getting charged") ||
+      lower.includes("which subscription i have to cancel") ||
+      lower.includes("remind me what to cancel") ||
+      lower.includes("what to cancel before") ||
+      lower.includes("subscriptions to cancel")
+    ) {
+      // Feature 2: Proactive cancellation reminders before getting charged
+      toolInvoked = "get_cancellation_reminders";
+      toolArgs = { timeframeDays: 7 };
+      toolResult = getCancellationReminders(7);
+    } else if (
+      lower.includes("tell me which active subscriptions") ||
+      lower.includes("which active subscriptions do i have") ||
+      lower.includes("which active subscriptions i have") ||
+      lower.includes("list active subscriptions") ||
+      lower.includes("list all active subscriptions") ||
+      lower.includes("what active subscriptions do i have") ||
+      lower.includes("list down my subscriptions") ||
+      lower.includes("list my subscriptions")
+    ) {
+      // Feature 1: List active subscriptions itemized
+      toolInvoked = "list_active_subscriptions";
+      toolArgs = {};
+      toolResult = listActiveSubscriptions();
     } else if (
       lower.includes("cancel") ||
       lower.includes("stop renewal") ||
@@ -305,7 +361,7 @@ app.post("/api/simulate/voice-prompt", async (req: Request, res: Response) => {
       toolArgs = { subscriptionId: targetSub };
       toolResult = cancelSubscriptionAlert(targetSub);
     } else {
-      // Default to get_active_subscriptions
+      // General Subscriptions overview
       toolInvoked = "get_active_subscriptions";
       toolArgs = { timeframeDays: 7 };
       toolResult = getActiveSubscriptions(7);

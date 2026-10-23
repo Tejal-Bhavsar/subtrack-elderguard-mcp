@@ -273,3 +273,141 @@ export function cancelSubscriptionAlert(subscriptionId: string): CancelAlertResu
     instructions: `Auto-renewal block registered with ${target.billingProvider}. Digital cancellation token generated.`,
   };
 }
+
+export interface ListActiveSubscriptionsResult {
+  totalCount: number;
+  totalMonthlySpend: number;
+  currency: string;
+  subscriptions: Array<{
+    id: string;
+    name: string;
+    monthlyPrice: number;
+    billingProvider: string;
+    renewalDate: string;
+    isTrial: boolean;
+    status: string;
+  }>;
+  alexaVoiceSummary: string;
+}
+
+/**
+ * Feature 1: List all active subscriptions with itemized spoken breakdown
+ */
+export function listActiveSubscriptions(): ListActiveSubscriptionsResult {
+  const active = activeDatabase.filter(
+    (s) => s.status === "ACTIVE" || s.status === "EXPIRING_TRIAL"
+  );
+  const total = active.reduce((acc, c) => acc + c.monthlyPrice, 0);
+
+  const spokenList = active
+    .map(
+      (s, idx) =>
+        `${idx + 1}. ${s.name} at $${s.monthlyPrice.toFixed(2)} a month`
+    )
+    .join(", ");
+
+  const alexaVoiceSummary = `You currently have ${active.length} active subscriptions totaling $${total.toFixed(
+    2
+  )} per month: ${spokenList}. Would you like me to check which subscriptions are expiring free trials?`;
+
+  return {
+    totalCount: active.length,
+    totalMonthlySpend: Number(total.toFixed(2)),
+    currency: "USD",
+    subscriptions: active.map((s) => ({
+      id: s.id,
+      name: s.name,
+      monthlyPrice: s.monthlyPrice,
+      billingProvider: s.billingProvider,
+      renewalDate: s.renewalDate,
+      isTrial: s.isTrial,
+      status: s.status,
+    })),
+    alexaVoiceSummary,
+  };
+}
+
+export interface CancellationReminderItem {
+  id: string;
+  name: string;
+  monthlyChargeIfAutoRenewed: number;
+  trialExpiresInDays: number;
+  trialEndDate: string;
+  billingProvider: string;
+  action: string;
+}
+
+export interface CancellationRemindersResult {
+  subscriptionsToCancelCount: number;
+  totalMonthlyChargesAtRisk: number;
+  reminders: CancellationReminderItem[];
+  alexaVoiceSummary: string;
+  actionRecommendations: string[];
+}
+
+/**
+ * Feature 2: Proactive cancellation reminders before getting charged
+ */
+export function getCancellationReminders(
+  timeframeDays: number = 7
+): CancellationRemindersResult {
+  const expiringTrials = activeDatabase.filter(
+    (s) =>
+      s.isTrial &&
+      (s.status === "ACTIVE" || s.status === "EXPIRING_TRIAL") &&
+      s.trialExpiresInDays !== null &&
+      s.trialExpiresInDays <= timeframeDays
+  );
+
+  const atRiskTotal = expiringTrials.reduce(
+    (acc, c) => acc + c.monthlyPrice,
+    0
+  );
+
+  let alexaVoiceSummary = "";
+  if (expiringTrials.length === 0) {
+    alexaVoiceSummary = `Great news! You have no subscriptions or free trials that need to be cancelled before getting charged in the next ${timeframeDays} days. All active services are on regular billing cycles.`;
+  } else {
+    const spokenDetails = expiringTrials
+      .map(
+        (t) =>
+          `${t.name}'s trial ends in ${
+            t.trialExpiresInDays === 1 ? "1 day" : `${t.trialExpiresInDays} days`
+          } on ${t.renewalDate}, which will auto-charge $${t.monthlyPrice.toFixed(
+            2
+          )}`
+      )
+      .join(". Next, ");
+
+    alexaVoiceSummary = `You have ${expiringTrials.length} subscription${
+      expiringTrials.length > 1 ? "s" : ""
+    } you need to cancel before getting charged: ${spokenDetails}. If you cancel them now, you will protect your budget and save $${atRiskTotal.toFixed(
+      2
+    )} every month. Would you like me to cancel ${
+      expiringTrials[0].name
+    } for you right now?`;
+  }
+
+  const recommendations = expiringTrials.map(
+    (t) =>
+      `Say: "Alexa, cancel auto-renewal for ${t.name}" before ${t.renewalDate} to prevent the $${t.monthlyPrice.toFixed(
+        2
+      )} charge.`
+  );
+
+  return {
+    subscriptionsToCancelCount: expiringTrials.length,
+    totalMonthlyChargesAtRisk: Number(atRiskTotal.toFixed(2)),
+    reminders: expiringTrials.map((t) => ({
+      id: t.id,
+      name: t.name,
+      monthlyChargeIfAutoRenewed: t.monthlyPrice,
+      trialExpiresInDays: t.trialExpiresInDays!,
+      trialEndDate: t.renewalDate,
+      billingProvider: t.billingProvider,
+      action: `Say 'Alexa, cancel auto-renewal for ${t.name}'`,
+    })),
+    alexaVoiceSummary,
+    actionRecommendations: recommendations,
+  };
+}

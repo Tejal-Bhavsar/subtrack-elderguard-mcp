@@ -7,8 +7,12 @@ import {
 import {
   getActiveSubscriptions,
   cancelSubscriptionAlert,
+  listActiveSubscriptions,
+  getCancellationReminders,
   SubTrackReport,
   CancelAlertResult,
+  ListActiveSubscriptionsResult,
+  CancellationRemindersResult,
 } from "./subTrackTool.js";
 
 /**
@@ -131,6 +135,77 @@ export function createElderGuardMcpServer(): McpServer {
             {
               type: "text",
               text: `Error cancelling subscription: ${err?.message || "Unknown error"}`,
+            },
+          ],
+        };
+      }
+    }
+  );
+
+  // Tool 4: SubTrack - Itemized List of Active Subscriptions
+  server.tool(
+    "list_active_subscriptions",
+    "Lists down every active subscription with its name, monthly price, and total household spend.",
+    {},
+    async () => {
+      try {
+        const result: ListActiveSubscriptionsResult = listActiveSubscriptions();
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(result, null, 2),
+            },
+          ],
+        };
+      } catch (err: any) {
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text: `Error listing subscriptions: ${err?.message || "Unknown error"}`,
+            },
+          ],
+        };
+      }
+    }
+  );
+
+  // Tool 5: SubTrack - Expiring Trials & Cancellation Reminders
+  server.tool(
+    "get_cancellation_reminders",
+    "Provides proactive warnings and reminders about expiring free trials and subscriptions that must be cancelled before getting charged.",
+    {
+      timeframeDays: z
+        .number()
+        .int()
+        .positive()
+        .optional()
+        .default(7)
+        .describe(
+          "Number of days ahead to look for upcoming charges and trial expirations (default 7 days)."
+        ),
+    },
+    async ({ timeframeDays = 7 }) => {
+      try {
+        const result: CancellationRemindersResult =
+          getCancellationReminders(timeframeDays);
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(result, null, 2),
+            },
+          ],
+        };
+      } catch (err: any) {
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text: `Error getting cancellation reminders: ${err?.message || "Unknown error"}`,
             },
           ],
         };

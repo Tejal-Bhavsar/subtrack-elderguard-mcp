@@ -182,6 +182,36 @@ Every year, older adults lose over **$3.4 Billion** to text and email scams:
 
 ---
 
+### 4. `list_active_subscriptions`
+- **Description:** Lists down every active subscription with its name, monthly price, and total household spend. Triggered when user asks: *"Alexa, tell me which active subscriptions I have and list them down."*
+- **Input Schema:**
+  ```json
+  {
+    "type": "object",
+    "properties": {}
+  }
+  ```
+
+---
+
+### 5. `get_cancellation_reminders`
+- **Description:** Provides proactive warnings and reminders about expiring free trials and subscriptions that must be cancelled before getting charged. Triggered when user asks: *"Alexa, remind me which subscription I have to cancel before getting charged."*
+- **Input Schema:**
+  ```json
+  {
+    "type": "object",
+    "properties": {
+      "timeframeDays": {
+        "type": "number",
+        "default": 7,
+        "description": "Number of days ahead to look for upcoming charges and trial expirations (default: 7)."
+      }
+    }
+  }
+  ```
+
+---
+
 ## ⚡ Quickstart Guide
 
 ### Prerequisites

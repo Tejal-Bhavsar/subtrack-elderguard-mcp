@@ -757,9 +757,14 @@
         <div class="alexa-sub-text">Click any preset voice prompt below or speak to test active MCP skills over Streamable HTTP</div>
       </div>
 
-      <!-- Sample Voice Prompt Triggers -->
-      <label class="preset-label">Simulate Asking Alexa+ (Click to Test):</label>
-      <div class="prompt-grid">
+        <button class="btn-prompt" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+          <span class="btn-prompt-icon">📋</span>
+          <span><strong>List Active Subs:</strong> "Alexa, tell me which active subscriptions I have and list them down"</span>
+        </button>
+        <button class="btn-prompt" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+          <span class="btn-prompt-icon">⏰</span>
+          <span><strong>Cancel Reminders:</strong> "Alexa, remind me which subscription I have to cancel before getting charged"</span>
+        </button>
         <button class="btn-prompt" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
           <span class="btn-prompt-icon">🏦</span>
           <span><strong>Chase Wire Scam:</strong> "Urgent: Unauthorized wire from Chase. Verify at chase-alert-login.cc within 24h"</span>
@@ -774,7 +779,7 @@
         </button>
         <button class="btn-prompt" onclick="runPrompt('Alexa, what free trials are expiring this week?')">
           <span class="btn-prompt-icon">💳</span>
-          <span><strong>SubTrack Query:</strong> "Show my active subscriptions and warn me about expiring free trials"</span>
+          <span><strong>SubTrack Overview:</strong> "Show my active subscriptions and warn me about expiring free trials"</span>
         </button>
         <button class="btn-prompt" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
           <span class="btn-prompt-icon">🛑</span>
@@ -877,6 +882,8 @@
         <div class="inspector-controls">
           <select id="mcpMethodSelect" class="select-mcp-method" onchange="loadPresetPayload()">
             <option value="tools/list">Method: tools/list (List MCP Tools)</option>
+            <option value="call_list_active">Method: tools/call (list_active_subscriptions)</option>
+            <option value="call_reminders">Method: tools/call (get_cancellation_reminders)</option>
             <option value="call_scam">Method: tools/call (analyze_suspicious_message)</option>
             <option value="call_subs">Method: tools/call (get_active_subscriptions)</option>
             <option value="call_cancel">Method: tools/call (cancel_subscription_alert)</option>
@@ -1168,6 +1175,26 @@
         id: "msg-tools-1",
         method: "tools/list",
         params: {}
+      },
+      "call_list_active": {
+        jsonrpc: "2.0",
+        id: "msg-list-5",
+        method: "tools/call",
+        params: {
+          name: "list_active_subscriptions",
+          arguments: {}
+        }
+      },
+      "call_reminders": {
+        jsonrpc: "2.0",
+        id: "msg-remind-6",
+        method: "tools/call",
+        params: {
+          name: "get_cancellation_reminders",
+          arguments: {
+            timeframeDays: 7
+          }
+        }
       },
       "call_scam": {
         jsonrpc: "2.0",
