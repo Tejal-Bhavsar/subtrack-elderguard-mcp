@@ -36,9 +36,10 @@
 
 **Speaker (0:50 - 1:10):**
 > *"Look at the threat telemetry: The ScamShield engine caught the homoglyph domain spoofing, the manufactured 24-hour urgency trigger, and flagged an immediate risk score of 92 out of 100 with zero delay.*
-> *Now let's check household subscriptions. A senior says: 'Alexa, what free trials are expiring this week?'*
-> *(Speaker clicks the SubTrack voice button)*
-> *Immediately, Alexa warns that BrainGym Memory Pro's 7-day trial ends in 2 days and will auto-charge $29.99.*
+> *Now let's test household subscriptions. When a senior asks:*
+> *'Alexa, tell me which active subscriptions I have and list them down.'*
+> *Alexa recites all 7 active services, calculating our exact $145.94 monthly household spend.*
+> *And when asking: 'Alexa, remind me which subscription I have to cancel before getting charged' — our agent warns that BrainGym Memory Pro's trial ends in 2 days and Ancestry's ends in 4 days, putting $81.98 at risk.*
 > *With one sentence: 'Alexa, cancel my BrainGym auto-renewal' — our agent skill issues an auto-renewal block token, saving $30 a month instantly!"*
 
 **Speaker (1:10 - 1:30):**
