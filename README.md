@@ -53,8 +53,14 @@ Every year, older adults lose over **$3.4 Billion** to text and email scams:
    - Allows users to speak directly to Alexa: *"Alexa, cancel the BrainGym trial auto-renewal"*.
    - Executes auto-renewal block tokens and calculates immediate monthly budget savings.
 
-4. **Interactive Local Web Simulator:**
-   - Visual dashboard at `http://localhost:3000` demonstrating the Alexa+ experience with glowing Alexa voice rings, text-to-speech audio playback, and a live Streamable HTTP protocol inspector.
+4. **Interactive Local Web Simulator (Subly & Lumio Inspired Design):**
+   - High-end financial and safety interface at `http://localhost:3000` incorporating design patterns from Subly and Lumio:
+     - Atmospheric teal gradient hero with Subly sky-blue AI savings card and floating 3D stars.
+     - Subly 7-day spend chart with diagonal crosshatch active bar and floating tooltip.
+     - Segmented radial arch health gauge (`74/100`) and Lumio diagonal hatch progress bars.
+     - Echo Show 15 smart display simulation with pulsing Alexa voice orb and speech synthesis.
+     - Subly 3-step senior safety playbook with 1-click actions and toast feedback.
+     - Live MCP Streamable HTTP protocol inspector (`POST /mcp`) compliant with Spec 2025-11-25+.
 
 ---
 
@@ -220,7 +226,7 @@ Every year, older adults lose over **$3.4 Billion** to text and email scams:
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/your-username/subtrack-elderguard-mcp.git
+git clone https://github.com/Tejal-Bhavsar/subtrack-elderguard-mcp.git
 cd subtrack-elderguard-mcp
 npm install
 ```
