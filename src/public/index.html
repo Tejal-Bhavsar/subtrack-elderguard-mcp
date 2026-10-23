@@ -6,57 +6,60 @@
   <title>SubTrack & ElderGuard | Alexa+ Family Protection & Subscription Shield</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Amazon & Alexa+ Premium Light Palette */
-      --amazon-navy: #0f172a;
-      --amazon-dark: #1e293b;
-      --alexa-blue: #00a8e1;
-      --alexa-blue-hover: #0090c2;
-      --alexa-subtle: #f0f9ff;
-      --alexa-border: #bae6fd;
-      --alexa-deep: #0284c7;
-
-      --amazon-gold: #ff9900;
-      --amazon-gold-subtle: #fffdf5;
-      --amazon-gold-border: #fed7aa;
-      --amazon-amber: #d97706;
-
-      --bg-canvas: #f8fafc;
-      --bg-surface: #ffffff;
-      --bg-subtle: #f1f5f9;
-      --bg-active: #e2e8f0;
-
-      --border-subtle: #f1f5f9;
-      --border-default: #e2e8f0;
-      --border-strong: #cbd5e1;
+      /* Subly & Lumio Color Palette */
+      --canvas-bg: #f4f7fa;
+      --surface-white: #ffffff;
+      --surface-subtle: #f8fafc;
+      --surface-border: #e2e8f0;
+      --surface-border-subtle: #edf2f7;
 
       --text-main: #0f172a;
+      --text-secondary: #334155;
       --text-muted: #64748b;
-      --text-soft: #94a3b8;
+      --text-light: #94a3b8;
+
+      /* Lumio Deep Atmospheric Teal Gradients */
+      --teal-hero-bg: linear-gradient(135deg, #061c24 0%, #0a2d3a 50%, #115064 100%);
+      --teal-card-bg: linear-gradient(145deg, #08212c 0%, #0d3848 60%, #134e5e 100%);
+      --teal-accent: #0284c7;
+      --teal-accent-subtle: #f0f9ff;
+      --teal-accent-border: #bae6fd;
+      --cyan-bright: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.35);
+
+      /* Subly Sky Blue AI Card & Accents */
+      --subly-sky-card: linear-gradient(145deg, #0284c7 0%, #0369a1 100%);
+      --subly-coral: #f97316;
+      --subly-coral-subtle: #fff7ed;
+      --subly-amber: #f59e0b;
+      --subly-amber-subtle: #fffbeb;
 
       --success-green: #059669;
-      --success-bg: #ecfdf5;
+      --success-subtle: #ecfdf5;
       --success-border: #a7f3d0;
 
-      --danger-red: #dc2626;
-      --danger-bg: #fef2f2;
-      --danger-border: #fecaca;
+      --danger-red: #e11d48;
+      --danger-subtle: #fff1f2;
+      --danger-border: #fecdd3;
 
+      --font-display: 'Outfit', 'Plus Jakarta Sans', -apple-system, sans-serif;
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+      --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
 
       --radius-xs: 6px;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 26px;
       --radius-full: 9999px;
 
-      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-      --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
-      --shadow-hover: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 6px 12px -4px rgba(15, 23, 42, 0.04);
+      --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+      --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 1px 3px 0 rgba(15, 23, 42, 0.03);
+      --shadow-hover: 0 20px 32px -8px rgba(15, 23, 42, 0.08), 0 8px 16px -4px rgba(15, 23, 42, 0.03);
+      --shadow-island: 0 20px 40px -10px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05);
     }
 
     * {
@@ -65,8 +68,12 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      background-color: var(--bg-canvas);
+      background-color: var(--canvas-bg);
       color: var(--text-main);
       font-family: var(--font-sans);
       min-height: 100vh;
@@ -76,97 +83,92 @@
       line-height: 1.5;
     }
 
-    /* AMAZON-INSPIRED TOP HEADER */
-    /* ULTRA-SLEEK MODERN NAVBAR (Apple/Linear/Stripe inspired) */
-    .nav-wrapper {
+    /* TOP FROSTED NAVBAR (Subly / Lumio Style) */
+    .top-nav-bar {
       position: sticky;
       top: 0;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.9);
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-default);
+      border-bottom: 1px solid var(--surface-border);
+      height: 64px;
+      display: flex;
+      align-items: center;
       transition: all 0.2s ease;
     }
 
-    header {
-      max-width: 1360px;
+    .nav-inner {
+      max-width: 1400px;
+      width: 100%;
       margin: 0 auto;
-      height: 64px;
       padding: 0 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    /* Left Brand Section */
-    .brand-section {
+    .nav-brand {
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-
-    .brand-logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
       text-decoration: none;
       color: inherit;
     }
 
-    .brand-icon-box {
+    .brand-icon-pill {
       width: 36px;
       height: 36px;
       border-radius: var(--radius-sm);
-      background: linear-gradient(135deg, #00a8e1 0%, #0284c7 100%);
+      background: linear-gradient(135deg, #0284c7 0%, #0f766e 100%);
       color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 18px;
-      box-shadow: 0 2px 8px rgba(0, 168, 225, 0.2);
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
     }
 
-    .brand-name-group {
+    .brand-name-wrap {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     .brand-title {
-      font-size: 15px;
+      font-family: var(--font-display);
+      font-size: 16px;
       font-weight: 800;
-      color: var(--text-main);
       letter-spacing: -0.02em;
+      color: var(--text-main);
     }
 
-    .brand-alexa-pill {
+    .brand-chip {
       font-size: 11px;
       font-weight: 700;
       color: #0284c7;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
+      background: var(--teal-accent-subtle);
+      border: 1px solid var(--teal-accent-border);
       padding: 2px 8px;
       border-radius: var(--radius-full);
-      letter-spacing: 0.02em;
     }
 
-    /* Center Navigation Capsule (Segmented Control) */
-    .nav-capsule {
+    /* Center Segmented Pill Controller */
+    .nav-tabs-pill {
       display: none;
       align-items: center;
-      background: #f1f5f9;
-      border: 1px solid var(--border-default);
+      background: #edf2f7;
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-full);
       padding: 3px;
       gap: 2px;
     }
 
-    @media (min-width: 860px) {
-      .nav-capsule { display: flex; }
+    @media (min-width: 900px) {
+      .nav-tabs-pill { display: flex; }
     }
 
-    .nav-link-pill {
+    .nav-tab-link {
       padding: 6px 14px;
       font-size: 12px;
       font-weight: 600;
@@ -176,28 +178,28 @@
       transition: all 0.15s ease;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
 
-    .nav-link-pill:hover {
+    .nav-tab-link:hover {
       color: var(--text-main);
     }
 
-    .nav-link-pill.active {
+    .nav-tab-link.active {
       background: #ffffff;
-      color: var(--alexa-deep);
+      color: #0284c7;
       font-weight: 700;
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
     }
 
-    /* Right Action Group */
-    .header-actions-group {
+    /* Nav Right Actions */
+    .nav-actions {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .nav-mcp-status {
+    .status-badge-mcp {
       display: flex;
       align-items: center;
       gap: 6px;
@@ -206,12 +208,12 @@
       font-size: 12px;
       font-weight: 600;
       background: #ffffff;
-      border: 1px solid var(--border-default);
+      border: 1px solid var(--surface-border);
       color: var(--text-main);
       box-shadow: var(--shadow-sm);
     }
 
-    .pulse-dot-green {
+    .pulse-dot-active {
       width: 7px;
       height: 7px;
       border-radius: 50%;
@@ -219,12 +221,12 @@
       box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
     }
 
-    .nav-voice-toggle {
+    .btn-audio-pill {
       height: 32px;
       padding: 0 12px;
       border-radius: var(--radius-full);
       background: #ffffff;
-      border: 1px solid var(--border-default);
+      border: 1px solid var(--surface-border);
       color: var(--text-main);
       display: flex;
       align-items: center;
@@ -236,19 +238,19 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .nav-voice-toggle:hover {
-      background: var(--bg-subtle);
+    .btn-audio-pill:hover {
+      background: var(--surface-subtle);
     }
 
-    .nav-voice-toggle.active {
-      background: var(--alexa-subtle);
-      border-color: var(--alexa-border);
-      color: var(--alexa-deep);
+    .btn-audio-pill.active {
+      background: var(--teal-accent-subtle);
+      border-color: var(--teal-accent-border);
+      color: var(--teal-accent);
     }
 
-    .nav-github-btn {
+    .btn-github-pill {
       height: 32px;
-      padding: 0 12px;
+      padding: 0 14px;
       border-radius: var(--radius-full);
       background: #0f172a;
       border: 1px solid #0f172a;
@@ -263,785 +265,1416 @@
       box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
     }
 
-    .nav-github-btn:hover {
+    .btn-github-pill:hover {
       background: #1e293b;
       transform: translateY(-1px);
     }
 
-    /* REFINED PROACTIVE CAPSULE (Floating & Elegant) */
-    .proactive-capsule-container {
-      max-width: 1360px;
-      margin: 14px auto 0;
+    /* SECTION 1: LUMIO-INSPIRED ATMOSPHERIC HERO BANNER */
+    .hero-lumio-wrap {
+      max-width: 1400px;
+      width: 100%;
+      margin: 20px auto 0;
       padding: 0 32px;
-      width: 100%;
     }
 
-    .proactive-capsule {
-      background: #fffdf5;
-      border: 1px solid #fef3c7;
-      border-radius: var(--radius-md);
-      padding: 10px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: #92400e;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
-    }
-
-    .proactive-capsule-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-capsule-action {
-      background: #ffffff;
-      border: 1px solid #fcd34d;
-      color: #92400e;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-
-    .btn-capsule-action:hover {
-      background: #fef3c7;
-    }
-
-    /* MAIN CONTENT */
-    main {
-      flex: 1;
-      max-width: 1360px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 28px 36px 64px;
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-    }
-
-    /* HERO SECTION: LANDING SHOWCASE */
-    .hero-banner {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      text-align: center;
-      padding: 12px 0 6px;
-    }
-
-    .hero-badge-row {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      background: var(--alexa-subtle);
-      border: 1px solid var(--alexa-border);
-      color: var(--alexa-deep);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-headline {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: -0.02em;
-      line-height: 1.25;
-    }
-
-    @media (min-width: 768px) {
-      .hero-headline { font-size: 34px; }
-    }
-
-    .hero-subhead {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 760px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* AMAZON ECHO SHOW 15 INTERACTIVE HUB */
-    .echo-station-card {
-      background: #ffffff;
-      border: 1px solid var(--border-default);
+    .hero-lumio-banner {
+      background: var(--teal-hero-bg);
       border-radius: var(--radius-xl);
-      padding: 26px 30px;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      position: relative;
-    }
-
-    .echo-station-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .echo-brand-indicator {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .echo-cyan-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--alexa-blue);
-      box-shadow: 0 0 6px rgba(0, 168, 225, 0.6);
-    }
-
-    .echo-status-tag {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: var(--radius-full);
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-default);
-      color: var(--text-muted);
-    }
-
-    .echo-status-tag.active {
-      background: var(--alexa-subtle);
-      border-color: var(--alexa-border);
-      color: var(--alexa-deep);
-    }
-
-    /* Interactive Voice Core Row */
-    .echo-voice-row {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 22px;
-      align-items: center;
-    }
-
-    @media (max-width: 640px) {
-      .echo-voice-row { grid-template-columns: 1fr; }
-    }
-
-    /* Amazon Alexa Glowing Voice Orb */
-    .alexa-orb-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .alexa-orb {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, #ffffff 0%, #e0f2fe 50%, #bae6fd 100%);
-      border: 3px solid #7dd3fc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.15), 0 0 0 4px #f0f9ff;
-      transition: all 0.25s ease;
-      position: relative;
-    }
-
-    .alexa-orb:hover {
-      transform: scale(1.03);
-      border-color: var(--alexa-blue);
-      box-shadow: 0 6px 20px rgba(0, 168, 225, 0.25), 0 0 0 6px #e0f2fe;
-    }
-
-    .alexa-orb.speaking {
-      border-color: var(--alexa-blue);
-      animation: orbGlow 1.8s infinite ease-in-out;
-    }
-
-    @keyframes orbGlow {
-      0%, 100% {
-        box-shadow: 0 0 0 6px rgba(0, 168, 225, 0.2), 0 0 24px rgba(0, 168, 225, 0.35);
-        transform: scale(1);
-      }
-      50% {
-        box-shadow: 0 0 0 12px rgba(0, 168, 225, 0.3), 0 0 36px rgba(0, 168, 225, 0.5);
-        transform: scale(1.05);
-      }
-    }
-
-    .soundwave-bars {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      height: 14px;
-    }
-
-    .soundwave-bar {
-      width: 3px;
-      height: 4px;
-      border-radius: 2px;
-      background: var(--alexa-blue);
-      transition: height 0.15s;
-    }
-
-    .speaking .soundwave-bar:nth-child(1) { animation: wave 0.6s infinite 0.1s; }
-    .speaking .soundwave-bar:nth-child(2) { animation: wave 0.6s infinite 0.25s; }
-    .speaking .soundwave-bar:nth-child(3) { animation: wave 0.6s infinite 0.15s; }
-    .speaking .soundwave-bar:nth-child(4) { animation: wave 0.6s infinite 0.35s; }
-    .speaking .soundwave-bar:nth-child(5) { animation: wave 0.6s infinite 0.2s; }
-
-    @keyframes wave {
-      0%, 100% { height: 4px; }
-      50% { height: 14px; }
-    }
-
-    /* Spoken Alexa Dialogue Card */
-    .dialogue-card {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-lg);
-      padding: 18px 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .dialogue-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .dialogue-speaker {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--alexa-deep);
-    }
-
-    .dialogue-text {
-      font-size: 16px;
-      font-weight: 500;
-      color: var(--text-main);
-      line-height: 1.55;
-    }
-
-    .dialogue-footer {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      font-size: 11px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-default);
-      padding-top: 8px;
-    }
-
-    .dialogue-footer strong {
-      color: var(--text-main);
-      font-family: var(--font-mono);
-      font-weight: 600;
-    }
-
-    /* Interactive Voice Prompt Chips */
-    .voice-chips-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .chips-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .chips-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .prompt-chip {
-      background: #ffffff;
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-full);
-      padding: 7px 15px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-main);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      transition: all 0.15s ease;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .prompt-chip:hover {
-      border-color: var(--alexa-blue);
-      color: var(--alexa-deep);
-      background: var(--alexa-subtle);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-hover);
-    }
-
-    .prompt-chip.featured {
-      background: #eff6ff;
-      border-color: #bfdbfe;
-      color: #1d4ed8;
-    }
-
-    /* Natural Voice Search / Input Bar */
-    .voice-input-container {
-      display: flex;
-      gap: 8px;
-    }
-
-    .voice-input {
-      flex: 1;
-      background: #ffffff;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-md);
-      padding: 11px 18px;
-      font-size: 13px;
-      font-family: var(--font-sans);
-      color: var(--text-main);
-      outline: none;
-      transition: all 0.15s;
-    }
-
-    .voice-input:focus {
-      border-color: var(--alexa-blue);
-      box-shadow: 0 0 0 3px rgba(0, 168, 225, 0.15);
-    }
-
-    .btn-alexa-submit {
-      background: linear-gradient(135deg, #00a8e1 0%, #0284c7 100%);
+      padding: 40px 48px;
       color: #ffffff;
-      border: none;
-      border-radius: var(--radius-md);
-      padding: 0 22px;
-      font-size: 13px;
-      font-weight: 700;
-      font-family: var(--font-sans);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: opacity 0.15s;
-      box-shadow: 0 2px 6px rgba(0, 168, 225, 0.3);
-    }
-
-    .btn-alexa-submit:hover {
-      opacity: 0.92;
-    }
-
-    /* TWO PILLAR CORE GRID */
-    .pillars-grid {
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 36px;
+      align-items: center;
     }
 
     @media (min-width: 1024px) {
-      .pillars-grid {
-        grid-template-columns: 1.05fr 0.95fr;
+      .hero-lumio-banner {
+        grid-template-columns: 1.25fr 0.95fr;
+        padding: 48px 56px;
       }
     }
 
-    .pillar-card {
-      background: #ffffff;
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
+    .hero-lumio-banner::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(2, 132, 199, 0) 70%);
+      pointer-events: none;
     }
 
-    .pillar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 16px;
+    .hero-lumio-banner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
     }
 
-    .pillar-brand-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .pillar-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .pillar-icon-blue {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #2563eb;
-    }
-
-    .pillar-icon-rose {
-      background: #fff1f2;
-      border: 1px solid #fecdd3;
-      color: #e11d48;
-    }
-
-    .pillar-title {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .pillar-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* SUBTRACK FILTER TABS */
-    .filter-tabs-row {
-      display: flex;
-      gap: 6px;
-      background: var(--bg-subtle);
-      padding: 4px;
-      border-radius: var(--radius-md);
-    }
-
-    .filter-tab {
-      flex: 1;
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-sm);
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s;
-    }
-
-    .filter-tab.active {
-      background: #ffffff;
-      color: var(--text-main);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* KPI METRIC TILES */
-    .kpi-deck {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .kpi-card {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .kpi-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .kpi-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-    }
-
-    .kpi-value.green { color: var(--success-green); }
-    .kpi-value.amber { color: var(--amazon-amber); }
-
-    .kpi-unit {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    /* SUBSCRIPTIONS LIST (AMAZON CLEAN LISTING UX) */
-    .subs-container {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      max-height: 420px;
-      overflow-y: auto;
-      padding-right: 4px;
-    }
-
-    .sub-card {
-      background: #ffffff;
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: all 0.15s ease;
+    .hero-left-content {
       position: relative;
-    }
-
-    .sub-card:hover {
-      border-color: var(--border-strong);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .sub-card.trial-alert {
-      border-left: 4px solid var(--amazon-gold);
-      background: #fffdf7;
-    }
-
-    .sub-card.active-sub {
-      border-left: 4px solid var(--success-green);
-    }
-
-    .sub-card.blocked {
-      border-left: 4px solid var(--border-strong);
-      background: #f8fafc;
-      opacity: 0.8;
-    }
-
-    .sub-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .sub-meta-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sub-icon {
-      font-size: 18px;
-    }
-
-    .sub-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
-
-    .sub-vendor {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    .sub-cost {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .sub-cost span {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    .sub-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 6px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .tag.amber {
-      background: #fef3c7;
-      color: #92400e;
-      border: 1px solid #fde68a;
-    }
-
-    .tag.green {
-      background: #dcfce7;
-      color: #166534;
-      border: 1px solid #bbf7d0;
-    }
-
-    .tag.blue {
-      background: #e0f2fe;
-      color: #0369a1;
-      border: 1px solid #bae6fd;
-    }
-
-    .btn-block-action {
-      background: #ffffff;
-      border: 1px solid var(--danger-border);
-      color: var(--danger-red);
-      padding: 3px 12px;
-      border-radius: var(--radius-sm);
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-
-    .btn-block-action:hover {
-      background: var(--danger-bg);
-    }
-
-    /* SCAMSHIELD SECTION */
-    .scamshield-body {
+      z-index: 2;
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    .scenario-box {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .scenario-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .scenario-row {
-      display: flex;
+    .hero-kicker-pill {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
       gap: 8px;
-    }
-
-    .scenario-select {
-      flex: 1;
-      background: #ffffff;
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      font-size: 12px;
-      font-family: var(--font-sans);
-      color: var(--text-main);
-      padding: 8px 12px;
-      outline: none;
-    }
-
-    .btn-scan-trigger {
-      background: var(--danger-red);
-      color: #ffffff;
-      border: none;
-      border-radius: var(--radius-sm);
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #7dd3fc;
       font-size: 12px;
       font-weight: 700;
-      padding: 0 16px;
-      cursor: pointer;
-      transition: background 0.15s;
+      backdrop-filter: blur(8px);
     }
 
-    .btn-scan-trigger:hover {
-      background: #b91c1c;
+    .hero-main-heading {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      color: #ffffff;
     }
 
-    /* THREAT RISK GAUGE CARD */
-    .gauge-card {
+    @media (min-width: 768px) {
+      .hero-main-heading { font-size: 42px; }
+    }
+
+    .hero-description {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      max-width: 600px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-hero-primary {
       background: #ffffff;
-      border: 1px solid var(--border-default);
-      border-radius: var(--radius-md);
-      padding: 16px;
+      color: #0f172a;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 12px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      text-decoration: none;
+    }
+
+    .btn-hero-primary:hover {
+      background: #f8fafc;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-hero-glass {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+      padding: 12px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-hero-glass:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* RIGHT: SUBLY SKY-BLUE AI SAVINGS CARD WITH 3D STARS & PUFFY CLOUDS */
+    .hero-subly-card {
+      position: relative;
+      z-index: 2;
+      background: var(--subly-sky-card);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 16px;
+      box-shadow: 0 16px 36px -8px rgba(3, 105, 161, 0.4);
+      overflow: hidden;
     }
 
-    .gauge-top {
+    .subly-cloud-svg {
+      position: absolute;
+      right: -20px;
+      bottom: -15px;
+      width: 220px;
+      height: 130px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .subly-star {
+      position: absolute;
+      font-size: 16px;
+      pointer-events: none;
+      z-index: 3;
+      animation: floatStar 3.5s ease-in-out infinite;
+    }
+
+    .star-1 { top: 18px; right: 28px; animation-delay: 0s; }
+    .star-2 { bottom: 38px; right: 85px; font-size: 14px; animation-delay: 1.2s; }
+    .star-3 { top: 68px; right: 22px; font-size: 13px; animation-delay: 2.1s; }
+
+    @keyframes floatStar {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(10deg); }
+    }
+
+    .subly-card-header {
+      position: relative;
+      z-index: 4;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .gauge-heading {
+    .subly-tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      backdrop-filter: blur(4px);
+    }
+
+    .subly-card-title {
+      position: relative;
+      z-index: 4;
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .subly-card-desc {
+      position: relative;
+      z-index: 4;
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 380px;
+    }
+
+    .subly-card-actions {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    .btn-subly-action {
+      background: #ffffff;
+      color: #0369a1;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 10px 22px;
+      font-size: 12px;
+      font-weight: 800;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.15s ease;
+    }
+
+    .btn-subly-action:hover {
+      background: #f8fafc;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    /* STATS SUMMARY BAR */
+    .hero-stats-strip {
+      max-width: 1400px;
+      width: 100%;
+      margin: 16px auto 0;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .hero-stat-pill-box {
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .hero-stat-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .icon-bg-blue { background: #e0f2fe; color: #0284c7; }
+    .icon-bg-green { background: #ecfdf5; color: #059669; }
+    .icon-bg-amber { background: #fef3c7; color: #d97706; }
+
+    .stat-pill-number {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .stat-pill-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* MAIN CONTENT WRAPPER */
+    main {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 32px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* SECTION 2: LUMIO / SUBLY STATS METRIC ROW */
+    .metrics-lumio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 900px) {
+      .metrics-lumio-grid {
+        grid-template-columns: 1.15fr 0.95fr 1.15fr;
+      }
+    }
+
+    .lumio-stat-card {
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .lumio-stat-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #cbd5e1;
+    }
+
+    .stat-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-caption {
       font-size: 11px;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    .gauge-score {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--danger-red);
+    .stat-number-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .stat-hero-number {
       font-family: var(--font-mono);
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
     }
 
-    .meter-track {
-      height: 8px;
-      background: var(--bg-subtle);
+    .stat-trend-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--success-green);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* SUBLY MINI BAR CHART WITH DIAGONAL STRIPES */
+    .mini-chart-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 64px;
+      padding-top: 14px;
+      border-bottom: 1px solid var(--surface-border-subtle);
+      padding-bottom: 6px;
+    }
+
+    .chart-bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+      justify-content: flex-end;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .chart-bar-fill {
+      width: 100%;
+      border-radius: var(--radius-xs);
+      background: #e2e8f0;
+      transition: height 0.3s ease, background-color 0.2s ease;
+    }
+
+    .chart-bar-col:hover .chart-bar-fill {
+      background: #cbd5e1;
+    }
+
+    .chart-bar-fill.active-hatch {
+      background: repeating-linear-gradient(
+        45deg,
+        #0284c7,
+        #0284c7 4px,
+        #38bdf8 4px,
+        #38bdf8 8px
+      ) !important;
+    }
+
+    .chart-day-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .chart-floating-pill {
+      position: absolute;
+      top: -26px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      font-size: 10px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      z-index: 10;
+    }
+
+    .chart-floating-pill::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 4px 4px 0 4px;
+      border-style: solid;
+      border-color: #0f172a transparent transparent transparent;
+    }
+
+    /* SUBLY SEGMENTED SEMI-CIRCULAR RADIAL GAUGE */
+    .radial-gauge-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      padding-top: 4px;
+    }
+
+    .radial-arc-svg {
+      width: 180px;
+      height: 96px;
+      overflow: visible;
+    }
+
+    .radial-score-display {
+      position: absolute;
+      bottom: 4px;
+      text-align: center;
+    }
+
+    .radial-number {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .radial-unit {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* LUMIO CATEGORY PROGRESS BARS */
+    .category-bars-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cat-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cat-bar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .cat-bar-track {
+      height: 9px;
+      background: #f1f5f9;
       border-radius: var(--radius-full);
       overflow: hidden;
     }
 
-    .meter-fill {
+    .cat-bar-fill-hatch {
       height: 100%;
-      width: 0%;
       border-radius: var(--radius-full);
-      background: var(--danger-red);
       transition: width 0.4s ease;
     }
 
-    .signals-wrap {
+    .hatch-blue {
+      background: repeating-linear-gradient(
+        45deg,
+        #0284c7,
+        #0284c7 3px,
+        #38bdf8 3px,
+        #38bdf8 6px
+      );
+    }
+
+    .hatch-orange {
+      background: repeating-linear-gradient(
+        45deg,
+        #f97316,
+        #f97316 3px,
+        #fb923c 3px,
+        #fb923c 6px
+      );
+    }
+
+    /* SUBLY 4-FEATURE HIGHLIGHTS GRID ("Less Subscription Stress. More Financial Control.") */
+    .subly-stress-free-section {
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-xl);
+      padding: 36px 38px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .subly-section-intro {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kicker-subtle {
+      font-size: 11px;
+      font-weight: 800;
+      color: #0284c7;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .subly-section-headline {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .subly-section-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .subly-four-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .subly-mini-feature-card {
+      background: var(--surface-subtle);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .subly-mini-feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card);
+      border-color: #cbd5e1;
+      background: #ffffff;
+    }
+
+    .feature-icon-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .avatar-blue { background: #e0f2fe; color: #0284c7; }
+    .avatar-amber { background: #fef3c7; color: #d97706; }
+    .avatar-cyan { background: #ecfeff; color: #0891b2; }
+    .avatar-rose { background: #ffe4e6; color: #e11d48; }
+
+    .subly-mini-feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .subly-mini-feature-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .feature-card-bullet {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* LUMIO ACCELERATION BANNER */
+    .lumio-acceleration-banner {
+      background: linear-gradient(135deg, #092c35 0%, #0d4655 100%);
+      border-radius: var(--radius-lg);
+      padding: 24px 30px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 860px) {
+      .lumio-acceleration-banner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+
+    .lumio-accel-tag {
+      font-size: 11px;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .lumio-accel-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .lumio-accel-sub {
+      font-size: 13px;
+      color: #cbd5e1;
+      max-width: 700px;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .btn-lumio-analysis {
+      background: #ffffff;
+      color: #0f172a;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 10px 22px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .btn-lumio-analysis:hover {
+      background: #f8fafc;
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================================
+       SECTION 4: ALEXA+ ECHO SHOW 15 LIVING ROOM SMART DISPLAY (LUMIO / HARDWARE)
+       ========================================================================= */
+    .alexa-companion-panel {
+      background: var(--teal-card-bg);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: var(--radius-xl);
+      padding: 30px 34px;
+      box-shadow: 0 20px 40px -10px rgba(6, 28, 36, 0.45);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      position: relative;
+      color: #ffffff;
+      overflow: hidden;
+    }
+
+    /* Echo Show Glowing LED Lightbar */
+    .alexa-companion-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #38bdf8 30%, #38bdf8 70%, transparent);
+      box-shadow: 0 0 16px #38bdf8, 0 0 28px rgba(56, 189, 248, 0.8);
+    }
+
+    .companion-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .companion-hardware-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .companion-cyan-led {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #38bdf8;
+      box-shadow: 0 0 12px #38bdf8;
+      animation: pulseLed 2s infinite ease-in-out;
+    }
+
+    .companion-agent-status {
+      font-size: 11px;
+      font-weight: 700;
+      color: #bae6fd;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(8px);
+    }
+
+    .alexa-voice-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: center;
+    }
+
+    @media (min-width: 860px) {
+      .alexa-voice-row {
+        grid-template-columns: 140px 1fr;
+        gap: 26px;
+      }
+    }
+
+    .orb-interactive-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alexa-luminous-orb {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #0284c7 50%, #0369a1 100%);
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.55), inset 0 2px 6px rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: #ffffff;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .alexa-luminous-orb:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 36px rgba(56, 189, 248, 0.8);
+    }
+
+    .alexa-luminous-orb.speaking {
+      animation: orbPulseSpeaking 1.2s infinite ease-in-out;
+    }
+
+    @keyframes orbPulseSpeaking {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 28px rgba(56, 189, 248, 0.6); }
+      50% { transform: scale(1.08); box-shadow: 0 0 44px rgba(56, 189, 248, 0.95); }
+    }
+
+    .wave-bars-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 16px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      height: 6px;
+      background: #38bdf8;
+      border-radius: var(--radius-full);
+      transition: height 0.15s ease;
+    }
+
+    .dialogue-speech-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: var(--radius-lg);
+      padding: 22px 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      backdrop-filter: blur(14px);
+    }
+
+    .dialogue-top-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dialogue-spoken-text {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.5;
+      min-height: 48px;
+    }
+
+    .dialogue-telemetry-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 10px;
+    }
+
+    .voice-chips-deck {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chips-heading-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #7dd3fc;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .chips-pill-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .voice-query-pill {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      backdrop-filter: blur(6px);
+    }
+
+    .voice-query-pill:hover {
+      background: rgba(255, 255, 255, 0.22);
+      border-color: #38bdf8;
+      transform: translateY(-1px);
+    }
+
+    .voice-query-pill.featured {
+      background: rgba(56, 189, 248, 0.18);
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #e0f2fe;
+      font-weight: 700;
+    }
+
+    .spotlight-input-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: var(--radius-full);
+      padding: 6px 8px 6px 18px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .spotlight-input-row:focus-within {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+
+    .spotlight-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 14px;
+      font-family: var(--font-sans);
+      color: #ffffff;
+    }
+
+    .spotlight-input::placeholder {
+      color: #94a3b8;
+    }
+
+    .btn-invoke-skill {
+      background: #38bdf8;
+      color: #071f28;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 10px 22px;
+      font-size: 13px;
+      font-weight: 800;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
+    }
+
+    .btn-invoke-skill:hover {
+      background: #7dd3fc;
+      transform: translateY(-1px);
+    }
+
+    /* =========================================================================
+       SECTION 5: TWO PILLAR APPLICATION SUITE (SUBLY + LUMIO)
+       ========================================================================= */
+    .pillars-two-col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 960px) {
+      .pillars-two-col {
+        grid-template-columns: 1.05fr 1fr;
+      }
+    }
+
+    .pillar-panel-card {
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .pillar-header-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pillar-identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-square-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .pillar-heading-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .pillar-heading-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Subly Smart Savings Agent Box */
+    .smart-savings-agent-card {
+      background: #f0f7ff;
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .savings-agent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .savings-agent-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0369a1;
+    }
+
+    .savings-agent-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-status-warm {
+      background: #ffedd5;
+      color: #c2410c;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+    }
+
+    .pill-status-urgent {
+      background: #ffe4e6;
+      color: #e11d48;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+    }
+
+    .savings-progress-bar-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .savings-progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .savings-segmented-track {
+      height: 9px;
+      background: #e2e8f0;
+      border-radius: var(--radius-full);
+      display: flex;
+      overflow: hidden;
+      gap: 2px;
+    }
+
+    .savings-track-segment-blue {
+      width: 41%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #0284c7,
+        #0284c7 3px,
+        #38bdf8 3px,
+        #38bdf8 6px
+      );
+    }
+
+    .savings-track-segment-orange {
+      width: 31%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        #f97316,
+        #f97316 3px,
+        #fb923c 3px,
+        #fb923c 6px
+      );
+    }
+
+    /* Subly Segmented Filter Tabs */
+    .segmented-filter-bar {
+      display: flex;
+      gap: 4px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-full);
+      padding: 3px;
+      overflow-x: auto;
+    }
+
+    .filter-tab-btn {
+      flex: 1;
+      min-width: fit-content;
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .filter-tab-btn.active {
+      background: #ffffff;
+      color: #0284c7;
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    /* SubTrack Subscriptions Deck (Subly "This Month" style) */
+    .subscriptions-scroll-deck {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .subscription-row-card {
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .subscription-row-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .subscription-row-card.trial-alert {
+      background: #fffdf5;
+      border-color: #fde68a;
+    }
+
+    .subscription-row-card.blocked {
+      background: #f8fafc;
+      opacity: 0.7;
+    }
+
+    .sub-card-top-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sub-brand-unit {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sub-brand-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .sub-service-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .sub-service-provider {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .sub-price-tag {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .sub-price-tag span {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+    }
+
+    .sub-card-bottom-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--surface-border-subtle);
+      padding-top: 10px;
+    }
+
+    .btn-cancel-block {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: var(--danger-red);
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-cancel-block:hover {
+      background: var(--danger-subtle);
+      border-color: var(--danger-border);
+      transform: translateY(-1px);
+    }
+
+    /* SCAMSHIELD & SUBLY PLAYBOOK */
+    .scamshield-content-deck {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Subly Interactive Scenario Chips */
+    .scenario-chips-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .scenario-chip-buttons-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .scenario-chip-btn {
+      background: var(--surface-subtle);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scenario-chip-btn:hover {
+      border-color: #0284c7;
+      color: #0284c7;
+      background: #ffffff;
+    }
+
+    .scenario-chip-btn.active {
+      background: #0284c7;
+      border-color: #0284c7;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+    }
+
+    /* Threat Gauge Card (Lumio High-End Dark Style) */
+    .threat-gauge-card {
+      background: #071f28;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(7, 31, 40, 0.25);
+    }
+
+    .threat-gauge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .threat-score-headline {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 800;
+      color: #fb7185;
+      letter-spacing: -0.01em;
+    }
+
+    .threat-progress-track {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .threat-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #e11d48 100%);
+      width: 78%;
+      border-radius: var(--radius-full);
+      transition: width 0.4s ease;
+    }
+
+    .deception-signals-row {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
@@ -1050,405 +1683,671 @@
     .signal-chip {
       font-size: 11px;
       font-weight: 600;
-      padding: 3px 9px;
-      border-radius: var(--radius-sm);
-      background: var(--danger-bg);
-      border: 1px solid var(--danger-border);
-      color: var(--danger-red);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    /* MUCH BETTER INTERACTIVE RECOMMENDED STEPS FOR SENIORS */
-    .interactive-playbook {
+    .signal-chip.red {
+      background: rgba(225, 29, 72, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(225, 29, 72, 0.4);
+    }
+
+    .signal-chip.amber {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fde68a;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    /* Subly 3-Step Senior Safety Playbook */
+    .smart-agent-playbook {
       background: #ffffff;
-      border: 1px solid var(--border-default);
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-lg);
-      padding: 16px 18px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .playbook-header {
+    .playbook-agent-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .playbook-title {
-      font-size: 12px;
+    .playbook-agent-title {
+      font-family: var(--font-display);
+      font-size: 14px;
       font-weight: 800;
       color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
     }
 
-    .interactive-steps-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .playbook-step {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-default);
+    .playbook-step-row {
+      background: var(--surface-subtle);
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-md);
-      padding: 12px 14px;
+      padding: 14px 16px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
       transition: all 0.15s ease;
     }
 
-    .playbook-step:hover {
+    .playbook-step-row:hover {
       background: #ffffff;
-      border-color: var(--alexa-blue);
-      box-shadow: var(--shadow-sm);
+      border-color: #cbd5e1;
     }
 
-    .step-left {
+    .playbook-step-row.completed {
+      border-color: var(--success-border);
+      background: var(--success-subtle);
+    }
+
+    .step-left-info {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .step-badge-num {
-      width: 24px;
-      height: 24px;
+    .step-num-bubble {
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      background: #ffffff;
-      border: 1px solid var(--border-strong);
+      background: #0284c7;
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
-      color: var(--text-main);
-      flex-shrink: 0;
     }
 
-    .playbook-step.completed .step-badge-num {
-      background: var(--success-green);
-      border-color: var(--success-green);
-      color: #ffffff;
-    }
-
-    .step-info-title {
+    .step-title-text {
       font-size: 13px;
       font-weight: 700;
       color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
-    .step-info-desc {
+    .step-desc-text {
       font-size: 11px;
       color: var(--text-muted);
     }
 
     .btn-step-action {
       background: #ffffff;
-      border: 1px solid var(--border-strong);
+      border: 1px solid var(--surface-border);
       color: var(--text-main);
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-full);
+      padding: 8px 16px;
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
+      transition: all 0.15s ease;
       white-space: nowrap;
-      transition: all 0.15s;
+      box-shadow: var(--shadow-sm);
     }
 
     .btn-step-action:hover {
-      background: var(--alexa-subtle);
-      border-color: var(--alexa-blue);
-      color: var(--alexa-deep);
+      background: var(--surface-subtle);
+      border-color: #cbd5e1;
     }
 
     .btn-step-action.done {
-      background: var(--success-bg);
+      background: var(--success-subtle);
       border-color: var(--success-border);
       color: var(--success-green);
-      cursor: default;
     }
 
-    /* TOAST NOTIFICATION */
-    .toast-notice {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: #0f172a;
-      color: #ffffff;
-      padding: 12px 18px;
-      border-radius: var(--radius-md);
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: var(--shadow-hover);
-      z-index: 100;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: all 0.25s ease;
-      pointer-events: none;
-    }
-
-    .toast-notice.show {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    /* DEVELOPER & HACKATHON MCP PROTOCOL DRAWER */
-    .mcp-drawer-card {
-      background: #ffffff;
-      border: 1px solid var(--border-default);
+    /* SECTION 6: LIVE MCP STREAMABLE HTTP INSPECTOR (LUMIO SCREEN) */
+    .mcp-protocol-deck {
+      background: #061820;
+      border: 1px solid rgba(56, 189, 248, 0.2);
       border-radius: var(--radius-xl);
-      padding: 20px 26px;
-      box-shadow: var(--shadow-card);
+      padding: 26px 30px;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.3);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
+      color: #ffffff;
     }
 
-    .mcp-drawer-top {
+    .mcp-deck-top {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
       gap: 12px;
     }
 
-    .mcp-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .mcp-code-screen {
-      background: #f8fafc;
-      border: 1px solid var(--border-default);
+    .mcp-deck-screen {
+      background: #030f14;
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-md);
-      padding: 14px 18px;
+      padding: 18px 22px;
       font-family: var(--font-mono);
       font-size: 12px;
-      line-height: 1.5;
-      color: #0f172a;
-      max-height: 220px;
+      line-height: 1.6;
+      color: #38bdf8;
+      max-height: 250px;
       overflow-y: auto;
       white-space: pre-wrap;
       word-break: break-all;
     }
 
-    /* MINIMAL FOOTER */
-    footer {
-      border-top: 1px solid var(--border-default);
-      background: #ffffff;
-      padding: 18px 36px;
+    /* SUBLY FLOATING BOTTOM ISLAND BAR */
+    .floating-island-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0f172a;
+      border-radius: var(--radius-full);
+      padding: 6px;
       display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: var(--shadow-island);
+      z-index: 99;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .island-link-item {
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .island-link-item:hover {
+      color: #ffffff;
+    }
+
+    .island-link-item.active {
+      background: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /* BADGES */
+    .badge-chip {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .badge-chip.green {
+      background: var(--success-subtle);
+      color: var(--success-green);
+      border: 1px solid var(--success-border);
+    }
+
+    .badge-chip.amber {
+      background: var(--subly-amber-subtle);
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-chip.blue {
+      background: var(--teal-accent-subtle);
+      color: #0284c7;
+      border: 1px solid var(--teal-accent-border);
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-pill-alert {
+      position: fixed;
+      top: 80px;
+      right: 32px;
+      z-index: 200;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: var(--shadow-island);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: all 0.25s ease;
+    }
+
+    .toast-pill-alert.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    footer {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 32px 32px;
+      display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
       color: var(--text-muted);
-      flex-wrap: wrap;
-      gap: 12px;
+      border-top: 1px solid var(--surface-border);
+      padding-top: 24px;
     }
 
-    .footer-nav {
+    .footer-links-group {
       display: flex;
-      gap: 20px;
+      gap: 16px;
     }
 
-    .footer-nav a {
+    .footer-links-group a {
       color: var(--text-muted);
       text-decoration: none;
-      font-weight: 500;
     }
 
-    .footer-nav a:hover {
-      color: var(--alexa-deep);
+    .footer-links-group a:hover {
+      color: #0284c7;
     }
   </style>
 </head>
 <body>
 
-  <!-- ULTRA-SLEEK MODERN NAVBAR (Apple/Linear/Stripe inspired) -->
-  <div class="nav-wrapper">
-    <header>
-      <!-- Left: Refined Brand Mark -->
-      <div class="brand-section">
-        <a href="#" class="brand-logo-wrap">
-          <div class="brand-icon-box">🛡️</div>
-          <div class="brand-name-group">
-            <span class="brand-title">SubTrack & ElderGuard</span>
-            <span class="brand-alexa-pill">Alexa+ Skill</span>
-          </div>
-        </a>
-      </div>
+  <!-- TOP FROSTED NAVBAR (Subly / Lumio Style) -->
+  <header class="top-nav-bar">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">
+        <div class="brand-icon-pill">🛡️</div>
+        <div class="brand-name-wrap">
+          <span class="brand-title">SubTrack & ElderGuard</span>
+          <span class="brand-chip">Alexa+ Skill</span>
+        </div>
+      </a>
 
-      <!-- Center: Segmented Navigation Capsule -->
-      <nav class="nav-capsule">
-        <a href="#alexa-hub" class="nav-link-pill active"><span>🎙️</span> Voice Hub</a>
-        <a href="#subtrack-section" class="nav-link-pill"><span>💳</span> SubTrack</a>
-        <a href="#scamshield-section" class="nav-link-pill"><span>🛡️</span> ScamShield</a>
-        <a href="#mcp-inspector" class="nav-link-pill"><span>⚡</span> MCP Spec</a>
+      <!-- Center Segmented Pill Nav -->
+      <nav class="nav-tabs-pill">
+        <a href="#alexa-hub" class="nav-tab-link active"><span>🎙️</span> Voice Hub</a>
+        <a href="#subtrack-section" class="nav-tab-link"><span>💳</span> SubTrack</a>
+        <a href="#scamshield-section" class="nav-tab-link"><span>🛡️</span> ScamShield</a>
+        <a href="#features-deck" class="nav-tab-link"><span>✨</span> Features</a>
+        <a href="#mcp-inspector" class="nav-tab-link"><span>⚡</span> MCP Spec</a>
       </nav>
 
-      <!-- Right: Consolidated Status & Audio -->
-      <div class="header-actions-group">
-        <div class="nav-mcp-status" title="MCP Streamable HTTP Transport Active">
-          <div class="pulse-dot-green"></div>
+      <!-- Right Actions -->
+      <div class="nav-actions">
+        <div class="status-badge-mcp" title="Model Context Protocol Streamable HTTP Transport Active">
+          <div class="pulse-dot-active"></div>
           <span>Streamable HTTP</span>
         </div>
-        <button class="nav-voice-toggle active" id="audioToggleBtn" title="Toggle Alexa Spoken Audio">
+        <button class="btn-audio-pill active" id="audioToggleBtn" title="Toggle Alexa Voice Audio">
           <span>🔊</span>
           <span id="audioBtnLabel">Voice On</span>
         </button>
-        <a href="https://github.com/Tejal-Bhavsar/subtrack-elderguard-mcp" target="_blank" class="nav-github-btn" title="View Source on GitHub">
+        <a href="https://github.com/Tejal-Bhavsar/subtrack-elderguard-mcp" target="_blank" class="btn-github-pill" title="View Source on GitHub">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           <span>GitHub</span>
         </a>
       </div>
-    </header>
-  </div>
-
-  <!-- FLOATING PROACTIVE ALERT CAPSULE (Clean & Non-Intrusive) -->
-  <div class="proactive-capsule-container">
-    <div class="proactive-capsule">
-      <div class="proactive-capsule-left">
-        <span>⚠️</span>
-        <span><strong>Proactive Defense Alert:</strong> 3 Free Trial Subscriptions expire this week ($81.98/mo at risk of auto-charge).</span>
-      </div>
-      <button class="btn-capsule-action" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
-        Review Cancellation Reminders →
-      </button>
     </div>
-  </div>
+  </header>
 
-  <!-- MAIN LANDING PAGE -->
-  <main>
-
-    <!-- LANDING HERO BANNER -->
-    <section class="hero-banner">
-      <div class="hero-badge-row">
-        <span class="hero-kicker">
+  <!-- SECTION 1: LUMIO-INSPIRED ATMOSPHERIC HERO BANNER -->
+  <section class="hero-lumio-wrap">
+    <div class="hero-lumio-banner">
+      <!-- Left Hero Pitch -->
+      <div class="hero-left-content">
+        <span class="hero-kicker-pill">
           <span>✨</span> Amazon Hackathon — Alexa+ Track & AWS Builder Challenge
         </span>
+        <h1 class="hero-main-heading">
+          You Can Take Control Of Every Subscription & Scam.
+        </h1>
+        <p class="hero-description">
+          Empowering families and seniors with autonomous voice-first vigilance against deceptive subscription auto-renewals, USPS smishing, and imposter wire fraud over the open Model Context Protocol standard.
+        </p>
+        <div class="hero-cta-row">
+          <a href="#alexa-hub" class="btn-hero-primary">
+            <span>Simulate Alexa+ Voice</span>
+            <span>🎙️</span>
+          </a>
+          <a href="#mcp-inspector" class="btn-hero-glass">
+            <span>Inspect Streamable HTTP Spec</span>
+            <span>⚡</span>
+          </a>
+        </div>
       </div>
-      <h2 class="hero-headline">
-        Autonomous Household Protection on Alexa+
-      </h2>
-      <p class="hero-subhead">
-        Empowering families and seniors with continuous voice-first vigilance against deceptive subscription auto-renewals, USPS smishing, and emergency imposter fraud over standard Model Context Protocol transports.
-      </p>
+
+      <!-- Right: Subly-Style Sky-Blue AI Savings Card with Floating 3D Stars -->
+      <div class="hero-subly-card">
+        <!-- SVG Puffy Cloud Vector -->
+        <svg class="subly-cloud-svg" viewBox="0 0 200 120" fill="none">
+          <path d="M40 90 A25 25 0 0 1 70 50 A35 35 0 0 1 130 45 A30 30 0 0 1 170 80 A25 25 0 0 1 160 100 L40 100 Z" fill="#ffffff" fill-opacity="0.15" />
+        </svg>
+
+        <!-- Floating 3D Stars from Subly -->
+        <div class="subly-star star-1">⭐</div>
+        <div class="subly-star star-2">✨</div>
+        <div class="subly-star star-3">🌟</div>
+
+        <div class="subly-card-header">
+          <span class="subly-tag-badge">+ AI SAVINGS</span>
+          <span style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9);">Alexa Agent</span>
+        </div>
+        <div class="subly-card-title">Save $81.98 this month</div>
+        <p class="subly-card-desc">
+          Alexa AI identified 3 free trial subscriptions scheduled to auto-renew and charge your household cards within 7 days.
+        </p>
+        <div class="subly-card-actions">
+          <button class="btn-subly-action" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+            Review Reminders →
+          </button>
+          <span style="font-size: 11px; opacity: 0.95; font-weight: 700; color: #ffffff;">3 Trials Expiring</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SUMMARY PILLS -->
+  <section class="hero-stats-strip">
+    <div class="hero-stat-pill-box">
+      <div class="hero-stat-icon-wrap icon-bg-blue">🛡️</div>
+      <div>
+        <div class="stat-pill-number">50+ Scams & Traps</div>
+        <div class="stat-pill-label">Detected by Bedrock Claude 3 Heuristics</div>
+      </div>
+    </div>
+    <div class="hero-stat-pill-box">
+      <div class="hero-stat-icon-wrap icon-bg-green">🎙️</div>
+      <div>
+        <div class="stat-pill-number">24/7 Voice Vigilance</div>
+        <div class="stat-pill-label">Autonomous Alexa+ Companion Protection</div>
+      </div>
+    </div>
+    <div class="hero-stat-pill-box">
+      <div class="hero-stat-icon-wrap icon-bg-amber">⚡</div>
+      <div>
+        <div class="stat-pill-number">100% MCP Streamable</div>
+        <div class="stat-pill-label">Official Spec 2025-11-25+ HTTP Standard</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CANVAS -->
+  <main>
+
+    <!-- SECTION 2: LUMIO / SUBLY STATS METRIC ROW -->
+    <section class="metrics-lumio-grid">
+      
+      <!-- Card 1: Total Spend & Subly Mini Bar Chart with Caret Tooltip -->
+      <div class="lumio-stat-card">
+        <div class="stat-header-row">
+          <span class="stat-caption">Total Subscription Spend</span>
+          <span style="font-size: 14px;">💳</span>
+        </div>
+        <div class="stat-number-row">
+          <span class="stat-hero-number" id="totalSpendDisplay">$145.94</span>
+          <span class="stat-trend-tag">↗ 18.4% vs last month</span>
+        </div>
+        <!-- Subly Mini Bar Chart -->
+        <div class="mini-chart-wrap">
+          <div class="chart-bar-col" onclick="selectDay('Sun', '$18.40')">
+            <div class="chart-bar-fill" style="height: 35%;"></div>
+            <span class="chart-day-label">Sun</span>
+          </div>
+          <div class="chart-bar-col" onclick="selectDay('Mon', '$24.99')">
+            <div class="chart-bar-fill" style="height: 48%;"></div>
+            <span class="chart-day-label">Mon</span>
+          </div>
+          <div class="chart-bar-col" onclick="selectDay('Tue', '$12.99')">
+            <div class="chart-bar-fill" style="height: 30%;"></div>
+            <span class="chart-day-label">Tue</span>
+          </div>
+          <div class="chart-bar-col" onclick="selectDay('Wed', '$34.98')">
+            <div class="chart-bar-fill" style="height: 60%;"></div>
+            <span class="chart-day-label">Wed</span>
+          </div>
+          <div class="chart-bar-col" onclick="selectDay('Thu', '$81.98')">
+            <div class="chart-floating-pill" id="chartPillSavings">$81.98 at risk</div>
+            <div class="chart-bar-fill active-hatch" style="height: 90%;"></div>
+            <span class="chart-day-label" style="font-weight: 700; color: #0284c7;">Thu</span>
+          </div>
+          <div class="chart-bar-col" onclick="selectDay('Fri', '$29.99')">
+            <div class="chart-bar-fill" style="height: 45%;"></div>
+            <span class="chart-day-label">Fri</span>
+          </div>
+          <div class="chart-bar-col" onclick="selectDay('Sat', '$15.99')">
+            <div class="chart-bar-fill" style="height: 25%;"></div>
+            <span class="chart-day-label">Sat</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Subly Semi-Circular Radial Health Arc with Segmented Radial Ticks -->
+      <div class="lumio-stat-card">
+        <div class="stat-header-row">
+          <span class="stat-caption">Subscription Health</span>
+          <span class="badge-chip green">Protected</span>
+        </div>
+        <div class="radial-gauge-container">
+          <svg class="radial-arc-svg" viewBox="0 0 180 96">
+            <g id="radialGaugeTicks"></g>
+          </svg>
+          <div class="radial-score-display">
+            <div class="radial-number" id="radialHealthNumber">74<span class="radial-unit">/100</span></div>
+            <div style="font-size: 11px; font-weight: 700; color: #f97316;">Trial Trap Vigilance (Good ⓘ)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Lumio Category Allocation Bars -->
+      <div class="lumio-stat-card">
+        <div class="stat-header-row">
+          <span class="stat-caption">Household Category Allocation</span>
+          <span style="font-size: 11px; font-weight: 700; color: #0284c7;">Save $81.98</span>
+        </div>
+        <div class="category-bars-list">
+          <div class="cat-bar-item">
+            <div class="cat-bar-header">
+              <span>Brain & Cognitive Training</span>
+              <span style="font-family: var(--font-mono);">$29.99 (42%)</span>
+            </div>
+            <div class="cat-bar-track">
+              <div class="cat-bar-fill-hatch hatch-blue" style="width: 42%;"></div>
+            </div>
+          </div>
+          <div class="cat-bar-item">
+            <div class="cat-bar-header">
+              <span>Family & Ancestry Trees</span>
+              <span style="font-family: var(--font-mono);">$39.99 (35%)</span>
+            </div>
+            <div class="cat-bar-track">
+              <div class="cat-bar-fill-hatch hatch-orange" style="width: 35%;"></div>
+            </div>
+          </div>
+          <div class="cat-bar-item">
+            <div class="cat-bar-header">
+              <span>Medical Alert & Telemetry</span>
+              <span style="font-family: var(--font-mono);">$34.98 (23%)</span>
+            </div>
+            <div class="cat-bar-track">
+              <div class="cat-bar-fill-hatch hatch-blue" style="width: 23%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </section>
 
-    <!-- SECTION 1: SIMULATED ECHO SHOW 15 VOICE HUB -->
-    <section class="echo-station-card" id="alexa-hub">
-      <div class="echo-station-header">
-        <div class="echo-brand-indicator">
-          <div class="echo-cyan-dot"></div>
-          <span>Simulated Echo Show 15 • Living Room Voice Agent</span>
+    <!-- SECTION 3: SUBLY "LESS SUBSCRIPTION STRESS" 4-FEATURE HIGHLIGHTS GRID -->
+    <section class="subly-stress-free-section" id="features-deck">
+      <div class="subly-section-intro">
+        <span class="kicker-subtle">Family Security & Clarity</span>
+        <h2 class="subly-section-headline">Less Subscription Stress. More Financial Control.</h2>
+        <p class="subly-section-sub">SubTrack & ElderGuard turns messy recurring charges and deceptive smishing into an autonomous, voice-controlled defense shield.</p>
+      </div>
+      <div class="subly-four-card-grid">
+        <div class="subly-mini-feature-card">
+          <div class="feature-icon-avatar avatar-blue">📂</div>
+          <h3>All in One Place</h3>
+          <p>One unified dashboard for household cards, subscription trials, and recurring senior care telemetry.</p>
+          <div class="feature-card-bullet">• Real-time price tracking</div>
+          <div class="feature-card-bullet">• Instant renewal calendar</div>
         </div>
-        <div class="echo-status-tag" id="alexaStatus">Alexa+ Agent Idle</div>
+        <div class="subly-mini-feature-card">
+          <div class="feature-icon-avatar avatar-amber">⏰</div>
+          <h3>Know Before Renewal</h3>
+          <p>Alexa speaks up 3 days before deceptive trial traps convert to paid annual renewals.</p>
+          <div class="feature-card-bullet">• Auto-renew cancellation reminders</div>
+          <div class="feature-card-bullet">• 1-click voice deactivation</div>
+        </div>
+        <div class="subly-mini-feature-card">
+          <div class="feature-icon-avatar avatar-cyan">✨</div>
+          <h3>AI-Powered Savings</h3>
+          <p>Autonomous savings agent powered by AWS Bedrock Claude 3 discovers forgotten subscriptions and pauses waste.</p>
+          <div class="feature-card-bullet">• $81.98 identified at risk</div>
+          <div class="feature-card-bullet">• Annual billing switch savings</div>
+        </div>
+        <div class="subly-mini-feature-card">
+          <div class="feature-icon-avatar avatar-rose">🛡️</div>
+          <h3>Elder Imposter Shield</h3>
+          <p>Instant SMS heuristic scanner intercepts USPS smishing, grandparent bail scams, and bank phishing.</p>
+          <div class="feature-card-bullet">• Domain spoofing detection</div>
+          <div class="feature-card-bullet">• 3-step senior safety playbook</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LUMIO FEATURE ACCELERATION BANNER -->
+    <div class="lumio-acceleration-banner">
+      <div>
+        <div class="lumio-accel-tag">🛡️ Real-Time Household Shield</div>
+        <div class="lumio-accel-title">Protection is accelerating this week.</div>
+        <div class="lumio-accel-sub">ElderGuard intercepted 1 high-risk USPS delivery smishing text and safeguarded $2,400 in potential bank imposter fraud. SubTrack detected 3 expiring free trial traps.</div>
+      </div>
+      <div>
+        <a href="#scamshield-section" class="btn-lumio-analysis">View Safety Analysis →</a>
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         SECTION 4: ALEXA+ LIVING ROOM VOICE STATION (ECHO SHOW 15 TITANIUM DESIGN)
+         ========================================================================= -->
+    <section class="alexa-companion-panel" id="alexa-hub">
+      <div class="companion-top-meta">
+        <div class="companion-hardware-badge">
+          <div class="companion-cyan-led"></div>
+          <span>Echo Show 15 • Living Room Voice Station</span>
+        </div>
+        <div class="companion-agent-status" id="alexaStatus">Alexa+ Agent Idle</div>
       </div>
 
-      <div class="echo-voice-row">
-        <!-- Interactive Alexa Voice Orb -->
-        <div class="alexa-orb-wrap">
-          <div class="alexa-orb" id="alexaSphere" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')" title="Click to test Alexa voice prompt">
+      <div class="alexa-voice-row">
+        <!-- Luminescent Multi-Layer Alexa Voice Orb -->
+        <div class="orb-interactive-wrap">
+          <div class="alexa-luminous-orb" id="alexaSphere" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')" title="Click to test voice synthesis">
             <span>🎙️</span>
           </div>
-          <div class="soundwave-bars">
-            <div class="soundwave-bar"></div>
-            <div class="soundwave-bar"></div>
-            <div class="soundwave-bar"></div>
-            <div class="soundwave-bar"></div>
-            <div class="soundwave-bar"></div>
+          <div class="wave-bars-row">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
           </div>
         </div>
 
-        <!-- Spoken Dialogue Card -->
-        <div class="dialogue-card">
-          <div class="dialogue-header">
-            <div class="dialogue-speaker">
-              <span>🔊 Alexa+ Spoken Response</span>
-            </div>
-            <span class="badge-alexa" id="toolBadge">Ready</span>
+        <!-- Dialogue Speech Card -->
+        <div class="dialogue-speech-card">
+          <div class="dialogue-top-meta">
+            <span style="color: #38bdf8; font-weight: 800;">🔊 Alexa+ Spoken Dialogue</span>
+            <span class="badge-chip blue" id="toolBadge">Ready</span>
           </div>
-
-          <div class="dialogue-text" id="spokenDialogueText">
-            "Hello! I am your SubTrack & ElderGuard family assistant. Ask me to list your subscriptions, warn you about free trials expiring before auto-charge, or check any suspicious text message for scams."
+          <div class="dialogue-spoken-text" id="spokenDialogueText">
+            "Hello! I am your SubTrack & ElderGuard family assistant. Ask me: 'Which subscriptions renew this week?', 'List my active subscriptions', or paste any suspicious text message to scan for scams."
           </div>
-
-          <div class="dialogue-footer">
-            <div>Active Agent Tool: <strong id="metaTool">None</strong></div>
-            <div>Transport: <strong>POST /mcp (Streamable HTTP)</strong></div>
-            <div>Latency: <strong id="metaLatency">0 ms</strong></div>
+          <div class="dialogue-telemetry-row">
+            <div>Active Tool: <strong id="metaTool" style="color: #38bdf8;">None</strong></div>
+            <div>Transport: <strong style="color: #ffffff;">POST /mcp (Streamable HTTP 2025-11-25+)</strong></div>
+            <div>Latency: <strong id="metaLatency" style="color: #38bdf8;">0 ms</strong></div>
           </div>
         </div>
       </div>
 
-      <!-- Quick Interactive Voice Chips -->
-      <div class="voice-chips-section">
-        <span class="chips-label">Simulate Alexa Voice Commands (Click Any):</span>
-        <div class="chips-row">
-          <button class="prompt-chip featured" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+      <!-- Quick Suggestion Chips (Subly Frosted Pills) -->
+      <div class="voice-chips-deck">
+        <span class="chips-heading-label">Try Asking Alexa (Click to Simulate Voice Skill):</span>
+        <div class="chips-pill-flow">
+          <button class="voice-query-pill featured" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
             <span>📋</span> List Active Subscriptions
           </button>
-          <button class="prompt-chip featured" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+          <button class="voice-query-pill featured" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
             <span>⏰</span> Expiring Cancellation Reminders
           </button>
-          <button class="prompt-chip" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
+          <button class="voice-query-pill" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
             <span>🏦</span> Scan Chase Wire SMS
           </button>
-          <button class="prompt-chip" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
+          <button class="voice-query-pill" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
             <span>📦</span> Scan USPS Phishing
           </button>
-          <button class="prompt-chip" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
+          <button class="voice-query-pill" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
             <span>🛑</span> Cancel BrainGym Renewal
           </button>
-          <button class="prompt-chip" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
+          <button class="voice-query-pill" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
             <span>👵</span> Grandparent Bail Scam
           </button>
         </div>
       </div>
 
-      <!-- Natural Query Input Bar -->
-      <div class="voice-input-container">
+      <!-- Spotlight Input Bar -->
+      <div class="spotlight-input-row">
+        <span style="font-size: 16px;">🔍</span>
         <input 
           type="text" 
           id="customPromptInput" 
-          class="voice-input" 
+          class="spotlight-input" 
           placeholder="Ask Alexa anything: e.g. Which subscriptions renew this week? Is this message safe?"
           onkeydown="if(event.key==='Enter') executeCustomPrompt()"
         />
-        <button class="btn-alexa-submit" onclick="executeCustomPrompt()">
+        <button class="btn-invoke-skill" onclick="executeCustomPrompt()">
           <span>Invoke Agent Skill</span>
           <span>⚡</span>
         </button>
       </div>
     </section>
 
-    <!-- SECTION 2: TWO CORE APPLICATION PILLARS -->
-    <div class="pillars-grid">
+    <!-- =========================================================================
+         SECTION 5: TWO PILLAR APPLICATION SUITE (SUBLY HISTORY & SMART PLAYBOOK)
+         ========================================================================= -->
+    <div class="pillars-two-col">
 
-      <!-- PILLAR 1: SUBTRACK FINANCIAL DEFENSE -->
-      <section class="pillar-card" id="subtrack-section">
-        <div class="pillar-header">
-          <div class="pillar-brand-group">
-            <div class="pillar-icon pillar-icon-blue">💳</div>
+      <!-- PILLAR 1: SUBTRACK FINANCIAL DEFENSE (SUBLY "THIS MONTH" & SMART AGENT) -->
+      <section class="pillar-panel-card" id="subtrack-section">
+        <div class="pillar-header-group">
+          <div class="pillar-identity">
+            <div class="icon-square-avatar avatar-blue">💳</div>
             <div>
-              <div class="pillar-title">SubTrack Financial Defense</div>
-              <div class="pillar-subtitle">Autonomous Subscription & Free-Trial Guardian</div>
+              <div class="pillar-heading-title">SubTrack Financial Defense</div>
+              <div class="pillar-heading-sub">Subscriptions, Hidden Trial Traps & Spend Control</div>
             </div>
           </div>
           <button class="btn-step-action" onclick="resetSubscriptions()">
@@ -1456,104 +2355,110 @@
           </button>
         </div>
 
-        <!-- Filter Tabs -->
-        <div class="filter-tabs-row">
-          <button class="filter-tab active" id="tabAll" onclick="setSubFilter('ALL')">All (7)</button>
-          <button class="filter-tab" id="tabTrials" onclick="setSubFilter('TRIALS')">⚠️ Expiring Trials (3)</button>
-          <button class="filter-tab" id="tabActive" onclick="setSubFilter('ACTIVE')">Active (4)</button>
-          <button class="filter-tab" id="tabBlocked" onclick="setSubFilter('BLOCKED')">🛡️ Blocked</button>
-        </div>
-
-        <!-- 3 KPI Metric Cards -->
-        <div class="kpi-deck">
-          <div class="kpi-card">
-            <div class="kpi-title">Monthly Spend</div>
-            <div class="kpi-value" id="totalSpendDisplay">$145.94</div>
+        <!-- Subly Smart Savings Agent Card (from Image 1, right screen) -->
+        <div class="smart-savings-agent-card">
+          <div class="savings-agent-header">
+            <div class="savings-agent-badge">
+              <span>💼</span> Smart Savings Agent
+            </div>
+            <div class="savings-agent-meta">
+              <span class="pill-status-warm">● In Progress</span>
+              <span class="pill-status-urgent">Urgent</span>
+            </div>
           </div>
-          <div class="kpi-card">
-            <div class="kpi-title">Trial Savings</div>
-            <div class="kpi-value green" id="potentialSavingsDisplay">$81.98</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-title">Expiring Trials</div>
-            <div class="kpi-value amber" id="expiringCountDisplay">
-              <span id="expiringNumber">3</span>
-              <span class="kpi-unit">trials</span>
+          <div class="savings-progress-bar-wrap">
+            <div class="savings-progress-labels">
+              <span>3 of 8 reviewed (41%)</span>
+              <span>Savings Health: 72%</span>
+            </div>
+            <div class="savings-segmented-track">
+              <div class="savings-track-segment-blue" title="Reviewed Subscriptions"></div>
+              <div class="savings-track-segment-orange" title="Savings Health Potential"></div>
             </div>
           </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
-          <span style="font-weight: 700; color: var(--text-main);" id="subListSummary">Active Household Subscriptions (7)</span>
-          <span style="color: var(--text-muted);">Protected by Alexa+ Agent</span>
+        <!-- Subly Segmented Filter Tabs -->
+        <div class="segmented-filter-bar">
+          <button class="filter-tab-btn active" id="tabAll" onclick="setSubFilter('ALL')">All (7)</button>
+          <button class="filter-tab-btn" id="tabTrials" onclick="setSubFilter('TRIALS')">⚠️ Expiring Trials (3)</button>
+          <button class="filter-tab-btn" id="tabActive" onclick="setSubFilter('ACTIVE')">Active (4)</button>
+          <button class="filter-tab-btn" id="tabBlocked" onclick="setSubFilter('BLOCKED')">🛡️ Blocked</button>
         </div>
 
-        <!-- Interactive Subscriptions List -->
-        <div class="subs-container" id="subscriptionsContainer">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-top: -6px;">
+          <span style="font-weight: 700; color: var(--text-main);" id="subListSummary">Active Household Subscriptions (7)</span>
+          <span style="color: var(--text-muted); font-size: 11px;">Protected by Alexa+ Agent</span>
+        </div>
+
+        <!-- Dynamic Subscriptions Deck (Pure White Subly Cards) -->
+        <div class="subscriptions-scroll-deck" id="subscriptionsContainer">
           <!-- Populated dynamically via JS -->
         </div>
       </section>
 
-      <!-- PILLAR 2: SCAMSHIELD THREAT ENGINE & INTERACTIVE PLAYBOOK -->
-      <section class="pillar-card" id="scamshield-section">
-        <div class="pillar-header">
-          <div class="pillar-brand-group">
-            <div class="pillar-icon pillar-icon-rose">🛡️</div>
+      <!-- PILLAR 2: SCAMSHIELD THREAT ENGINE & 3-STEP PLAYBOOK -->
+      <section class="pillar-panel-card" id="scamshield-section">
+        <div class="pillar-header-group">
+          <div class="pillar-identity">
+            <div class="icon-square-avatar avatar-rose">🛡️</div>
             <div>
-              <div class="pillar-title">ScamShield Threat Engine</div>
-              <div class="pillar-subtitle">Heuristics + Bedrock Claude 3 Intelligence</div>
+              <div class="pillar-heading-title">ScamShield Threat Engine</div>
+              <div class="pillar-heading-sub">Heuristics + Bedrock Claude 3 Intelligence</div>
             </div>
           </div>
-          <span class="tag blue" id="bedrockEngineTag">Bedrock Claude 3</span>
+          <span class="badge-chip blue" id="bedrockEngineTag">Bedrock Claude 3</span>
         </div>
 
-        <div class="scamshield-body">
-          <!-- Scenario Selector -->
-          <div class="scenario-box">
-            <div class="scenario-title">Simulate Incoming Message / Threat:</div>
-            <div class="scenario-row">
-              <select id="smsScenarioSelect" class="scenario-select" onchange="loadSmsScenario()">
-                <option value="chase">Chase Bank Alert: 'Unauthorized wire... verify credentials'</option>
-                <option value="usps">USPS Smishing: 'Package held at depot, pay $2.19 fee'</option>
-                <option value="grandkid">Grandparent Bail Scam: 'In jail after accident, send Apple cards'</option>
-                <option value="safe">Legitimate Family: 'Hi Mom, see you for Sunday dinner at 5pm'</option>
-              </select>
-              <button class="btn-scan-trigger" onclick="scanSelectedSms()">Scan Message</button>
+        <div class="scamshield-content-deck">
+          <!-- Subly Interactive Scenario Chips -->
+          <div class="scenario-chips-container">
+            <span class="scenario-caption">Select Threat Scenario to Test:</span>
+            <div class="scenario-chip-buttons-row">
+              <button class="scenario-chip-btn active" id="chipChase" onclick="selectScenario('chase')">
+                <span>🏦</span> Chase Bank Wire
+              </button>
+              <button class="scenario-chip-btn" id="chipUsps" onclick="selectScenario('usps')">
+                <span>📦</span> USPS Smishing
+              </button>
+              <button class="scenario-chip-btn" id="chipGrandkid" onclick="selectScenario('grandkid')">
+                <span>👵</span> Grandparent Bail
+              </button>
+              <button class="scenario-chip-btn" id="chipSafe" onclick="selectScenario('safe')">
+                <span>💚</span> Legitimate SMS
+              </button>
             </div>
           </div>
 
-          <!-- Dynamic Threat Risk Gauge -->
-          <div class="gauge-card">
-            <div class="gauge-top">
-              <div class="gauge-heading">Threat Risk Assessment</div>
-              <div class="gauge-score" id="threatGaugeText">63 / 100 (DANGEROUS SCAM)</div>
+          <!-- Dynamic Threat Risk Card (Lumio High-End Dark Style) -->
+          <div class="threat-gauge-card">
+            <div class="threat-gauge-header">
+              <span style="font-size: 11px; font-weight: 700; color: #7dd3fc; text-transform: uppercase; letter-spacing: 0.05em;">Threat Risk Assessment</span>
+              <div class="threat-score-headline" id="threatGaugeText">63 / 100 (DANGEROUS SCAM)</div>
             </div>
-            <div class="meter-track">
-              <div class="meter-fill" id="threatProgressBar"></div>
+            <div class="threat-progress-track">
+              <div class="threat-progress-fill" id="threatProgressBar"></div>
             </div>
-            <div class="signals-wrap" id="deceptionBadges"></div>
+            <div class="deception-signals-row" id="deceptionBadges"></div>
           </div>
 
-          <!-- MUCH BETTER INTERACTIVE ACTIONABLE STEPS FOR SENIORS -->
-          <div class="interactive-playbook">
-            <div class="playbook-header">
-              <div class="playbook-title">
-                <span>🛡️</span> Interactive Senior Protection Steps
+          <!-- Subly Smart Security Agent Playbook (3-Step Clarity) -->
+          <div class="smart-agent-playbook">
+            <div class="playbook-agent-header">
+              <div class="playbook-agent-title">
+                <span>🛡️</span> Smart Security Playbook for Seniors
               </div>
-              <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;">1-Click Safety Actions</span>
+              <span class="badge-chip amber" style="font-size: 10px;">Agent Action Ready</span>
             </div>
 
-            <div class="interactive-steps-list">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
               <!-- Step 1 -->
-              <div class="playbook-step" id="step1Card">
-                <div class="step-left">
-                  <div class="step-badge-num">1</div>
+              <div class="playbook-step-row" id="step1Card">
+                <div class="step-left-info">
+                  <div class="step-num-bubble">1</div>
                   <div>
-                    <div class="step-info-title">
-                      <span>Quarantine Link & Sender</span>
-                      <span class="tag amber" style="font-size: 10px; padding: 1px 6px;">Active</span>
-                    </div>
-                    <div class="step-info-desc">Isolates deceptive domain and prevents clicks</div>
+                    <div class="step-title-text">Quarantine Link & Block Sender</div>
+                    <div class="step-desc-text">Isolates deceptive domain & prevents clicks on senior's device</div>
                   </div>
                 </div>
                 <button class="btn-step-action" id="step1Btn" onclick="executeStepAction(1, 'Sender number & link quarantined.')">
@@ -1562,30 +2467,26 @@
               </div>
 
               <!-- Step 2 -->
-              <div class="playbook-step" id="step2Card">
-                <div class="step-left">
-                  <div class="step-badge-num">2</div>
+              <div class="playbook-step-row" id="step2Card">
+                <div class="step-left-info">
+                  <div class="step-num-bubble">2</div>
                   <div>
-                    <div class="step-info-title">
-                      <span>Verify via Official Channel</span>
-                    </div>
-                    <div class="step-info-desc">Dial official fraud department (Chase: 1-800-935-9935)</div>
+                    <div class="step-title-text">Verify via Official Channel</div>
+                    <div class="step-desc-text">Directly connect to official fraud line (Chase: 1-800-935-9935)</div>
                   </div>
                 </div>
-                <button class="btn-step-action" id="step2Btn" onclick="executeStepAction(2, 'Alexa is calling official verified Chase customer support.')">
+                <button class="btn-step-action" id="step2Btn" onclick="executeStepAction(2, 'Alexa is calling verified Chase customer support.')">
                   <span>📞 Call Verified Bank</span>
                 </button>
               </div>
 
               <!-- Step 3 -->
-              <div class="playbook-step" id="step3Card">
-                <div class="step-left">
-                  <div class="step-badge-num">3</div>
+              <div class="playbook-step-row" id="step3Card">
+                <div class="step-left-info">
+                  <div class="step-num-bubble">3</div>
                   <div>
-                    <div class="step-info-title">
-                      <span>Notify Family Caregiver</span>
-                    </div>
-                    <div class="step-info-desc">Dispatches high-priority summary to family guardian</div>
+                    <div class="step-title-text">Notify Family Guardian</div>
+                    <div class="step-desc-text">Dispatches high-priority summary to caregiver via Alexa notification</div>
                   </div>
                 </div>
                 <button class="btn-step-action" id="step3Btn" onclick="executeStepAction(3, 'Caregiver alert sent to daughter via Alexa Notification.')">
@@ -1599,23 +2500,30 @@
 
     </div>
 
-    <!-- SECTION 3: LIGHT-THEMED MCP PROTOCOL INSPECTOR -->
-    <section class="mcp-drawer-card" id="mcp-inspector">
-      <div class="mcp-drawer-top">
-        <div class="mcp-title-wrap">
-          <div class="pillar-icon pillar-icon-blue" style="width: 32px; height: 32px; font-size: 15px;">⚡</div>
+    <!-- =========================================================================
+         SECTION 6: LIVE MCP STREAMABLE HTTP INSPECTOR (LUMIO SCREEN)
+         ========================================================================= -->
+    <section class="mcp-protocol-deck" id="mcp-inspector">
+      <div class="mcp-deck-top">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <!-- macOS Window Control Dots -->
+          <div style="display: flex; gap: 6px;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></div>
+          </div>
           <div>
-            <div style="font-size: 14px; font-weight: 800; color: var(--text-main);">
+            <div style="font-family: var(--font-display); font-size: 15px; font-weight: 800; color: #ffffff;">
               Live MCP Streamable HTTP Protocol Inspector
             </div>
-            <div style="font-size: 11px; color: var(--text-muted);">
+            <div style="font-size: 11px; color: #7dd3fc;">
               Streamable JSON-RPC 2.0 via POST /mcp (Spec 2025-11-25+)
             </div>
           </div>
         </div>
 
         <div style="display: flex; align-items: center; gap: 8px;">
-          <select id="mcpMethodSelect" class="scenario-select" style="font-family: var(--font-mono); font-size: 11px; padding: 6px 10px;" onchange="loadPresetPayload()">
+          <select id="mcpMethodSelect" class="scenario-dropdown" style="font-family: var(--font-mono); font-size: 11px; padding: 7px 12px; background: #071f28; color: #ffffff; border-color: rgba(255,255,255,0.2);" onchange="loadPresetPayload()">
             <option value="call_list_active">tools/call: list_active_subscriptions</option>
             <option value="call_reminders">tools/call: get_cancellation_reminders</option>
             <option value="call_scam">tools/call: analyze_suspicious_message</option>
@@ -1624,32 +2532,51 @@
             <option value="tools/list">tools/list: Discover Agent Skills</option>
             <option value="initialize">initialize: Protocol Handshake</option>
           </select>
-          <button class="btn-alexa-submit" style="font-size: 12px; padding: 6px 16px;" onclick="sendRawMcpStream()">
+          <button class="btn-invoke-skill" style="font-size: 12px; padding: 7px 18px;" onclick="sendRawMcpStream()">
             Send to POST /mcp
           </button>
         </div>
       </div>
 
-      <!-- Pure Light-Mode Protocol Console -->
-      <div class="mcp-code-screen" id="mcpStreamConsole">// Ready. MCP Streamable HTTP endpoint active at POST http://localhost:3000/mcp
-// Select any method above and click 'Send to POST /mcp' to test streaming packets.
+      <!-- Pure Dark IDE / Console Screen -->
+      <div class="mcp-deck-screen" id="mcpStreamConsole">// Ready. MCP Streamable HTTP endpoint active at POST http://localhost:3000/mcp
+// Select any method above and click 'Send to POST /mcp' to test live streaming packets.
 </div>
     </section>
 
   </main>
 
+  <!-- SUBLY SIGNATURE FLOATING BOTTOM ISLAND PILL -->
+  <nav class="floating-island-bar">
+    <a href="#alexa-hub" class="island-link-item active" id="islandVoice">
+      <span>🎙️</span> Voice Hub
+    </a>
+    <a href="#subtrack-section" class="island-link-item" id="islandSubTrack">
+      <span>💳</span> SubTrack
+    </a>
+    <a href="#scamshield-section" class="island-link-item" id="islandScamShield">
+      <span>🛡️</span> ScamShield
+    </a>
+    <a href="#features-deck" class="island-link-item" id="islandFeatures">
+      <span>✨</span> Features
+    </a>
+    <a href="#mcp-inspector" class="island-link-item" id="islandMcp">
+      <span>⚡</span> MCP Spec
+    </a>
+  </nav>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
-  <div class="toast-notice" id="toastNotice">
+  <div class="toast-pill-alert" id="toastNotice">
     <span>🛡️</span>
     <span id="toastNoticeText">Action completed successfully.</span>
   </div>
 
-  <!-- MINIMAL FOOTER -->
+  <!-- FOOTER -->
   <footer>
     <div>
       <strong>SubTrack & ElderGuard MCP Server</strong> — Built for Amazon Hackathon (Alexa+ Track & AWS Builder Challenge) • MIT License
     </div>
-    <div class="footer-nav">
+    <div class="footer-links-group">
       <a href="/mcp" target="_blank">POST /mcp Endpoint</a>
       <a href="/health" target="_blank">Health Telemetry</a>
       <a href="https://modelcontextprotocol.io" target="_blank">MCP Specification</a>
@@ -1660,6 +2587,7 @@
     let isTtsEnabled = true;
     let currentFilter = 'ALL';
     let cachedSubscriptions = [];
+    let currentScenarioKey = 'chase';
 
     // Toggle Audio
     const audioBtn = document.getElementById("audioToggleBtn");
@@ -1678,153 +2606,68 @@
 
     // Web Speech API Voice Synthesis
     function speakText(text) {
-      if (!isTtsEnabled || !('speechSynthesis' in window)) return;
+      if (!isTtsEnabled || !("speechSynthesis" in window)) return;
       window.speechSynthesis.cancel();
+
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.rate = 1.0;
       utterance.pitch = 1.05;
 
-      const sphere = document.getElementById("alexaSphere");
-      const status = document.getElementById("alexaStatus");
+      const orb = document.getElementById("alexaSphere");
+      orb.classList.add("speaking");
 
-      sphere.classList.add("speaking");
-      status.textContent = "Alexa+ Speaking...";
-      status.classList.add("active");
-
-      utterance.onend = () => {
-        sphere.classList.remove("speaking");
-        status.textContent = "Alexa+ Agent Idle";
-        status.classList.remove("active");
-      };
+      utterance.onend = () => orb.classList.remove("speaking");
+      utterance.onerror = () => orb.classList.remove("speaking");
 
       window.speechSynthesis.speak(utterance);
     }
 
-    // Toast Notification Helper
-    function showToast(message) {
+    // Toast Alert
+    function showToast(msg) {
       const toast = document.getElementById("toastNotice");
       const text = document.getElementById("toastNoticeText");
-      text.textContent = message;
+      text.textContent = msg;
       toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 3500);
+      setTimeout(() => toast.classList.remove("show"), 3500);
     }
 
-    // Trigger Preset Voice Prompt
-    async function runPrompt(promptText) {
-      document.getElementById("customPromptInput").value = promptText;
-      await executeCustomPrompt();
+    // Subly Day Chart Click Selector
+    function selectDay(day, amount) {
+      const tooltip = document.getElementById("chartPillSavings");
+      tooltip.textContent = `${amount} (${day})`;
+      showToast(`Selected ${day}: ${amount} recurring spend`);
     }
 
-    // Execute Voice Prompt
-    async function executeCustomPrompt() {
-      const input = document.getElementById("customPromptInput");
-      const prompt = input.value.trim();
-      if (!prompt) return;
+    // Render Subly Segmented Radial Gauge Ticks
+    function updateRadialGauge(score) {
+      const container = document.getElementById("radialGaugeTicks");
+      if (!container) return;
+      const cx = 90, cy = 85;
+      const numTicks = 28;
+      const rInner = 56, rOuter = 72;
+      let html = "";
 
-      const sphere = document.getElementById("alexaSphere");
-      const status = document.getElementById("alexaStatus");
-      const spokenEl = document.getElementById("spokenDialogueText");
-      const toolEl = document.getElementById("metaTool");
-      const latencyEl = document.getElementById("metaLatency");
-      const badge = document.getElementById("toolBadge");
+      for (let i = 0; i < numTicks; i++) {
+        const angle = Math.PI - (i / (numTicks - 1)) * Math.PI;
+        const x1 = cx + rInner * Math.cos(angle);
+        const y1 = cy - rInner * Math.sin(angle);
+        const x2 = cx + rOuter * Math.cos(angle);
+        const y2 = cy - rOuter * Math.sin(angle);
 
-      sphere.classList.add("speaking");
-      status.textContent = "Invoking Agent Skill...";
-      status.classList.add("active");
-      badge.textContent = "Processing";
+        const isLit = (i / (numTicks - 1)) <= (score / 100);
+        const strokeColor = isLit ? "#f97316" : "#e2e8f0";
+        const strokeWidth = 3.5;
 
-      try {
-        const res = await fetch("/api/simulate/voice-prompt", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt }),
-        });
-
-        const data = await res.json();
-
-        sphere.classList.remove("speaking");
-        status.textContent = "Alexa+ Agent Idle";
-        status.classList.remove("active");
-        badge.textContent = "Completed";
-
-        spokenEl.textContent = `"${data.alexaSpokenResponse}"`;
-        toolEl.textContent = data.mcpToolInvoked;
-        latencyEl.textContent = `${data.executionLatencyMs} ms`;
-
-        if (data.mcpToolInvoked === "analyze_suspicious_message" && data.mcpToolResult) {
-          renderThreatMeter(data.mcpToolResult);
-        }
-
-        speakText(data.alexaSpokenResponse);
-        loadSubscriptions();
-      } catch (err) {
-        sphere.classList.remove("speaking");
-        status.textContent = "Error";
-        status.classList.remove("active");
-        badge.textContent = "Failed";
-        spokenEl.textContent = `Error simulating voice prompt: ${err.message}`;
+        html += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linecap="round" />`;
       }
+      container.innerHTML = html;
+      document.getElementById("radialHealthNumber").innerHTML = `${score}<span class="radial-unit">/100</span>`;
     }
 
-    // Interactive Senior Playbook Action
-    function executeStepAction(stepNumber, confirmationMessage) {
-      const card = document.getElementById(`step${stepNumber}Card`);
-      const btn = document.getElementById(`step${stepNumber}Btn`);
-
-      card.classList.add("completed");
-      btn.classList.add("done");
-      btn.innerHTML = "<span>✅ Completed</span>";
-
-      showToast(confirmationMessage);
-      speakText(confirmationMessage);
-    }
-
-    // Render Threat Meter
-    function renderThreatMeter(report) {
-      const fill = document.getElementById("threatProgressBar");
-      const text = document.getElementById("threatGaugeText");
-      const badgesContainer = document.getElementById("deceptionBadges");
-
-      const score = report.threatRiskScore || 0;
-      fill.style.width = `${score}%`;
-      text.textContent = `${score} / 100 (${report.verdict.replace(/_/g, ' ')})`;
-
-      if (score >= 60) {
-        fill.style.background = "var(--danger-red)";
-        text.style.color = "var(--danger-red)";
-      } else if (score >= 30) {
-        fill.style.background = "var(--amazon-gold)";
-        text.style.color = "var(--amazon-amber)";
-      } else {
-        fill.style.background = "var(--success-green)";
-        text.style.color = "var(--success-green)";
-      }
-
-      badgesContainer.innerHTML = "";
-      if (report.signals && report.signals.length > 0) {
-        report.signals.forEach(s => {
-          const chip = document.createElement("div");
-          chip.className = "signal-chip";
-          chip.textContent = `🚩 ${s.description}`;
-          badgesContainer.appendChild(chip);
-        });
-      } else {
-        const chip = document.createElement("div");
-        chip.className = "signal-chip";
-        chip.style.background = "var(--success-bg)";
-        chip.style.borderColor = "var(--success-border)";
-        chip.style.color = "var(--success-green)";
-        chip.textContent = "🛡️ Zero Threat Indicators Detected";
-        badgesContainer.appendChild(chip);
-      }
-    }
-
-    // Filter Subscriptions
+    // SubTrack Filter Controls
     function setSubFilter(filter) {
       currentFilter = filter;
-      document.querySelectorAll(".filter-tab").forEach(tab => tab.classList.remove("active"));
+      document.querySelectorAll(".filter-tab-btn").forEach(b => b.classList.remove("active"));
       if (filter === "ALL") document.getElementById("tabAll").classList.add("active");
       if (filter === "TRIALS") document.getElementById("tabTrials").classList.add("active");
       if (filter === "ACTIVE") document.getElementById("tabActive").classList.add("active");
@@ -1832,7 +2675,7 @@
       renderSubscriptionItems();
     }
 
-    // Load and Render Subscriptions
+    // Load Subscriptions Data
     async function loadSubscriptions() {
       try {
         const res = await fetch("/api/subscriptions");
@@ -1840,9 +2683,10 @@
         cachedSubscriptions = data.all || [];
 
         document.getElementById("totalSpendDisplay").textContent = `$${data.report.totalMonthlySpend.toFixed(2)}`;
-        document.getElementById("potentialSavingsDisplay").textContent = `$${data.report.potentialMonthlySavings.toFixed(2)}`;
-        document.getElementById("expiringNumber").textContent = data.report.expiringTrialsCount;
         document.getElementById("subListSummary").textContent = `Active Household Subscriptions (${cachedSubscriptions.length})`;
+
+        const healthScore = Math.max(30, 100 - (data.report.expiringTrialsCount * 12));
+        updateRadialGauge(healthScore);
 
         renderSubscriptionItems();
       } catch (err) {
@@ -1850,17 +2694,20 @@
       }
     }
 
+    // Authentic Brand Visuals (Subly Style)
+    const brandVisuals = {
+      "BrainGym Memory Pro": { icon: "🧠", bg: "#f3e8ff", fg: "#7e22ce", brand: "Apple" },
+      "Ancestry Heritage Premium": { icon: "🌳", bg: "#e0f2fe", fg: "#0284c7", brand: "Ancestry" },
+      "Senior Daily Puzzles & Crosswords": { icon: "🧩", bg: "#fef3c7", fg: "#b45309", brand: "PayPal" },
+      "Netflix 4K Ultra": { icon: "N", bg: "#000000", fg: "#e50914", brand: "Netflix" },
+      "VitalHealth Medical Telemetry": { icon: "💊", bg: "#ecfdf5", fg: "#059669", brand: "VitalHealth" },
+      "Spotify Family Plan": { icon: "🟢", bg: "#1db954", fg: "#ffffff", brand: "Spotify" },
+      "FitPulse Senior Chair Yoga": { icon: "🧘", bg: "#ffe4e6", fg: "#e11d48", brand: "FitPulse" }
+    };
+
     function renderSubscriptionItems() {
       const container = document.getElementById("subscriptionsContainer");
       container.innerHTML = "";
-
-      const categoryIcons = {
-        "BRAIN_TRAINING": "🧠",
-        "FAMILY": "🌳",
-        "HEALTH": "💊",
-        "ENTERTAINMENT": "🎬",
-        "NEWS_PUZZLES": "🧩"
-      };
 
       const filtered = cachedSubscriptions.filter(sub => {
         if (currentFilter === "TRIALS") return sub.isTrial && sub.trialExpiresInDays !== null && sub.status !== "AUTO_RENEW_BLOCKED";
@@ -1877,38 +2724,42 @@
       filtered.forEach(sub => {
         const row = document.createElement("div");
         let extraClass = "active-sub";
-        let badgeHtml = `<span class="tag green">Active</span>`;
+        let badgeHtml = `<span class="badge-chip green">● Active</span>`;
 
         if (sub.status === "AUTO_RENEW_BLOCKED") {
           extraClass = "blocked";
-          badgeHtml = `<span class="tag blue">🛡️ Blocked</span>`;
+          badgeHtml = `<span class="badge-chip blue">🛡️ Blocked by Alexa</span>`;
         } else if (sub.isTrial && sub.trialExpiresInDays !== null) {
           extraClass = "trial-alert";
-          badgeHtml = `<span class="tag amber">⚠️ Trial: ${sub.trialExpiresInDays}d left</span>`;
+          badgeHtml = `<span class="badge-chip amber">⚠️ Trial: ${sub.trialExpiresInDays}d left</span>`;
         }
 
-        row.className = `sub-card ${extraClass}`;
+        const brand = brandVisuals[sub.name] || { icon: "📦", bg: "#f1f5f9", fg: "#475569", brand: "Service" };
+
+        row.className = `subscription-row-card ${extraClass}`;
         row.innerHTML = `
-          <div class="sub-top">
-            <div class="sub-meta-group">
-              <span class="sub-icon">${categoryIcons[sub.category] || "📦"}</span>
+          <div class="sub-card-top-line">
+            <div class="sub-brand-unit">
+              <div class="sub-brand-avatar" style="background: ${brand.bg}; color: ${brand.fg};">
+                ${brand.icon}
+              </div>
               <div>
-                <div class="sub-name">${sub.name}</div>
-                <div class="sub-vendor">${sub.billingProvider}</div>
+                <div class="sub-service-name">${sub.name}</div>
+                <div class="sub-service-provider">${sub.billingProvider} • ${sub.category.replace('_', ' ')}</div>
               </div>
             </div>
-            <div class="sub-cost">$${sub.monthlyPrice.toFixed(2)}<span>/mo</span></div>
+            <div class="sub-price-tag">-$${sub.monthlyPrice.toFixed(2)}<span>/mo</span></div>
           </div>
 
-          <div class="sub-bottom">
-            <div style="display: flex; align-items: center; gap: 6px;">
+          <div class="sub-card-bottom-line">
+            <div style="display: flex; align-items: center; gap: 8px;">
               ${badgeHtml}
               <span>Renews: <strong>${sub.renewalDate}</strong></span>
             </div>
             ${
               sub.status !== "AUTO_RENEW_BLOCKED"
-                ? `<button class="btn-block-action" onclick="cancelSubscription('${sub.id}', '${sub.name}')">Block Renewal</button>`
-                : `<span style="font-size: 11px; color: var(--success-green); font-weight: 700;">Saved $${sub.monthlyPrice.toFixed(2)}/mo</span>`
+                ? `<button class="btn-cancel-block" onclick="cancelSubscription('${sub.id}', '${sub.name}')">Cancel via Alexa ⚡</button>`
+                : `<span style="font-size: 11px; color: var(--success-green); font-weight: 800;">✓ Saved $${sub.monthlyPrice.toFixed(2)}/mo</span>`
             }
           </div>
         `;
@@ -1922,172 +2773,318 @@
         const res = await fetch("/api/subscriptions/cancel", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ subscriptionId: subId }),
+          body: JSON.stringify({ subscriptionId: subId })
         });
         const result = await res.json();
         speakText(result.alexaVoiceConfirmation);
+
         document.getElementById("spokenDialogueText").textContent = `"${result.alexaVoiceConfirmation}"`;
+        document.getElementById("toolBadge").textContent = "cancel_subscription_alert";
         document.getElementById("metaTool").textContent = "cancel_subscription_alert";
-        showToast(`Auto-renewal blocked for ${subName}`);
-        loadSubscriptions();
+
+        showToast(`Canceled: ${subName}`);
+        await loadSubscriptions();
       } catch (err) {
-        alert("Error cancelling subscription: " + err.message);
+        showToast("Error canceling subscription");
       }
     }
 
-    // Reset Subscriptions Seed
+    // Reset Subscriptions Data
     async function resetSubscriptions() {
-      await fetch("/api/subscriptions/reset", { method: "POST" });
-      showToast("Subscription seed data restored.");
-      loadSubscriptions();
+      try {
+        const res = await fetch("/api/subscriptions/reset", { method: "POST" });
+        await res.json();
+        await loadSubscriptions();
+        showToast("Subscriptions restored to baseline demo state");
+      } catch (err) {
+        showToast("Failed to reset demo state");
+      }
     }
 
-    // SMS Scenarios for ScamShield
-    const SMS_SCENARIOS = {
-      chase: "Urgent: Unauthorized wire of $499 from your Chase card. Verify at http://chase-security-alert.xyz within 24 hours.",
-      usps: "USPS: Package detained at regional facility due to unpaid fee of $2.19. Please update address at http://usps-redelivery.xyz",
-      grandkid: "Grandma, I had an accident and I am in jail. Please do not tell mom. Buy $2,000 in Apple gift cards and text me codes for bail.",
-      safe: "Hi Mom, see you for Sunday dinner at 5pm. Love you!"
+    // Run Prompt Simulation
+    async function runPrompt(promptText) {
+      const orb = document.getElementById("alexaSphere");
+      const status = document.getElementById("alexaStatus");
+      const spokenText = document.getElementById("spokenDialogueText");
+      const badge = document.getElementById("toolBadge");
+      const metaTool = document.getElementById("metaTool");
+      const metaLatency = document.getElementById("metaLatency");
+
+      status.textContent = "Processing Voice Skill...";
+      badge.textContent = "Invoking Skill...";
+
+      const t0 = performance.now();
+      try {
+        const res = await fetch("/api/simulate/voice-prompt", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: promptText })
+        });
+        const data = await res.json();
+        const latency = Math.round(performance.now() - t0);
+
+        status.textContent = "Alexa+ Response Ready";
+        badge.textContent = data.tool;
+        metaTool.textContent = data.tool;
+        metaLatency.textContent = `${latency} ms`;
+        spokenText.textContent = `"${data.spokenResponse}"`;
+
+        speakText(data.spokenResponse);
+
+        if (data.tool === "analyze_suspicious_message") {
+          updateThreatCard(data.rawResult);
+        } else if (data.tool === "get_cancellation_reminders" || data.tool === "list_active_subscriptions" || data.tool === "get_active_subscriptions") {
+          await loadSubscriptions();
+        }
+      } catch (err) {
+        status.textContent = "Error communicating with server";
+        spokenText.textContent = "I'm having trouble connecting right now.";
+      }
+    }
+
+    // Execute Custom Spotlight Input
+    function executeCustomPrompt() {
+      const input = document.getElementById("customPromptInput");
+      const prompt = input.value.trim();
+      if (!prompt) return;
+      runPrompt(prompt);
+      input.value = "";
+    }
+
+    // SMS Scenarios
+    const smsScenarios = {
+      chase: {
+        message: "Chase Fraud Alert: Suspicious attempt for $2,400.00 to CryptoPay LLC. If not you, reply NO or visit https://chase-security-verify-889.com immediately to secure account.",
+        sender: "+1 (844) 935-0199"
+      },
+      usps: {
+        message: "USPS Alert: Package tracking #9400111899562729 cannot be delivered due to incomplete address & unpaid $2.19 redelivery fee. Resolve within 12h: https://usps-depot-redeliver-fee.info",
+        sender: "+1 (833) 441-2091"
+      },
+      grandkid: {
+        message: "Grandma, it's Kevin. I'm in holding after a terrible accident and my phone is impounded. Please don't call Mom yet, she will panic. Send $2,000 via Apple gift cards to this bail bond rep immediately.",
+        sender: "+1 (917) 555-0143"
+      },
+      safe: {
+        message: "Hi Mom, just checking in! See you for Sunday dinner at 5pm. Love you!",
+        sender: "+1 (415) 555-0182"
+      }
     };
 
-    function loadSmsScenario() {
-      // Prepared
+    function selectScenario(key) {
+      currentScenarioKey = key;
+      document.querySelectorAll(".scenario-chip-btn").forEach(b => b.classList.remove("active"));
+      if (key === "chase") document.getElementById("chipChase").classList.add("active");
+      if (key === "usps") document.getElementById("chipUsps").classList.add("active");
+      if (key === "grandkid") document.getElementById("chipGrandkid").classList.add("active");
+      if (key === "safe") document.getElementById("chipSafe").classList.add("active");
+      scanSelectedSms();
     }
 
     async function scanSelectedSms() {
-      const select = document.getElementById("smsScenarioSelect");
-      const text = SMS_SCENARIOS[select.value];
-      await runPrompt(`Alexa, check if this text is a scam: ${text}`);
+      const scenario = smsScenarios[currentScenarioKey];
+      if (!scenario) return;
+
+      try {
+        const res = await fetch("/api/scamshield/scan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: scenario.message, sender: scenario.sender })
+        });
+        const result = await res.json();
+        updateThreatCard(result);
+        speakText(result.alexaVoiceSummary);
+        document.getElementById("spokenDialogueText").textContent = `"${result.alexaVoiceSummary}"`;
+        document.getElementById("toolBadge").textContent = "analyze_suspicious_message";
+        document.getElementById("metaTool").textContent = "analyze_suspicious_message";
+      } catch (err) {
+        showToast("Failed to scan message");
+      }
     }
 
-    // MCP Inspector: Presets
-    const MCP_PRESETS = {
-      "call_list_active": {
-        jsonrpc: "2.0",
-        id: "msg-list-5",
-        method: "tools/call",
-        params: {
-          name: "list_active_subscriptions",
-          arguments: {}
+    function updateThreatCard(result) {
+      const gaugeText = document.getElementById("threatGaugeText");
+      const progressBar = document.getElementById("threatProgressBar");
+      const badgesContainer = document.getElementById("deceptionBadges");
+
+      const score = result.threatScore || 0;
+      const level = result.threatLevel || "SAFE";
+      gaugeText.textContent = `${score} / 100 (${level})`;
+
+      progressBar.style.width = `${score}%`;
+      if (score >= 70) {
+        gaugeText.style.color = "#fb7185";
+      } else if (score >= 40) {
+        gaugeText.style.color = "#fbbf24";
+      } else {
+        gaugeText.style.color = "#34d399";
+      }
+
+      badgesContainer.innerHTML = "";
+      if (result.deceptionSignals && result.deceptionSignals.length > 0) {
+        result.deceptionSignals.forEach(sig => {
+          const chip = document.createElement("span");
+          chip.className = `signal-chip ${score >= 60 ? 'red' : 'amber'}`;
+          chip.innerHTML = `<span>⚠️</span> ${sig}`;
+          badgesContainer.appendChild(chip);
+        });
+      } else {
+        badgesContainer.innerHTML = `<span class="signal-chip" style="background:rgba(16, 185, 129, 0.2); color:#a7f3d0; border:1px solid rgba(16, 185, 129, 0.4);"><span>✅</span> No malicious deception signals detected</span>`;
+      }
+
+      // Reset playbook buttons
+      [1, 2, 3].forEach(step => {
+        const btn = document.getElementById(`step${step}Btn`);
+        const card = document.getElementById(`step${step}Card`);
+        if (btn) {
+          btn.classList.remove("done");
+          btn.textContent = step === 1 ? "🔒 Block Sender" : (step === 2 ? "📞 Call Verified Bank" : "📲 Alert Family");
         }
-      },
-      "call_reminders": {
+        if (card) card.classList.remove("completed");
+      });
+    }
+
+    function executeStepAction(step, feedback) {
+      const btn = document.getElementById(`step${step}Btn`);
+      const card = document.getElementById(`step${step}Card`);
+      if (btn) {
+        btn.classList.add("done");
+        btn.innerHTML = "<span>✅</span> Done";
+      }
+      if (card) card.classList.add("completed");
+
+      showToast(feedback);
+      speakText(feedback);
+    }
+
+    // MCP Streamable HTTP Presets
+    const mcpPresets = {
+      call_list_active: {
         jsonrpc: "2.0",
-        id: "msg-remind-6",
+        id: "call-1",
         method: "tools/call",
-        params: {
-          name: "get_cancellation_reminders",
-          arguments: { timeframeDays: 7 }
-        }
+        params: { name: "list_active_subscriptions", arguments: {} }
       },
-      "call_scam": {
+      call_reminders: {
         jsonrpc: "2.0",
-        id: "msg-scam-2",
+        id: "call-2",
+        method: "tools/call",
+        params: { name: "get_cancellation_reminders", arguments: { daysAhead: 7 } }
+      },
+      call_scam: {
+        jsonrpc: "2.0",
+        id: "call-3",
         method: "tools/call",
         params: {
           name: "analyze_suspicious_message",
           arguments: {
-            messageText: "Urgent: Your Chase Bank card is suspended. Verify credentials at http://chase-security-login.xyz immediately."
+            messageText: "USPS Alert: Package held at depot. Pay $2.19 redelivery fee at https://usps-depot-redeliver-fee.info",
+            sender: "+1-833-441-2091"
           }
         }
       },
-      "call_cancel": {
+      call_cancel: {
         jsonrpc: "2.0",
-        id: "msg-cancel-4",
+        id: "call-4",
         method: "tools/call",
-        params: {
-          name: "cancel_subscription_alert",
-          arguments: { subscriptionId: "sub-bg-101" }
-        }
+        params: { name: "cancel_subscription_alert", arguments: { subscriptionId: "sub-1" } }
       },
-      "call_subs": {
+      call_subs: {
         jsonrpc: "2.0",
-        id: "msg-subs-3",
+        id: "call-5",
         method: "tools/call",
-        params: {
-          name: "get_active_subscriptions",
-          arguments: { timeframeDays: 7 }
-        }
+        params: { name: "get_active_subscriptions", arguments: {} }
       },
       "tools/list": {
         jsonrpc: "2.0",
-        id: "msg-tools-1",
+        id: "tools-list-req",
         method: "tools/list",
         params: {}
       },
-      "initialize": {
+      initialize: {
         jsonrpc: "2.0",
-        id: "msg-init-0",
+        id: "init-1",
         method: "initialize",
         params: {
-          protocolVersion: "2024-11-05",
+          protocolVersion: "2025-11-25",
           capabilities: {},
-          clientInfo: { name: "alexa-plus-client", version: "1.0.0" }
+          clientInfo: { name: "AlexaPlusSimulatedClient", version: "1.0.0" }
         }
       }
     };
 
     function loadPresetPayload() {
-      const select = document.getElementById("mcpMethodSelect");
-      const payload = MCP_PRESETS[select.value];
-      const consoleEl = document.getElementById("mcpStreamConsole");
-      consoleEl.textContent = `// Prepared JSON-RPC 2.0 Request for POST /mcp\n${JSON.stringify(payload, null, 2)}`;
+      // Intentionally lightweight
     }
 
     async function sendRawMcpStream() {
-      const select = document.getElementById("mcpMethodSelect");
-      const payload = MCP_PRESETS[select.value];
-      const consoleEl = document.getElementById("mcpStreamConsole");
+      const method = document.getElementById("mcpMethodSelect").value;
+      const payload = mcpPresets[method] || mcpPresets["call_list_active"];
+      const consoleBox = document.getElementById("mcpStreamConsole");
 
-      const startTime = performance.now();
-      consoleEl.textContent = `> POST http://localhost:3000/mcp (Streamable HTTP Transport)\n> Headers: Accept: application/json, text/event-stream\n> Payload:\n${JSON.stringify(payload, null, 2)}\n\nStreaming response packets...`;
+      consoleBox.textContent = `>>> POST /mcp (Streamable HTTP 2025-11-25+)\n>>> Headers: Content-Type: application/json; Accept: text/event-stream, application/json\n>>> Payload: ${JSON.stringify(payload, null, 2)}\n\n<<< Streaming Response:\n`;
 
+      const t0 = performance.now();
       try {
         const res = await fetch("/mcp", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json, text/event-stream"
+            "Accept": "text/event-stream, application/json"
           },
           body: JSON.stringify(payload)
         });
 
-        const elapsed = (performance.now() - startTime).toFixed(1);
-        const headers = Array.from(res.headers.entries()).map(([k, v]) => `  ${k}: ${v}`).join("\n");
-        const bodyText = await res.text();
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let streamText = "";
 
-        consoleEl.textContent = `< HTTP/1.1 ${res.status} ${res.statusText} (${elapsed} ms)\n< Response Headers:\n${headers}\n\n< Streamable HTTP Stream Data:\n${bodyText}`;
-      } catch (err) {
-        consoleEl.textContent += `\n\n[Error sending to /mcp]: ${err.message}`;
-      }
-    }
-
-    // Telemetry Polling
-    async function fetchTelemetry() {
-      try {
-        const res = await fetch("/health");
-        const data = await res.json();
-        const pill = document.getElementById("bedrockPill");
-        if (data.bedrock && data.bedrock.configured) {
-          pill.innerHTML = "<span>⚡ Bedrock Claude 3: Connected</span>";
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value);
+          streamText += chunk;
+          consoleBox.textContent += chunk;
+          consoleBox.scrollTop = consoleBox.scrollHeight;
         }
-      } catch (e) {
-        console.error("Telemetry failed", e);
+
+        const elapsed = Math.round(performance.now() - t0);
+        consoleBox.textContent += `\n\n[Stream Completed in ${elapsed} ms] [HTTP ${res.status} OK]`;
+      } catch (err) {
+        consoleBox.textContent += `\n[Stream Error: ${err.message}]`;
       }
     }
 
-    // Initial Bootstrap
+    // Floating Island active link update on scroll
+    window.addEventListener("scroll", () => {
+      const scrollPos = window.scrollY + 200;
+      const sections = [
+        { id: "alexa-hub", linkId: "islandVoice" },
+        { id: "subtrack-section", linkId: "islandSubTrack" },
+        { id: "scamshield-section", linkId: "islandScamShield" },
+        { id: "features-deck", linkId: "islandFeatures" },
+        { id: "mcp-inspector", linkId: "islandMcp" }
+      ];
+
+      sections.forEach(sec => {
+        const el = document.getElementById(sec.id);
+        const link = document.getElementById(sec.linkId);
+        if (el && link) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            document.querySelectorAll(".island-link-item").forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+          }
+        }
+      });
+    });
+
+    // Initial Load
     window.addEventListener("DOMContentLoaded", () => {
       loadSubscriptions();
-      loadPresetPayload();
-      fetchTelemetry();
-      renderThreatMeter({
-        verdict: "DANGEROUS_SCAM",
-        threatRiskScore: 63,
-        signals: [
-          { description: "Untraceable or non-standard payment method demand: 'wire transfer'" }
-        ]
-      });
+      updateRadialGauge(74);
+      scanSelectedSms();
     });
   </script>
 </body>
