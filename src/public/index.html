@@ -895,13 +895,17 @@
       width: 100%;
       max-width: 32px;
       border-radius: 6px 6px 3px 3px;
-      background: #e2e8f0;
-      transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, transform 0.15s ease;
+      background: linear-gradient(180deg, #7dd3fc 0%, #0284c7 100%);
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.18);
+      opacity: 0.82;
+      transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, transform 0.15s ease, opacity 0.2s ease, box-shadow 0.2s ease;
     }
 
     .chart-bar-col:hover .chart-bar-fill {
-      background: #94a3b8;
-      transform: scaleY(1.04);
+      opacity: 1;
+      background: linear-gradient(180deg, #38bdf8 0%, #0369a1 100%);
+      transform: scaleY(1.05);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.32);
     }
 
     .chart-bar-fill.active-hatch {
@@ -913,12 +917,13 @@
         #38bdf8 8px
       ) !important;
       border-radius: 6px 6px 3px 3px !important;
-      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.28);
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      opacity: 1 !important;
     }
 
     .chart-bar-col:hover .chart-bar-fill.active-hatch {
       transform: scaleY(1.03);
-      filter: brightness(1.05);
+      filter: brightness(1.06);
     }
 
     .chart-day-label {
