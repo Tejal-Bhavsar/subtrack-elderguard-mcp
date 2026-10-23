@@ -164,11 +164,11 @@
       background: #edf2f7;
       border: 1px solid var(--surface-border);
       border-radius: var(--radius-full);
-      padding: 3px;
-      gap: 2px;
+      padding: 4px;
+      gap: 3px;
     }
 
-    @media (min-width: 960px) {
+    @media (min-width: 768px) {
       .nav-tabs-pill { display: flex; }
     }
 
@@ -176,7 +176,7 @@
       padding: 6px 14px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--text-muted);
+      color: #475569;
       text-decoration: none;
       border-radius: var(--radius-full);
       transition: all 0.15s ease;
@@ -204,34 +204,12 @@
       gap: 10px;
     }
 
-    .btn-view-toggle {
+    .status-badge-mcp {
       height: 34px;
-      padding: 0 16px;
-      border-radius: var(--radius-full);
-      background: #0284c7;
-      color: #ffffff;
-      border: none;
-      font-size: 12px;
-      font-weight: 700;
-      font-family: var(--font-sans);
-      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.15s ease;
-      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
-    }
-
-    .btn-view-toggle:hover {
-      background: #0369a1;
-      transform: translateY(-1px);
-    }
-
-    .status-badge-mcp {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
+      gap: 7px;
+      padding: 0 14px;
       border-radius: var(--radius-full);
       font-size: 12px;
       font-weight: 600;
@@ -250,29 +228,27 @@
     }
 
     .btn-audio-pill {
-      height: 32px;
-      padding: 0 12px;
+      height: 34px;
+      padding: 0 14px;
       border-radius: var(--radius-full);
       background: #ffffff;
       border: 1px solid var(--surface-border);
-      color: var(--text-main);
-      display: flex;
+      color: var(--text-muted);
+      display: inline-flex;
       align-items: center;
       gap: 6px;
       cursor: pointer;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       transition: all 0.15s ease;
       box-shadow: var(--shadow-sm);
     }
 
     .btn-audio-pill.active {
-      background: var(--teal-accent-subtle);
-      border-color: var(--teal-accent-border);
-      color: var(--teal-accent);
+      background: #e0f2fe;
+      border-color: #bae6fd;
+      color: #0284c7;
     }
-
-    .btn-github-pill {
       height: 32px;
       padding: 0 14px;
       border-radius: var(--radius-full);
@@ -1975,8 +1951,8 @@
   <!-- TOP FROSTED NAVBAR -->
   <header class="top-nav-bar">
     <div class="nav-inner">
-      <!-- Click Logo to Go to Landing Page -->
-      <a href="#landing" class="nav-brand" onclick="switchView('landing'); return false;" title="Click to view Landing Page">
+      <!-- Click Logo to Toggle Landing Page -->
+      <a href="#landing" class="nav-brand" onclick="toggleView(); return false;" title="SubTrack & ElderGuard - Click to toggle Landing Page">
         <div class="brand-icon-pill">🛡️</div>
         <div class="brand-name-wrap">
           <span class="brand-title">SubTrack & ElderGuard</span>
@@ -1986,22 +1962,15 @@
 
       <!-- Center Segmented Pill Controller (App Navigation) -->
       <nav class="nav-tabs-pill" id="centerNavTabs">
-        <a class="nav-tab-link" onclick="switchView('landing')" id="tabNavLanding"><span>🌐</span> Landing Page</a>
-        <a class="nav-tab-link active" onclick="switchView('dashboard')" id="tabNavDashboard"><span>📱</span> App Dashboard</a>
-        <a href="#alexa-hub" class="nav-tab-link" onclick="ensureDashboardView()"><span>🎙️</span> Voice Station</a>
-        <a href="#subtrack-section" class="nav-tab-link" onclick="ensureDashboardView()"><span>💳</span> SubTrack</a>
-        <a href="#scamshield-section" class="nav-tab-link" onclick="ensureDashboardView()"><span>🛡️</span> ScamShield</a>
-        <a href="#mcp-inspector" class="nav-tab-link" onclick="ensureDashboardView()"><span>⚡</span> MCP Inspector</a>
+        <a href="#alexa-hub" class="nav-tab-link active" id="navLinkVoice" onclick="navigateToSection('alexa-hub', this)"><span>🎙️</span> Voice Hub</a>
+        <a href="#subtrack-section" class="nav-tab-link" id="navLinkSubTrack" onclick="navigateToSection('subtrack-section', this)"><span>💳</span> SubTrack</a>
+        <a href="#scamshield-section" class="nav-tab-link" id="navLinkScam" onclick="navigateToSection('scamshield-section', this)"><span>🛡️</span> ScamShield</a>
+        <a href="#features-deck" class="nav-tab-link" id="navLinkFeatures" onclick="navigateToSection('features-deck', this)"><span>✨</span> Features</a>
+        <a href="#mcp-inspector" class="nav-tab-link" id="navLinkMcp" onclick="navigateToSection('mcp-inspector', this)"><span>⚡</span> MCP Spec</a>
       </nav>
 
       <!-- Right Actions -->
       <div class="nav-actions">
-        <!-- View Toggle Pill Button -->
-        <button class="btn-view-toggle" id="btnViewToggle" onclick="toggleView()">
-          <span id="btnViewToggleIcon">🌐</span>
-          <span id="btnViewToggleText">Landing Page</span>
-        </button>
-
         <div class="status-badge-mcp" title="Model Context Protocol Streamable HTTP Transport Active">
           <div class="pulse-dot-active"></div>
           <span>Streamable HTTP</span>
@@ -2010,10 +1979,6 @@
           <span>🔊</span>
           <span id="audioBtnLabel">Voice On</span>
         </button>
-        <a href="https://github.com/Tejal-Bhavsar/subtrack-elderguard-mcp" target="_blank" class="btn-github-pill" title="View Source on GitHub">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          <span>GitHub</span>
-        </a>
       </div>
     </div>
   </header>
@@ -2513,6 +2478,45 @@
 
       </div>
 
+      <!-- SECTION 4.5: SUBLY 4-FEATURE ARCHITECTURE GRID -->
+      <section class="subly-stress-free-section" id="features-deck">
+        <div class="subly-section-intro">
+          <span class="kicker-subtle">Family Security & Clarity</span>
+          <h2 class="subly-section-headline">Less Subscription Stress. More Financial Control.</h2>
+          <p class="subly-section-sub">SubTrack & ElderGuard turns messy recurring charges and deceptive smishing into an autonomous, voice-controlled defense shield.</p>
+        </div>
+        <div class="subly-four-card-grid">
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-blue">📂</div>
+            <h3>All in One Place</h3>
+            <p>One unified dashboard for household cards, subscription trials, and recurring senior care telemetry.</p>
+            <div class="feature-card-bullet">• Real-time price tracking</div>
+            <div class="feature-card-bullet">• Instant renewal calendar</div>
+          </div>
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-amber">⏰</div>
+            <h3>Know Before Renewal</h3>
+            <p>Alexa speaks up 3 days before deceptive trial traps convert to paid annual renewals.</p>
+            <div class="feature-card-bullet">• Auto-renew cancellation reminders</div>
+            <div class="feature-card-bullet">• 1-click voice deactivation</div>
+          </div>
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-cyan">✨</div>
+            <h3>AI-Powered Savings</h3>
+            <p>Autonomous savings agent powered by AWS Bedrock Claude 3 discovers forgotten subscriptions and pauses waste.</p>
+            <div class="feature-card-bullet">• $81.98 identified at risk</div>
+            <div class="feature-card-bullet">• Annual billing switch savings</div>
+          </div>
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-rose">🛡️</div>
+            <h3>Elder Imposter Shield</h3>
+            <p>Instant SMS heuristic scanner intercepts USPS smishing, grandparent bail scams, and bank phishing.</p>
+            <div class="feature-card-bullet">• Domain spoofing detection</div>
+            <div class="feature-card-bullet">• 3-step senior safety playbook</div>
+          </div>
+        </div>
+      </section>
+
       <!-- SECTION 5: LIVE MCP STREAMABLE HTTP INSPECTOR (LIGHT THEME) -->
       <section class="mcp-protocol-deck" id="mcp-inspector">
         <div class="mcp-deck-top">
@@ -2587,27 +2591,19 @@
       currentActiveView = viewName;
       const landingView = document.getElementById("landingView");
       const dashboardView = document.getElementById("dashboardView");
-      const tabLanding = document.getElementById("tabNavLanding");
-      const tabDashboard = document.getElementById("tabNavDashboard");
-      const toggleBtnIcon = document.getElementById("btnViewToggleIcon");
-      const toggleBtnText = document.getElementById("btnViewToggleText");
 
       if (viewName === 'landing') {
         landingView.classList.add("active");
         dashboardView.classList.remove("active");
-        tabLanding.classList.add("active");
-        tabDashboard.classList.remove("active");
-        toggleBtnIcon.textContent = "📱";
-        toggleBtnText.textContent = "App Dashboard";
+        document.querySelectorAll(".nav-tab-link").forEach(l => l.classList.remove("active"));
         window.location.hash = "#landing";
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         dashboardView.classList.add("active");
         landingView.classList.remove("active");
-        tabDashboard.classList.add("active");
-        tabLanding.classList.remove("active");
-        toggleBtnIcon.textContent = "🌐";
-        toggleBtnText.textContent = "Landing Page";
+        document.querySelectorAll(".nav-tab-link").forEach(l => l.classList.remove("active"));
+        const voiceLink = document.getElementById("navLinkVoice");
+        if (voiceLink) voiceLink.classList.add("active");
         window.location.hash = "#dashboard";
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
@@ -2621,10 +2617,26 @@
       }
     }
 
-    function ensureDashboardView() {
+    // Smooth In-Page Navigation for Navbar Tabs
+    function navigateToSection(sectionId, linkEl) {
       if (currentActiveView !== 'dashboard') {
-        switchView('dashboard');
+        currentActiveView = 'dashboard';
+        const landingView = document.getElementById("landingView");
+        const dashboardView = document.getElementById("dashboardView");
+        dashboardView.classList.add("active");
+        landingView.classList.remove("active");
+        window.location.hash = "#dashboard";
       }
+      document.querySelectorAll(".nav-tab-link").forEach(l => l.classList.remove("active"));
+      if (linkEl) linkEl.classList.add("active");
+
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const topOffset = el.getBoundingClientRect().top + window.pageYOffset - 80;
+          window.scrollTo({ top: topOffset, behavior: "smooth" });
+        }
+      }, 50);
     }
 
     // Toggle Audio
@@ -3091,6 +3103,32 @@
         consoleBox.textContent += `\n[Stream Error: ${err.message}]`;
       }
     }
+
+    // Navbar Segmented Pill Dock Active Scroll Spy
+    window.addEventListener("scroll", () => {
+      if (currentActiveView !== 'dashboard') return;
+      const scrollPos = window.scrollY + 160;
+      const sections = [
+        { id: "alexa-hub", linkId: "navLinkVoice" },
+        { id: "subtrack-section", linkId: "navLinkSubTrack" },
+        { id: "scamshield-section", linkId: "navLinkScam" },
+        { id: "features-deck", linkId: "navLinkFeatures" },
+        { id: "mcp-inspector", linkId: "navLinkMcp" }
+      ];
+
+      sections.forEach(sec => {
+        const el = document.getElementById(sec.id);
+        const link = document.getElementById(sec.linkId);
+        if (el && link) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            document.querySelectorAll(".nav-tab-link").forEach(l => l.classList.remove("active"));
+            link.classList.add("active");
+          }
+        }
+      });
+    });
 
     // Initial Load & Hash Route Detection
     window.addEventListener("DOMContentLoaded", () => {
