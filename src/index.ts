@@ -287,84 +287,146 @@ app.get("/api/bedrock/status", (_req: Request, res: Response) => {
 // Converts user voice / text prompt into simulated Alexa+ agent tool invocation over MCP
 app.post("/api/simulate/voice-prompt", async (req: Request, res: Response) => {
   const { prompt } = req.body;
-  if (!prompt) {
+  if (!prompt || typeof prompt !== "string") {
     res.status(400).json({ error: "Missing prompt parameter" });
     return;
   }
 
-  const lower = prompt.toLowerCase();
+  const trimmed = prompt.trim();
+  const lower = trimmed.toLowerCase();
   const startTime = Date.now();
 
   try {
     let toolInvoked = "";
     let toolArgs: any = {};
     let toolResult: any = null;
+    let spokenResponse = "";
 
+    // 1. GREETINGS & INTRODUCTORY QUESTIONS
     if (
-      lower.includes("scam") ||
-      lower.includes("phish") ||
-      lower.includes("suspicious") ||
-      lower.includes("check text") ||
-      lower.includes("check message") ||
-      lower.includes("is this legitimate") ||
-      lower.includes("wire") ||
-      lower.includes("gift card")
+      /^(hi|hello|hey|greetings|help|who are you|what can you do|what is this)\b/i.test(lower) ||
+      lower === "hello alexa" ||
+      lower === "hey alexa" ||
+      lower === "help"
     ) {
-      toolInvoked = "analyze_suspicious_message";
-      let cleanText = prompt
-        .replace(/^alexa,?\s*/i, "")
-        .replace(/^check (if )?(this )?(text|message)( is a scam)?:?/i, "")
-        .replace(/^is (this )?(text|message) a scam:?/i, "")
-        .trim();
-      if (!cleanText || cleanText.length < 5) {
-        cleanText = prompt;
+      toolInvoked = "assistant_guidance";
+      toolArgs = { query: trimmed };
+      spokenResponse =
+        "Hello! I am your SubTrack & ElderGuard family security assistant. Ask me: 'Which subscriptions renew this week?', 'List my active subscriptions', or paste any suspicious text message to scan for scams.";
+      toolResult = {
+        message: spokenResponse,
+        alexaVoiceSummary: spokenResponse,
+      };
+    }
+
+    // 2. SPECIFIC SUBSCRIPTION CANCELLATION
+    else if (
+      /(\bcancel\b|\bstop renewal\b|\bblock charge\b|\bunsubscribe\b|\bprevent renewal\b)/i.test(lower) &&
+      !/(remind|which subscription|upcoming|alert|list)/i.test(lower)
+    ) {
+      toolInvoked = "cancel_subscription_alert";
+      const allSubs = getAllSubscriptions();
+
+      // Find best match in database
+      let matched = allSubs.find(
+        (s) =>
+          lower.includes(s.name.toLowerCase()) ||
+          lower.includes(s.id.toLowerCase()) ||
+          (s.category === "BRAIN_TRAINING" && (lower.includes("braingym") || lower.includes("memory"))) ||
+          (s.category === "FAMILY" && (lower.includes("ancestry") || lower.includes("heritage"))) ||
+          (s.category === "HEALTH" && (lower.includes("aarp") || lower.includes("pill"))) ||
+          (s.category === "NEWS_PUZZLES" && (lower.includes("crossword") || lower.includes("magazinia"))) ||
+          (s.category === "ENTERTAINMENT" && (lower.includes("stream") || lower.includes("gold 4k") || lower.includes("fitness")))
+      );
+
+      // If user said just "cancel my trial" or "cancel subscription" without a name, pick the first urgent expiring trial
+      if (!matched) {
+        matched = allSubs.find((s) => s.status === "EXPIRING_TRIAL") || allSubs[0];
       }
-      toolArgs = { messageText: cleanText };
-      toolResult = await analyzeSuspiciousMessage(cleanText);
-    } else if (
-      lower.includes("remind me which subscription") ||
-      lower.includes("cancel before getting charged") ||
-      lower.includes("which subscription i have to cancel") ||
-      lower.includes("remind me what to cancel") ||
-      lower.includes("what to cancel before") ||
-      lower.includes("subscriptions to cancel")
+
+      toolArgs = { subscriptionId: matched.id };
+      toolResult = cancelSubscriptionAlert(matched.id);
+      spokenResponse = toolResult.alexaVoiceConfirmation;
+    }
+
+    // 3. CANCELLATION REMINDERS & EXPIRING FREE TRIALS
+    else if (
+      /(remind me which subscription|cancel before getting charged|which subscription.*cancel|what to cancel|subscriptions to cancel|expir.*trial|trial.*expir|renew.*this week|renew.*soon|which subscriptions renew|upcoming.*charge|avoid auto-renew)/i.test(
+        lower
+      )
     ) {
-      // Feature 2: Proactive cancellation reminders before getting charged
       toolInvoked = "get_cancellation_reminders";
       toolArgs = { timeframeDays: 7 };
       toolResult = getCancellationReminders(7);
-    } else if (
-      lower.includes("tell me which active subscriptions") ||
-      lower.includes("which active subscriptions do i have") ||
-      lower.includes("which active subscriptions i have") ||
-      lower.includes("list active subscriptions") ||
-      lower.includes("list all active subscriptions") ||
-      lower.includes("what active subscriptions do i have") ||
-      lower.includes("list down my subscriptions") ||
-      lower.includes("list my subscriptions")
+      spokenResponse = toolResult.alexaVoiceSummary;
+    }
+
+    // 4. LIST ALL ACTIVE SUBSCRIPTIONS ITEMIZATION
+    else if (
+      /(list.*active subscription|which active subscription|what active subscription|list all.*subscription|list down.*subscription|show.*subscription|itemized subscription|what are my subscription|what am i paying for|how many subscriptions)/i.test(
+        lower
+      )
     ) {
-      // Feature 1: List active subscriptions itemized
       toolInvoked = "list_active_subscriptions";
       toolArgs = {};
       toolResult = listActiveSubscriptions();
-    } else if (
-      lower.includes("cancel") ||
-      lower.includes("stop renewal") ||
-      lower.includes("block charge")
+      spokenResponse = toolResult.alexaVoiceSummary;
+    }
+
+    // 5. MONTHLY SPEND / FINANCIAL OVERVIEW
+    else if (
+      /(how much.*spend|monthly spend|total spend|total bill|how much am i paying|subscription cost|household spend)/i.test(
+        lower
+      )
     ) {
-      toolInvoked = "cancel_subscription_alert";
-      let targetSub = "BrainGym Memory Pro";
-      if (lower.includes("ancestry")) targetSub = "Ancestry Heritage Tree Weekly Trial";
-      if (lower.includes("braingym") || lower.includes("memory")) targetSub = "BrainGym Memory Pro";
-      if (lower.includes("crossword")) targetSub = "Magazinia Large Print Crosswords";
-      if (lower.includes("aarp")) targetSub = "AARP Health Alert Plus";
-      toolArgs = { subscriptionId: targetSub };
-      toolResult = cancelSubscriptionAlert(targetSub);
-    } else {
-      // General Subscriptions overview
       toolInvoked = "get_active_subscriptions";
-      toolArgs = { timeframeDays: 7 };
-      toolResult = getActiveSubscriptions(7);
+      toolArgs = { timeframeDays: 30 };
+      toolResult = getActiveSubscriptions(30);
+      spokenResponse = `Your total household subscription spend is $${toolResult.totalMonthlySpend.toFixed(
+        2
+      )} per month across ${toolResult.activeSubscriptionsCount} active services. You have ${
+        toolResult.expiringTrialsCount
+      } free trial subscriptions scheduled to renew, with potential monthly savings of $${toolResult.potentialMonthlySavings.toFixed(
+        2
+      )}.`;
+    }
+
+    // 6. SCAM / PHISHING / SUSPICIOUS TEXT / RAW MESSAGE ANALYSIS
+    else {
+      // By default, if the user entered any message, phone text, or email, analyze it!
+      toolInvoked = "analyze_suspicious_message";
+
+      let cleanText = trimmed
+        .replace(/^alexa,?\s*/i, "")
+        .replace(/^(can you )?(please )?(check|scan|analyze|verify|test)( if)?( this)?( text| message| email)?:?/i, "")
+        .replace(/^is (this )?(text|message|email) (a scam|safe|legitimate|real):?/i, "")
+        .trim();
+
+      // If cleanText was completely emptied (e.g. user literally asked "Is this message safe?"), prompt them
+      if (!cleanText || cleanText.length < 5) {
+        if (/(is this message safe|is this safe|check this message|scan text)/i.test(lower)) {
+          spokenResponse =
+            "Please paste or dictate the text message or email, and I will scan it with Amazon Bedrock Claude 3 for phishing links, urgency pressure, and fraudulent wire requests.";
+          toolResult = {
+            threatRiskScore: 0,
+            verdict: "LIKELY_SAFE",
+            alexaVoiceSummary: spokenResponse,
+            signals: [],
+            actionRecommendations: [
+              "Paste the suspicious message content to test.",
+              "Never send gift card codes or wire transfers to unsolicited messages.",
+            ],
+          };
+        } else {
+          cleanText = trimmed;
+        }
+      }
+
+      if (!spokenResponse) {
+        toolArgs = { messageText: cleanText };
+        toolResult = await analyzeSuspiciousMessage(cleanText);
+        spokenResponse = toolResult.alexaVoiceSummary;
+      }
     }
 
     const elapsed = Date.now() - startTime;
@@ -374,12 +436,12 @@ app.post("/api/simulate/voice-prompt", async (req: Request, res: Response) => {
       mcpToolInvoked: toolInvoked,
       mcpToolArguments: toolArgs,
       mcpToolResult: toolResult,
-      alexaSpokenResponse:
-        toolResult.alexaVoiceSummary || toolResult.alexaVoiceConfirmation,
+      alexaSpokenResponse: spokenResponse,
       executionLatencyMs: elapsed,
       protocol: "Streamable HTTP (MCP 2025-11-25+)",
     });
   } catch (err: any) {
+    console.error("[Voice Prompt Simulator Error]", err);
     res.status(500).json({ error: err?.message || "Failed to simulate Alexa prompt" });
   }
 });
