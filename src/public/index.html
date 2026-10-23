@@ -3,36 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SubTrack & ElderGuard MCP Server | Alexa+ Interactive Simulator</title>
+  <title>ElderGuard & SubTrack | Alexa+ Family Security & Subscription Shield</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #0a0e17;
-      --bg-secondary: #111827;
-      --bg-card: rgba(17, 24, 39, 0.75);
-      --bg-card-hover: rgba(26, 36, 56, 0.85);
-      --border-color: rgba(255, 255, 255, 0.08);
-      --border-active: rgba(0, 202, 255, 0.4);
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --text-dim: #6b7280;
+      --bg-dark: #070a12;
+      --bg-surface: #0e1424;
+      --bg-card: rgba(18, 26, 46, 0.75);
+      --bg-card-hover: rgba(26, 38, 66, 0.85);
+      --bg-input: #080c16;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: #00caff;
+      --text-primary: #ffffff;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
       --alexa-cyan: #00caff;
-      --alexa-blue: #0077ff;
-      --alexa-glow: rgba(0, 202, 255, 0.35);
-      --accent-danger: #ef4444;
-      --accent-danger-glow: rgba(239, 68, 68, 0.25);
+      --alexa-blue: #0066ff;
+      --alexa-glow: rgba(0, 202, 255, 0.45);
+      --accent-danger: #f43f5e;
+      --accent-danger-glow: rgba(244, 63, 94, 0.3);
       --accent-warning: #f59e0b;
-      --accent-warning-glow: rgba(245, 158, 11, 0.2);
+      --accent-warning-glow: rgba(245, 158, 11, 0.25);
       --accent-success: #10b981;
-      --accent-success-glow: rgba(16, 185, 129, 0.2);
-      --accent-purple: #8b5cf6;
-      --font-main: 'Outfit', sans-serif;
-      --font-code: 'JetBrains Mono', monospace;
+      --accent-success-glow: rgba(16, 185, 129, 0.25);
+      --accent-purple: #a855f7;
       --radius-sm: 8px;
       --radius-md: 14px;
       --radius-lg: 20px;
+      --radius-xl: 28px;
+      --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-subtle);
+      --shadow-glow: 0 0 25px var(--alexa-glow);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * {
@@ -42,465 +46,668 @@
     }
 
     body {
-      background-color: var(--bg-primary);
+      background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(0, 202, 255, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.07) 0%, transparent 40%);
-      color: var(--text-main);
-      font-family: var(--font-main);
+        radial-gradient(circle at 10% 15%, rgba(0, 102, 255, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 90% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(0, 202, 255, 0.08) 0%, transparent 55%);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Top Navigation */
+    /* Ambient Header */
     header {
-      background: rgba(10, 14, 23, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
+      background: rgba(7, 10, 18, 0.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
       position: sticky;
       top: 0;
       z-index: 100;
-      padding: 16px 32px;
+      padding: 14px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .brand-section {
+    .brand-group {
       display: flex;
       align-items: center;
       gap: 14px;
     }
 
-    .brand-icon {
+    .brand-logo-cube {
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #00caff 0%, #0051ff 100%);
+      background: linear-gradient(135deg, #00caff 0%, #0052cc 60%, #8b5cf6 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       box-shadow: 0 0 20px var(--alexa-glow);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .brand-title {
-      font-size: 20px;
-      font-weight: 700;
+    .brand-text h1 {
+      font-size: 19px;
+      font-weight: 800;
       letter-spacing: -0.5px;
       background: linear-gradient(90deg, #ffffff 40%, var(--alexa-cyan) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .brand-sub {
+    .brand-badge-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #00caff;
+      background: rgba(0, 202, 255, 0.12);
+      border: 1px solid rgba(0, 202, 255, 0.3);
+      padding: 2px 7px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .brand-text p {
       font-size: 12px;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-weight: 500;
+      margin-top: 1px;
     }
 
-    .header-badges {
+    .header-controls {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .badge {
-      display: inline-flex;
+    .status-pill {
+      display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
+      gap: 8px;
+      padding: 6px 14px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 600;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
     }
 
-    .badge-streamable {
-      background: rgba(0, 202, 255, 0.1);
-      border-color: rgba(0, 202, 255, 0.3);
-      color: var(--alexa-cyan);
-    }
-
-    .badge-pulse-dot {
+    .status-dot-active {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: var(--alexa-cyan);
       box-shadow: 0 0 10px var(--alexa-cyan);
-      animation: pulse 1.8s infinite;
+      animation: pulseGlow 1.8s infinite ease-in-out;
     }
 
-    @keyframes pulse {
+    @keyframes pulseGlow {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
+
+    .btn-audio-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+
+    .btn-audio-circle.active {
+      background: rgba(0, 202, 255, 0.15);
+      border-color: var(--alexa-cyan);
+      color: var(--alexa-cyan);
+      box-shadow: 0 0 12px rgba(0, 202, 255, 0.3);
+    }
+
+    /* Urgent Alert Strip */
+    .urgent-banner {
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.15) 0%, rgba(244, 63, 94, 0.15) 100%);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 10px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .urgent-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .urgent-btn {
+      background: rgba(245, 158, 11, 0.25);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+      color: #fde68a;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .urgent-btn:hover {
+      background: #f59e0b;
+      color: #000;
     }
 
     /* Main Container */
     main {
       flex: 1;
-      max-width: 1440px;
+      max-width: 1480px;
       width: 100%;
       margin: 0 auto;
-      padding: 32px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 28px;
+      padding: 24px 28px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
-    @media (min-width: 1024px) {
-      main {
-        grid-template-columns: 1.15fr 0.85fr;
-      }
-    }
-
-    /* Common Card Styles */
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    /* HERO: Alexa Echo Show 15 Smart Display Simulation Console */
+    .echo-station {
+      background: radial-gradient(circle at 50% 10%, rgba(0, 202, 255, 0.14) 0%, rgba(14, 20, 36, 0.85) 60%);
+      border: 1px solid rgba(0, 202, 255, 0.25);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 202, 255, 0.1);
       position: relative;
       overflow: hidden;
     }
 
-    .card::before {
+    .echo-station::after {
       content: "";
       position: absolute;
       top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0, 202, 255, 0.4), transparent);
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--alexa-cyan), transparent);
     }
 
-    .card-header {
+    .echo-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
     }
 
-    .card-title {
-      font-size: 18px;
-      font-weight: 700;
+    .device-badge {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 600;
     }
 
-    /* Section 1: Alexa Voice Simulator Interactive Hub */
-    .voice-hub-hero {
+    .echo-pulse-orb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--alexa-cyan), #0066ff, #a855f7, var(--alexa-cyan));
+      animation: rotateOrb 3s linear infinite;
+      box-shadow: 0 0 15px var(--alexa-cyan);
+    }
+
+    @keyframes rotateOrb {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Voice Interaction Row */
+    .echo-interaction-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .echo-interaction-grid {
+        grid-template-columns: auto 1fr;
+      }
+    }
+
+    /* Alexa Glowing Ring Device */
+    .alexa-device-unit {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 30px 20px;
-      background: radial-gradient(circle at 50% 30%, rgba(0, 202, 255, 0.12) 0%, transparent 70%);
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(0, 202, 255, 0.15);
-      margin-bottom: 24px;
-      position: relative;
+      padding: 10px;
     }
 
-    /* Alexa Glowing Ring */
-    .alexa-ring-wrapper {
-      position: relative;
+    .alexa-ring-stage {
       width: 120px;
       height: 120px;
-      margin-bottom: 18px;
+      position: relative;
       cursor: pointer;
+      margin-bottom: 12px;
     }
 
     .alexa-ring-outer {
       position: absolute;
       inset: 0;
       border-radius: 50%;
-      background: conic-gradient(from 0deg, #00caff, #0051ff, #8b5cf6, #00caff);
-      animation: rotateRing 6s linear infinite;
+      background: conic-gradient(from 0deg, #00caff, #0066ff, #9333ea, #00caff);
+      animation: ringSpin 5s linear infinite;
       box-shadow: 0 0 35px var(--alexa-glow);
+      transition: all 0.3s;
     }
 
     .alexa-ring-inner {
       position: absolute;
-      inset: 8px;
+      inset: 7px;
       border-radius: 50%;
-      background: var(--bg-primary);
+      background: #090e18;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 38px;
+      font-size: 36px;
+      color: #fff;
+      transition: all 0.3s;
     }
 
-    .alexa-ring-wrapper.speaking .alexa-ring-outer {
-      animation: rotateRing 1.5s linear infinite;
-      box-shadow: 0 0 50px rgba(0, 202, 255, 0.8);
+    .alexa-ring-stage.speaking .alexa-ring-outer {
+      animation: ringSpin 1.2s linear infinite;
+      box-shadow: 0 0 55px rgba(0, 202, 255, 0.9);
+      filter: brightness(1.2);
     }
 
-    @keyframes rotateRing {
+    .alexa-ring-stage.speaking .alexa-ring-inner {
+      background: #0d1527;
+    }
+
+    @keyframes ringSpin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
 
-    .alexa-status-text {
-      font-size: 13px;
-      color: var(--alexa-cyan);
-      font-weight: 600;
+    /* Sound Waveform Visualizer */
+    .sound-wave-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 18px;
+      margin-top: 6px;
+    }
+
+    .wave-bar {
+      width: 3px;
+      height: 4px;
+      background: var(--alexa-cyan);
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }
+
+    .speaking .wave-bar:nth-child(1) { animation: wave 0.8s infinite 0.1s; }
+    .speaking .wave-bar:nth-child(2) { animation: wave 0.8s infinite 0.3s; }
+    .speaking .wave-bar:nth-child(3) { animation: wave 0.8s infinite 0.2s; }
+    .speaking .wave-bar:nth-child(4) { animation: wave 0.8s infinite 0.5s; }
+    .speaking .wave-bar:nth-child(5) { animation: wave 0.8s infinite 0.15s; }
+    .speaking .wave-bar:nth-child(6) { animation: wave 0.8s infinite 0.4s; }
+    .speaking .wave-bar:nth-child(7) { animation: wave 0.8s infinite 0.25s; }
+
+    @keyframes wave {
+      0%, 100% { height: 4px; }
+      50% { height: 18px; }
+    }
+
+    .station-state-label {
+      font-size: 12px;
+      font-weight: 700;
       letter-spacing: 1px;
+      color: var(--alexa-cyan);
       text-transform: uppercase;
-      margin-bottom: 6px;
     }
 
-    .alexa-sub-text {
-      font-size: 14px;
-      color: var(--text-muted);
-      max-width: 460px;
+    /* Spoken Alexa Dialogue Card */
+    .dialogue-card {
+      background: rgba(8, 12, 22, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 22px 26px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
-    /* Preset Voice Prompt Buttons */
-    .preset-label {
+    .dialogue-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 10px;
+    }
+
+    .dialogue-speaker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 13px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .tool-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: rgba(0, 202, 255, 0.1);
+      color: var(--alexa-cyan);
+      border: 1px solid rgba(0, 202, 255, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .dialogue-bubble {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #f8fafc;
+      font-weight: 400;
+      min-height: 52px;
+    }
+
+    .dialogue-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .meta-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .meta-tag strong {
+      color: #cbd5e1;
       font-weight: 600;
+    }
+
+    /* Preset Voice Prompt Chips */
+    .prompt-chips-section {
+      margin-top: 18px;
+    }
+
+    .chips-label {
+      font-size: 12px;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 12px;
+      letter-spacing: 0.6px;
+      margin-bottom: 10px;
       display: block;
     }
 
-    .prompt-grid {
+    .chips-wrap {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 10px;
-      margin-bottom: 22px;
     }
 
-    @media (min-width: 640px) {
-      .prompt-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .btn-prompt {
+    .voice-chip {
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-md);
       padding: 12px 14px;
-      color: var(--text-main);
-      font-family: var(--font-main);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
       font-size: 13px;
-      text-align: left;
       cursor: pointer;
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: left;
       line-height: 1.4;
     }
 
-    .btn-prompt:hover {
-      background: rgba(0, 202, 255, 0.08);
-      border-color: var(--border-active);
+    .voice-chip:hover {
+      background: rgba(0, 202, 255, 0.09);
+      border-color: rgba(0, 202, 255, 0.4);
       transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     }
 
-    .btn-prompt-icon {
-      font-size: 16px;
+    .voice-chip-icon {
+      font-size: 18px;
       flex-shrink: 0;
       margin-top: 1px;
     }
 
-    /* Voice Input Box */
-    .voice-input-row {
+    .voice-chip-title {
+      font-weight: 700;
+      color: #fff;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .voice-chip-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Custom Input Bar */
+    .custom-query-bar {
       display: flex;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-top: 16px;
     }
 
-    .input-speech {
+    .query-input {
       flex: 1;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      padding: 14px 18px;
+      background: #080c16;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
       color: #fff;
-      font-family: var(--font-main);
+      font-family: var(--font-sans);
       font-size: 14px;
       outline: none;
-      transition: border 0.2s;
+      transition: all 0.2s;
     }
 
-    .input-speech:focus {
+    .query-input:focus {
       border-color: var(--alexa-cyan);
-      box-shadow: 0 0 12px rgba(0, 202, 255, 0.2);
+      box-shadow: 0 0 15px rgba(0, 202, 255, 0.25);
     }
 
-    .btn-action-primary {
+    .btn-invoke {
       background: linear-gradient(135deg, var(--alexa-cyan) 0%, var(--alexa-blue) 100%);
       color: #fff;
       border: none;
-      border-radius: var(--radius-sm);
+      border-radius: var(--radius-md);
       padding: 0 24px;
-      font-family: var(--font-main);
-      font-weight: 600;
+      font-family: var(--font-sans);
+      font-weight: 700;
       font-size: 14px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 15px rgba(0, 119, 255, 0.35);
+      transition: all 0.2s;
+      box-shadow: 0 4px 18px rgba(0, 102, 255, 0.4);
     }
 
-    .btn-action-primary:hover {
+    .btn-invoke:hover {
       filter: brightness(1.15);
       transform: translateY(-1px);
     }
 
-    .btn-audio-toggle {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      color: var(--text-main);
-      padding: 0 16px;
-      cursor: pointer;
-      font-size: 18px;
+    /* TWO-COLUMN CONSUMER APPLICATION GRID */
+    .app-main-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    @media (min-width: 1080px) {
+      .app-main-grid {
+        grid-template-columns: 1.08fr 0.92fr;
+      }
+    }
+
+    /* Card Panels */
+    .panel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+
+    .panel-title-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-icon-wrap {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.2s;
+      font-size: 20px;
     }
 
-    .btn-audio-toggle.active {
-      border-color: var(--alexa-cyan);
+    .icon-subtrack {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+    }
+
+    .icon-scamshield {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.2) 0%, rgba(225, 29, 72, 0.3) 100%);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fb7185;
+    }
+
+    .icon-mcp {
+      background: linear-gradient(135deg, rgba(0, 202, 255, 0.2) 0%, rgba(0, 102, 255, 0.3) 100%);
+      border: 1px solid rgba(0, 202, 255, 0.4);
       color: var(--alexa-cyan);
-      background: rgba(0, 202, 255, 0.1);
     }
 
-    /* Live Alexa Spoken Response Box */
-    .spoken-response-container {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(0, 202, 255, 0.25);
-      border-radius: var(--radius-md);
-      padding: 18px;
-      position: relative;
-      margin-top: 14px;
-    }
-
-    .spoken-tag {
-      font-size: 11px;
+    .panel-title {
+      font-size: 18px;
       font-weight: 700;
-      color: var(--alexa-cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
+      color: #fff;
     }
 
-    .spoken-content {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #e5e7eb;
-    }
-
-    .meta-indicators {
-      display: flex;
-      gap: 16px;
-      margin-top: 12px;
+    .panel-subtitle {
       font-size: 12px;
-      color: var(--text-muted);
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 10px;
+      color: var(--text-secondary);
     }
 
-    .meta-item {
+    /* MODULE A: SUBTRACK SUBSCRIPTION MANAGER */
+    .stat-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat-metric-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
       display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #fff;
+    }
+
+    .stat-value.savings {
+      color: var(--accent-success);
+    }
+
+    .stat-value.danger {
+      color: var(--accent-danger);
+    }
+
+    /* Subscriptions List */
+    .sub-filter-row {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 5px;
     }
 
-    .meta-val {
-      color: var(--text-main);
-      font-weight: 600;
-      font-family: var(--font-code);
+    .sub-count-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
     }
 
-    /* Right Column: Live Streamable HTTP Inspector & Subscriptions */
-    .tabs-nav {
-      display: flex;
-      gap: 8px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 12px;
-      margin-bottom: 18px;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
+    .btn-reset-seed {
+      background: none;
+      border: 1px solid var(--border-subtle);
       color: var(--text-muted);
-      font-family: var(--font-main);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: var(--radius-sm);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
       cursor: pointer;
       transition: all 0.2s;
     }
 
-    .tab-btn.active {
+    .btn-reset-seed:hover {
+      border-color: #fff;
       color: #fff;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-color);
     }
 
-    .tab-panel {
-      display: none;
-    }
-
-    .tab-panel.active {
-      display: block;
-    }
-
-    /* Subscriptions View */
-    .spend-summary-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .spend-box {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-    }
-
-    .spend-title {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .spend-amount {
-      font-size: 24px;
-      font-weight: 800;
-      font-family: var(--font-code);
-    }
-
-    .spend-amount.savings {
-      color: var(--accent-success);
-    }
-
-    .subscription-list {
+    .subscriptions-scroll-area {
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -509,45 +716,64 @@
       padding-right: 4px;
     }
 
-    .sub-item-card {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      padding: 14px;
+    .sub-card-row {
+      background: rgba(10, 15, 28, 0.6);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      transition: border 0.2s;
+      gap: 10px;
+      transition: all 0.2s;
     }
 
-    .sub-item-card.is-expiring {
-      border-color: rgba(245, 158, 11, 0.4);
-      background: rgba(245, 158, 11, 0.04);
+    .sub-card-row.trial-urgent {
+      background: rgba(245, 158, 11, 0.05);
+      border-color: rgba(245, 158, 11, 0.35);
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
     }
 
-    .sub-item-card.is-blocked {
-      border-color: rgba(16, 185, 129, 0.4);
-      background: rgba(16, 185, 129, 0.04);
+    .sub-card-row.blocked {
+      background: rgba(16, 185, 129, 0.05);
+      border-color: rgba(16, 185, 129, 0.35);
     }
 
-    .sub-header-row {
+    .sub-card-main {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
     }
 
-    .sub-name {
-      font-size: 14px;
-      font-weight: 700;
+    .sub-name-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .sub-price {
-      font-family: var(--font-code);
-      font-weight: 700;
-      font-size: 14px;
+    .sub-category-icon {
+      font-size: 20px;
     }
 
-    .sub-meta-row {
+    .sub-name-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sub-provider-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .sub-price-tag {
+      font-size: 15px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: #fff;
+    }
+
+    .sub-footer-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -555,151 +781,273 @@
       color: var(--text-muted);
     }
 
-    .btn-cancel-sub {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.35);
-      color: #fca5a5;
+    .sub-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
       border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-family: var(--font-main);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-cancel-sub:hover {
-      background: rgba(239, 68, 68, 0.3);
-      color: #fff;
-    }
-
-    .badge-sub-status {
-      padding: 2px 8px;
-      border-radius: 10px;
       font-size: 11px;
       font-weight: 700;
-      text-transform: uppercase;
     }
 
-    .status-expiring {
+    .badge-trial {
       background: rgba(245, 158, 11, 0.2);
       color: #fbbf24;
       border: 1px solid rgba(245, 158, 11, 0.4);
     }
 
-    .status-active {
+    .badge-active {
       background: rgba(16, 185, 129, 0.15);
       color: #34d399;
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
 
-    .status-blocked {
-      background: rgba(59, 130, 246, 0.2);
-      color: #60a5fa;
-      border: 1px solid rgba(59, 130, 246, 0.4);
+    .badge-blocked {
+      background: rgba(0, 202, 255, 0.15);
+      color: var(--alexa-cyan);
+      border: 1px solid rgba(0, 202, 255, 0.35);
     }
 
-    /* Streamable HTTP Inspector */
-    .inspector-controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
+    .btn-block-action {
+      background: rgba(244, 63, 94, 0.18);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .select-mcp-method {
-      flex: 1;
+    .btn-block-action:hover {
+      background: #f43f5e;
+      color: #fff;
+    }
+
+    /* MODULE B: SCAMSHIELD PHISHING DETECTOR */
+    .scam-simulator-box {
       background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .scam-preset-select-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .select-sms {
+      flex: 1;
+      background: #080c16;
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
-      color: var(--text-main);
-      padding: 10px 14px;
-      font-family: var(--font-code);
-      font-size: 12px;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      padding: 10px 12px;
       outline: none;
     }
 
-    .json-console {
-      background: #06090e;
-      border: 1px solid var(--border-color);
+    .btn-scan-now {
+      background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+      border: none;
       border-radius: var(--radius-sm);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 0 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+    }
+
+    .btn-scan-now:hover {
+      filter: brightness(1.15);
+    }
+
+    /* Threat Gauge Widget */
+    .threat-gauge-card {
+      background: rgba(8, 12, 22, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .gauge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gauge-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .gauge-score-value {
+      font-size: 20px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+    }
+
+    .progress-bar-track {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 8px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .deception-badges-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .deception-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+
+    .action-checklist-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .checklist-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .checklist-item {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+
+    /* BOTTOM DRAWER: LIVE MCP STREAMABLE HTTP INSPECTOR (FOR HACKATHON JUDGES) */
+    .mcp-debugger-drawer {
+      background: #05080e;
+      border: 1px solid rgba(0, 202, 255, 0.2);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .drawer-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .drawer-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .inspector-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .method-select {
+      background: #0e1424;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 8px 12px;
+      outline: none;
+    }
+
+    .btn-send-mcp {
+      background: linear-gradient(135deg, var(--alexa-cyan) 0%, var(--alexa-blue) 100%);
+      border: none;
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 0 16px;
+      cursor: pointer;
+    }
+
+    .terminal-console {
+      background: #020408;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
       padding: 16px;
-      font-family: var(--font-code);
+      font-family: var(--font-mono);
       font-size: 12px;
       line-height: 1.5;
       color: #38bdf8;
-      max-height: 380px;
-      overflow: auto;
+      max-height: 280px;
+      overflow-y: auto;
       white-space: pre-wrap;
       word-break: break-all;
     }
 
-    /* Threat Meter */
-    .risk-meter-container {
-      margin-top: 16px;
-      padding: 16px;
-      border-radius: var(--radius-sm);
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-color);
-    }
-
-    .meter-label-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .meter-bar-outer {
-      height: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .meter-bar-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: 6px;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .signals-badge-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-    }
-
-    .signal-pill {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-weight: 600;
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #fca5a5;
-    }
-
     /* Footer */
     footer {
-      border-top: 1px solid var(--border-color);
-      padding: 20px 32px;
+      border-top: 1px solid var(--border-subtle);
+      padding: 20px 28px;
+      background: rgba(7, 10, 18, 0.7);
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
-      color: var(--text-dim);
-      background: rgba(10, 14, 23, 0.5);
+      color: var(--text-muted);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .footer-links {
       display: flex;
-      gap: 16px;
+      gap: 18px;
     }
 
     .footer-links a {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -711,227 +1059,340 @@
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
+  <!-- Ambient Header -->
   <header>
-    <div class="brand-section">
-      <div class="brand-icon">🛡️</div>
-      <div>
-        <div class="brand-title">SubTrack & ElderGuard MCP Server</div>
-        <div class="brand-sub">Alexa+ Track • Streamable HTTP (spec 2025-11-25) • Amazon Bedrock</div>
+    <div class="brand-group">
+      <div class="brand-logo-cube">🛡️</div>
+      <div class="brand-text">
+        <h1>
+          ElderGuard & SubTrack
+          <span class="brand-badge-tag">Alexa+ Agent Skill</span>
+        </h1>
+        <p>Autonomous Senior Phishing Protection & Hidden Subscription Defense over Streamable HTTP</p>
       </div>
     </div>
-    <div class="header-badges">
-      <div class="badge badge-streamable">
-        <div class="badge-pulse-dot"></div>
-        <span>POST /mcp Active</span>
+
+    <div class="header-controls">
+      <div class="status-pill">
+        <div class="status-dot-active"></div>
+        <span>POST /mcp (Spec 2025-11-25)</span>
       </div>
-      <div class="badge" id="bedrockBadge">
+      <div class="status-pill" id="bedrockPill">
         <span>⚡ Bedrock Claude 3 Ready</span>
       </div>
+      <button class="btn-audio-circle active" id="audioToggleBtn" title="Toggle Alexa Spoken Audio Feedback">
+        🔊
+      </button>
     </div>
   </header>
 
-  <!-- Main Grid Layout -->
+  <!-- Urgent Trial Warning Strip -->
+  <div class="urgent-banner">
+    <div class="urgent-banner-content">
+      <span>⚠️</span>
+      <span><strong>Attention:</strong> 3 Free Trial Subscriptions are expiring this week ($81.98/mo at risk of auto-charge).</span>
+    </div>
+    <button class="urgent-btn" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+      Review Cancellation Reminders
+    </button>
+  </div>
+
+  <!-- Main Container -->
   <main>
-    <!-- Left Column: Alexa+ Agent Voice Simulator -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">
-          <span>🗣️</span>
-          <span>Alexa+ Voice Simulation Agent</span>
+
+    <!-- HERO SECTION: Alexa Echo Show 15 Smart Display Simulation Station -->
+    <div class="echo-station">
+      <div class="echo-header">
+        <div class="device-badge">
+          <div class="echo-pulse-orb"></div>
+          <span>Simulated Echo Show 15 • Living Room Voice Agent</span>
         </div>
-        <button class="btn-audio-toggle active" id="audioToggleBtn" title="Toggle Alexa Spoken Audio Response">
-          🔊
-        </button>
+        <div class="station-state-label" id="alexaStatus">Alexa+ Agent Idle</div>
       </div>
 
-      <!-- Glowing Voice Hub Visualizer -->
-      <div class="voice-hub-hero">
-        <div class="alexa-ring-wrapper" id="alexaRing" onclick="triggerRandomPrompt()">
-          <div class="alexa-ring-outer"></div>
-          <div class="alexa-ring-inner">
-            <span>🎙️</span>
+      <div class="echo-interaction-grid">
+        <!-- Visual Alexa Glowing Unit -->
+        <div class="alexa-device-unit">
+          <div class="alexa-ring-stage" id="alexaRing" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+            <div class="alexa-ring-outer"></div>
+            <div class="alexa-ring-inner">
+              <span>🎙️</span>
+            </div>
+          </div>
+          <div class="sound-wave-bars">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
           </div>
         </div>
-        <div class="alexa-status-text" id="alexaStatus">Alexa+ Agent Idle</div>
-        <div class="alexa-sub-text">Click any preset voice prompt below or speak to test active MCP skills over Streamable HTTP</div>
+
+        <!-- Spoken Dialogue Card -->
+        <div class="dialogue-card">
+          <div class="dialogue-top">
+            <div class="dialogue-speaker">
+              <span>🔊 Alexa+ Voice Response</span>
+            </div>
+            <div class="tool-badge" id="toolBadge">Ready</div>
+          </div>
+
+          <div class="dialogue-bubble" id="spokenDialogueText">
+            "Hello! I am your SubTrack & ElderGuard family assistant. Ask me to list your subscriptions, warn you about free trials expiring before auto-charge, or check any suspicious text message for scams."
+          </div>
+
+          <div class="dialogue-meta-row">
+            <div class="meta-tag">
+              <span>Active Agent Tool:</span>
+              <strong id="metaTool">None</strong>
+            </div>
+            <div class="meta-tag">
+              <span>Protocol:</span>
+              <strong>POST /mcp (Streamable HTTP)</strong>
+            </div>
+            <div class="meta-tag">
+              <span>Latency:</span>
+              <strong id="metaLatency">0 ms</strong>
+            </div>
+          </div>
+        </div>
       </div>
 
-        <button class="btn-prompt" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
-          <span class="btn-prompt-icon">📋</span>
-          <span><strong>List Active Subs:</strong> "Alexa, tell me which active subscriptions I have and list them down"</span>
-        </button>
-        <button class="btn-prompt" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
-          <span class="btn-prompt-icon">⏰</span>
-          <span><strong>Cancel Reminders:</strong> "Alexa, remind me which subscription I have to cancel before getting charged"</span>
-        </button>
-        <button class="btn-prompt" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
-          <span class="btn-prompt-icon">🏦</span>
-          <span><strong>Chase Wire Scam:</strong> "Urgent: Unauthorized wire from Chase. Verify at chase-alert-login.cc within 24h"</span>
-        </button>
-        <button class="btn-prompt" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
-          <span class="btn-prompt-icon">📦</span>
-          <span><strong>USPS Smishing:</strong> "USPS: Package detained at depot due to $2.19 unpaid fee. Update at usps-redelivery.xyz"</span>
-        </button>
-        <button class="btn-prompt" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
-          <span class="btn-prompt-icon">👵</span>
-          <span><strong>Grandparent Trap:</strong> "Grandma, I had an accident and need bail money now. Buy Apple cards and text codes"</span>
-        </button>
-        <button class="btn-prompt" onclick="runPrompt('Alexa, what free trials are expiring this week?')">
-          <span class="btn-prompt-icon">💳</span>
-          <span><strong>SubTrack Overview:</strong> "Show my active subscriptions and warn me about expiring free trials"</span>
-        </button>
-        <button class="btn-prompt" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
-          <span class="btn-prompt-icon">🛑</span>
-          <span><strong>Cancel Alert:</strong> "Block the renewal charge for BrainGym Memory Pro trial ($29.99/mo)"</span>
-        </button>
-        <button class="btn-prompt" onclick="runPrompt('Alexa, verify message from Mom: Hi honey, see you for Sunday dinner at 5pm.')">
-          <span class="btn-prompt-icon">✅</span>
-          <span><strong>Safe Text:</strong> "Hi honey, see you for Sunday dinner at 5pm. Love you!"</span>
-        </button>
+      <!-- Preset Voice Action Chips -->
+      <div class="prompt-chips-section">
+        <span class="chips-label">Simulate Asking Alexa+ (Click Any Prompt):</span>
+        <div class="chips-wrap">
+          <button class="voice-chip" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+            <span class="voice-chip-icon">📋</span>
+            <div>
+              <span class="voice-chip-title">List All Active Subscriptions</span>
+              <span class="voice-chip-desc">Itemizes every subscription, monthly costs, and household total</span>
+            </div>
+          </button>
+
+          <button class="voice-chip" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+            <span class="voice-chip-icon">⏰</span>
+            <div>
+              <span class="voice-chip-title">Cancellation Reminders</span>
+              <span class="voice-chip-desc">Proactively warns about expiring trials before auto-renewals trigger</span>
+            </div>
+          </button>
+
+          <button class="voice-chip" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
+            <span class="voice-chip-icon">🏦</span>
+            <div>
+              <span class="voice-chip-title">Scan Fake Chase Wire Text</span>
+              <span class="voice-chip-desc">Catches homoglyph links, fake bank domains, and 24h pressure</span>
+            </div>
+          </button>
+
+          <button class="voice-chip" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
+            <span class="voice-chip-icon">📦</span>
+            <div>
+              <span class="voice-chip-title">Scan USPS Package Smishing</span>
+              <span class="voice-chip-desc">Detects fraudulent $2.19 customs fee & deceptive .xyz redelivery link</span>
+            </div>
+          </button>
+
+          <button class="voice-chip" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
+            <span class="voice-chip-icon">🛑</span>
+            <div>
+              <span class="voice-chip-title">Cancel Auto-Renewal Alert</span>
+              <span class="voice-chip-desc">Blocks trial conversion to save $29.99/mo automatically</span>
+            </div>
+          </button>
+
+          <button class="voice-chip" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
+            <span class="voice-chip-icon">👵</span>
+            <div>
+              <span class="voice-chip-title">Grandparent Imposter Trap</span>
+              <span class="voice-chip-desc">Detects coercive emergency bail scam demanding gift cards</span>
+            </div>
+          </button>
+        </div>
       </div>
 
-      <!-- Custom Voice / Text Query Bar -->
-      <div class="voice-input-row">
+      <!-- Custom Voice / Text Input -->
+      <div class="custom-query-bar">
         <input 
           type="text" 
           id="customPromptInput" 
-          class="input-speech" 
-          placeholder="Ask Alexa: e.g. Is this text a scam: Urgent notice from IRS..."
+          class="query-input" 
+          placeholder="Ask Alexa anything: e.g. Is this text a scam: Urgent notice from IRS..."
           onkeydown="if(event.key==='Enter') executeCustomPrompt()"
         />
-        <button class="btn-action-primary" onclick="executeCustomPrompt()">
-          <span>Invoke MCP</span>
+        <button class="btn-invoke" onclick="executeCustomPrompt()">
+          <span>Invoke Agent Skill</span>
           <span>⚡</span>
         </button>
       </div>
-
-      <!-- Spoken Response Card -->
-      <div class="spoken-response-container">
-        <div class="spoken-tag">
-          <span>🔊 Alexa+ Spoken Response</span>
-          <span id="responseStatusBadge">Ready</span>
-        </div>
-        <div class="spoken-content" id="spokenText">
-          "Hello! I am your ElderGuard & SubTrack assistant. Ask me to check any suspicious text message for scams, or ask me what subscriptions and free trials are coming up for renewal."
-        </div>
-        <div class="meta-indicators">
-          <div class="meta-item">
-            <span>MCP Tool:</span>
-            <span class="meta-val" id="metaTool">None</span>
-          </div>
-          <div class="meta-item">
-            <span>Transport:</span>
-            <span class="meta-val">POST /mcp</span>
-          </div>
-          <div class="meta-item">
-            <span>Latency:</span>
-            <span class="meta-val" id="metaLatency">0 ms</span>
-          </div>
-        </div>
-
-        <!-- Threat Meter Visualizer (Visible on Scam checks) -->
-        <div class="risk-meter-container" id="riskMeterBox" style="display: none;">
-          <div class="meter-label-row">
-            <span>Threat Risk Score:</span>
-            <span id="riskScoreLabel" style="font-family: var(--font-code); font-weight: 700;">0 / 100</span>
-          </div>
-          <div class="meter-bar-outer">
-            <div class="meter-bar-fill" id="riskBarFill"></div>
-          </div>
-          <div class="signals-badge-list" id="signalsBadgeList"></div>
-        </div>
-      </div>
     </div>
 
-    <!-- Right Column: SubTrack Manager & Live MCP Protocol Stream Inspector -->
-    <div class="card">
-      <div class="tabs-nav">
-        <button class="tab-btn active" onclick="switchTab('subTab')">💳 SubTrack Subscriptions</button>
-        <button class="tab-btn" onclick="switchTab('mcpTab')">⚡ Live Streamable HTTP</button>
-        <button class="tab-btn" onclick="switchTab('telemetryTab')">📊 AWS & Telemetry</button>
-      </div>
+    <!-- TWO-COLUMN CONSUMER APPLICATION GRID -->
+    <div class="app-main-grid">
 
-      <!-- Tab 1: SubTrack Subscription Manager -->
-      <div class="tab-panel active" id="subTab">
-        <div class="spend-summary-row">
-          <div class="spend-box">
-            <div class="spend-title">Total Monthly Spend</div>
-            <div class="spend-amount" id="totalSpend">$145.94</div>
+      <!-- COLUMN 1: SUBTRACK SUBSCRIPTION MANAGER -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-block">
+            <div class="panel-icon-wrap icon-subtrack">💳</div>
+            <div>
+              <div class="panel-title">SubTrack Financial Defense</div>
+              <div class="panel-subtitle">Household Subscriptions, Trial Traps & Spend Control</div>
+            </div>
           </div>
-          <div class="spend-box">
-            <div class="spend-title">Potential Trial Savings</div>
-            <div class="spend-amount savings" id="potentialSavings">$69.98</div>
-          </div>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Household Subscriptions & Trials</span>
-          <button onclick="resetSubscriptions()" style="background: none; border: 1px solid var(--border-color); color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">
+          <button class="btn-reset-seed" onclick="resetSubscriptions()">
             🔄 Reset Seed Data
           </button>
         </div>
 
-        <div class="subscription-list" id="subscriptionList">
+        <!-- 3 Metrics Cards -->
+        <div class="stat-cards-grid">
+          <div class="stat-metric-card">
+            <div class="stat-label">Total Monthly Spend</div>
+            <div class="stat-value" id="totalSpendDisplay">$145.94</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-label">Potential Trial Savings</div>
+            <div class="stat-value savings" id="potentialSavingsDisplay">$81.98</div>
+          </div>
+          <div class="stat-metric-card">
+            <div class="stat-label">Expiring Trials</div>
+            <div class="stat-value danger" id="expiringCountDisplay">3 Trials</div>
+          </div>
+        </div>
+
+        <div class="sub-filter-row">
+          <div class="sub-count-badge" id="subListSummary">Active Household Subscriptions (7)</div>
+          <span style="font-size: 11px; color: var(--text-muted);">Protected by Alexa+ Agent</span>
+        </div>
+
+        <!-- Interactive Subscriptions List -->
+        <div class="subscriptions-scroll-area" id="subscriptionsContainer">
           <!-- Populated dynamically via JavaScript -->
         </div>
       </div>
 
-      <!-- Tab 2: Live Streamable HTTP Inspector -->
-      <div class="tab-panel" id="mcpTab">
-        <div class="inspector-controls">
-          <select id="mcpMethodSelect" class="select-mcp-method" onchange="loadPresetPayload()">
-            <option value="tools/list">Method: tools/list (List MCP Tools)</option>
-            <option value="call_list_active">Method: tools/call (list_active_subscriptions)</option>
-            <option value="call_reminders">Method: tools/call (get_cancellation_reminders)</option>
-            <option value="call_scam">Method: tools/call (analyze_suspicious_message)</option>
-            <option value="call_subs">Method: tools/call (get_active_subscriptions)</option>
-            <option value="call_cancel">Method: tools/call (cancel_subscription_alert)</option>
-            <option value="initialize">Method: initialize (Handshake)</option>
-          </select>
-          <button class="btn-action-primary" style="padding: 0 16px; font-size: 12px;" onclick="sendRawMcpStream()">
-            Send to POST /mcp
-          </button>
-        </div>
-        <div class="json-console" id="mcpStreamConsole">// Live Streamable HTTP Transport Log
-// Ready. Listening on POST http://localhost:3000/mcp
-// Conforming to official MCP 2025-11-25+ specification
-</div>
-      </div>
-
-      <!-- Tab 3: System Health & AWS Bedrock Telemetry -->
-      <div class="tab-panel" id="telemetryTab">
-        <div class="spend-summary-row" style="margin-bottom: 16px;">
-          <div class="spend-box">
-            <div class="spend-title">MCP Protocol Version</div>
-            <div class="spend-amount" style="font-size: 18px; color: var(--alexa-cyan);">2025-11-25+</div>
+      <!-- COLUMN 2: SCAMSHIELD FRAUD DETECTOR -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <div class="panel-title-block">
+            <div class="panel-icon-wrap icon-scamshield">🛡️</div>
+            <div>
+              <div class="panel-title">ScamShield Threat Engine</div>
+              <div class="panel-subtitle">Heuristics + Amazon Bedrock Claude 3 Intelligence</div>
+            </div>
           </div>
-          <div class="spend-box">
-            <div class="spend-title">Total MCP Invocations</div>
-            <div class="spend-amount" id="totalMcpCount" style="font-size: 18px;">0</div>
+          <span class="sub-badge badge-active" id="bedrockEngineTag">Bedrock Claude 3</span>
+        </div>
+
+        <!-- Incoming Message Tester -->
+        <div class="scam-simulator-box">
+          <div style="font-size: 12px; font-weight: 700; color: #cbd5e1;">Test Deceptive Message:</div>
+          <div class="scam-preset-select-row">
+            <select id="smsScenarioSelect" class="select-sms" onchange="loadSmsScenario()">
+              <option value="chase">Chase Bank Wire Alert: 'Unauthorized wire... verify credentials'</option>
+              <option value="usps">USPS Smishing: 'Package held at depot, pay $2.19 fee'</option>
+              <option value="grandkid">Grandparent Bail Scam: 'In jail after accident, send Apple cards'</option>
+              <option value="safe">Legitimate Message: 'Hi Mom, see you for Sunday dinner at 5pm'</option>
+            </select>
+            <button class="btn-scan-now" onclick="scanSelectedSms()">Scan Now</button>
           </div>
         </div>
 
-        <div class="json-console" id="telemetryConsole">// Polling server health...</div>
+        <!-- Live Threat Gauge -->
+        <div class="threat-gauge-card">
+          <div class="gauge-header">
+            <div class="gauge-title">Threat Risk Assessment</div>
+            <div class="gauge-score-value" id="threatGaugeText">63 / 100 (DANGEROUS SCAM)</div>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="threatProgressBar"></div>
+          </div>
+          <div class="deception-badges-list" id="deceptionBadges"></div>
+        </div>
+
+        <!-- Senior Safety Advice Checklist -->
+        <div class="action-checklist-box">
+          <div class="checklist-title">
+            <span>🛡️</span>
+            <span>Recommended Protection Steps for Senior:</span>
+          </div>
+          <div id="checklistItems">
+            <div class="checklist-item">
+              <span>•</span>
+              <span>Do not click any embedded links or open attachments.</span>
+            </div>
+            <div class="checklist-item">
+              <span>•</span>
+              <span>Never send gift card codes, Zelle transfers, or one-time verification passwords.</span>
+            </div>
+            <div class="checklist-item">
+              <span>•</span>
+              <span>If concerned, call the organization directly using the phone number on the back of your card.</span>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
+
+    <!-- HACKATHON EVALUATORS DRAWER: LIVE MCP STREAMABLE HTTP INSPECTOR -->
+    <div class="mcp-debugger-drawer">
+      <div class="drawer-top-row">
+        <div class="drawer-title-group">
+          <div class="panel-icon-wrap icon-mcp" style="width: 32px; height: 32px; font-size: 16px;">⚡</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 800; color: #fff;">
+              Live MCP Streamable HTTP Protocol Inspector
+            </div>
+            <div style="font-size: 11px; color: var(--text-muted);">
+              JSON-RPC 2.0 streaming via POST /mcp conforming to spec 2025-11-25+
+            </div>
+          </div>
+        </div>
+
+        <div class="inspector-actions">
+          <select id="mcpMethodSelect" class="method-select" onchange="loadPresetPayload()">
+            <option value="call_list_active">tools/call: list_active_subscriptions</option>
+            <option value="call_reminders">tools/call: get_cancellation_reminders</option>
+            <option value="call_scam">tools/call: analyze_suspicious_message</option>
+            <option value="call_cancel">tools/call: cancel_subscription_alert</option>
+            <option value="call_subs">tools/call: get_active_subscriptions</option>
+            <option value="tools/list">tools/list: Discover Agent Skills</option>
+            <option value="initialize">initialize: Protocol Handshake</option>
+          </select>
+          <button class="btn-send-mcp" onclick="sendRawMcpStream()">Send to POST /mcp</button>
+        </div>
+      </div>
+
+      <div class="terminal-console" id="mcpStreamConsole">// Ready. MCP Streamable HTTP endpoint active at POST http://localhost:3000/mcp
+// Select any method above and click 'Send to POST /mcp' to inspect streaming packets.
+</div>
+    </div>
+
   </main>
 
-  <!-- Footer -->
+  <!-- Ambient Footer -->
   <footer>
-    <div>
-      <strong>SubTrack & ElderGuard MCP Server</strong> — Built for the Amazon Hackathon (Alexa+ Track & AWS Builder Challenge).
+    <div class="footer-left">
+      <strong>SubTrack & ElderGuard MCP Server</strong>
+      <span>•</span>
+      <span>Amazon Hackathon Entry (Alexa+ Track & AWS Builder Mini-Challenge)</span>
+      <span>•</span>
+      <span>MIT Open Source</span>
     </div>
     <div class="footer-links">
-      <a href="/mcp" target="_blank">POST /mcp Endpoint</a>
-      <a href="/health" target="_blank">Health Check</a>
-      <a href="https://modelcontextprotocol.io" target="_blank">MCP Docs</a>
+      <a href="/mcp" target="_blank">POST /mcp</a>
+      <a href="/health" target="_blank">Health Telemetry</a>
+      <a href="https://modelcontextprotocol.io" target="_blank">MCP Specification</a>
     </div>
   </footer>
 
   <script>
     let isTtsEnabled = true;
-    let currentSpeechUtterance = null;
 
     // Toggle Audio
     const audioBtn = document.getElementById("audioToggleBtn");
@@ -947,7 +1408,7 @@
       }
     });
 
-    // Voice Synthesis
+    // Web Speech API Voice Synthesis
     function speakText(text) {
       if (!isTtsEnabled || !('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
@@ -969,27 +1430,13 @@
       window.speechSynthesis.speak(utterance);
     }
 
-    // Switch Tabs
-    function switchTab(tabId) {
-      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-      
-      const activeBtn = Array.from(document.querySelectorAll(".tab-btn")).find(b => 
-        b.getAttribute("onclick").includes(tabId)
-      );
-      if (activeBtn) activeBtn.classList.add("active");
-      
-      const panel = document.getElementById(tabId);
-      if (panel) panel.classList.add("active");
-    }
-
-    // Run Preset Voice Prompt
+    // Trigger Preset Voice Prompt
     async function runPrompt(promptText) {
       document.getElementById("customPromptInput").value = promptText;
       await executeCustomPrompt();
     }
 
-    // Execute Voice Prompt via Alexa Simulator Endpoint
+    // Execute Voice Prompt
     async function executeCustomPrompt() {
       const input = document.getElementById("customPromptInput");
       const prompt = input.value.trim();
@@ -997,14 +1444,15 @@
 
       const ring = document.getElementById("alexaRing");
       const status = document.getElementById("alexaStatus");
-      const spokenEl = document.getElementById("spokenText");
+      const spokenEl = document.getElementById("spokenDialogueText");
       const toolEl = document.getElementById("metaTool");
       const latencyEl = document.getElementById("metaLatency");
-      const badge = document.getElementById("responseStatusBadge");
+      const badge = document.getElementById("toolBadge");
 
       ring.classList.add("speaking");
-      status.textContent = "Invoking MCP Agent Skills...";
-      badge.textContent = "Processing...";
+      status.textContent = "Invoking Agent Skill...";
+      badge.textContent = "Processing";
+      badge.style.borderColor = "var(--alexa-cyan)";
       badge.style.color = "var(--alexa-cyan)";
 
       try {
@@ -1019,28 +1467,20 @@
         ring.classList.remove("speaking");
         status.textContent = "Alexa+ Agent Idle";
         badge.textContent = "Completed";
+        badge.style.borderColor = "var(--accent-success)";
         badge.style.color = "var(--accent-success)";
 
         spokenEl.textContent = `"${data.alexaSpokenResponse}"`;
         toolEl.textContent = data.mcpToolInvoked;
         latencyEl.textContent = `${data.executionLatencyMs} ms`;
 
-        // Render Threat Meter if scam check was performed
-        const meterBox = document.getElementById("riskMeterBox");
+        // Update Threat Meter if a scam scan was performed
         if (data.mcpToolInvoked === "analyze_suspicious_message" && data.mcpToolResult) {
-          meterBox.style.display = "block";
           renderThreatMeter(data.mcpToolResult);
-        } else {
-          meterBox.style.display = "none";
         }
 
-        // Voice output
         speakText(data.alexaSpokenResponse);
-
-        // Refresh subscriptions list if cancel or check was run
         loadSubscriptions();
-        fetchTelemetry();
-
       } catch (err) {
         ring.classList.remove("speaking");
         status.textContent = "Error";
@@ -1050,97 +1490,112 @@
       }
     }
 
+    // Render Threat Meter
     function renderThreatMeter(report) {
-      const fill = document.getElementById("riskBarFill");
-      const label = document.getElementById("riskScoreLabel");
-      const badgeList = document.getElementById("signalsBadgeList");
+      const fill = document.getElementById("threatProgressBar");
+      const text = document.getElementById("threatGaugeText");
+      const badgesContainer = document.getElementById("deceptionBadges");
 
       const score = report.threatRiskScore || 0;
       fill.style.width = `${score}%`;
-      label.textContent = `${score} / 100 (${report.verdict})`;
+      text.textContent = `${score} / 100 (${report.verdict.replace(/_/g, ' ')})`;
 
       if (score >= 60) {
         fill.style.background = "linear-gradient(90deg, #f59e0b, #ef4444)";
-        label.style.color = "var(--accent-danger)";
+        text.style.color = "var(--accent-danger)";
       } else if (score >= 30) {
         fill.style.background = "linear-gradient(90deg, #10b981, #f59e0b)";
-        label.style.color = "var(--accent-warning)";
+        text.style.color = "var(--accent-warning)";
       } else {
         fill.style.background = "var(--accent-success)";
-        label.style.color = "var(--accent-success)";
+        text.style.color = "var(--accent-success)";
       }
 
-      badgeList.innerHTML = "";
+      badgesContainer.innerHTML = "";
       if (report.signals && report.signals.length > 0) {
         report.signals.forEach(s => {
-          const pill = document.createElement("div");
-          pill.className = "signal-pill";
-          pill.textContent = `🚩 ${s.description}`;
-          badgeList.appendChild(pill);
+          const chip = document.createElement("div");
+          chip.className = "deception-chip";
+          chip.textContent = `🚩 ${s.description}`;
+          badgesContainer.appendChild(chip);
         });
       } else {
-        const pill = document.createElement("div");
-        pill.className = "signal-pill";
-        pill.style.background = "rgba(16, 185, 129, 0.15)";
-        pill.style.borderColor = "rgba(16, 185, 129, 0.3)";
-        pill.style.color = "#6ee7b7";
-        pill.textContent = "🛡️ Zero Threat Indicators Detected";
-        badgeList.appendChild(pill);
+        const chip = document.createElement("div");
+        chip.className = "deception-chip";
+        chip.style.background = "rgba(16, 185, 129, 0.15)";
+        chip.style.borderColor = "rgba(16, 185, 129, 0.35)";
+        chip.style.color = "#6ee7b7";
+        chip.textContent = "🛡️ Zero Threat Indicators Detected";
+        badgesContainer.appendChild(chip);
       }
     }
 
-    // Load Subscriptions List
+    // Load and Render Subscriptions
     async function loadSubscriptions() {
       try {
         const res = await fetch("/api/subscriptions");
         const data = await res.json();
 
-        document.getElementById("totalSpend").textContent = `$${data.report.totalMonthlySpend.toFixed(2)}`;
-        document.getElementById("potentialSavings").textContent = `$${data.report.potentialMonthlySavings.toFixed(2)}`;
+        document.getElementById("totalSpendDisplay").textContent = `$${data.report.totalMonthlySpend.toFixed(2)}`;
+        document.getElementById("potentialSavingsDisplay").textContent = `$${data.report.potentialMonthlySavings.toFixed(2)}`;
+        document.getElementById("expiringCountDisplay").textContent = `${data.report.expiringTrialsCount} Trials`;
+        document.getElementById("subListSummary").textContent = `Active Household Subscriptions (${data.all.length})`;
 
-        const listContainer = document.getElementById("subscriptionList");
-        listContainer.innerHTML = "";
+        const container = document.getElementById("subscriptionsContainer");
+        container.innerHTML = "";
+
+        const categoryIcons = {
+          "BRAIN_TRAINING": "🧠",
+          "FAMILY": "🌳",
+          "HEALTH": "💊",
+          "ENTERTAINMENT": "🎬",
+          "NEWS_PUZZLES": "🧩"
+        };
 
         data.all.forEach(sub => {
-          const card = document.createElement("div");
-          let extraClass = "";
+          const row = document.createElement("div");
+          let urgentClass = "";
           let badgeHtml = "";
 
           if (sub.status === "AUTO_RENEW_BLOCKED") {
-            extraClass = "is-blocked";
-            badgeHtml = `<span class="badge-sub-status status-blocked">🛡️ Renewal Blocked</span>`;
+            urgentClass = "blocked";
+            badgeHtml = `<span class="sub-badge badge-blocked">🛡️ Renewal Blocked</span>`;
           } else if (sub.isTrial && sub.trialExpiresInDays !== null) {
-            extraClass = "is-expiring";
-            badgeHtml = `<span class="badge-sub-status status-expiring">⚠️ Trial: ${sub.trialExpiresInDays} Days Left</span>`;
+            urgentClass = "trial-urgent";
+            badgeHtml = `<span class="sub-badge badge-trial">⚠️ Trial: ${sub.trialExpiresInDays} Days Left</span>`;
           } else {
-            badgeHtml = `<span class="badge-sub-status status-active">Active</span>`;
+            badgeHtml = `<span class="sub-badge badge-active">Active</span>`;
           }
 
-          card.className = `sub-item-card ${extraClass}`;
-          card.innerHTML = `
-            <div class="sub-header-row">
-              <div>
-                <span class="sub-name">${sub.name}</span>
-                <span style="font-size: 11px; color: var(--text-dim); margin-left: 6px;">[${sub.billingProvider}]</span>
+          row.className = `sub-card-row ${urgentClass}`;
+          row.innerHTML = `
+            <div class="sub-card-main">
+              <div class="sub-name-group">
+                <span class="sub-category-icon">${categoryIcons[sub.category] || "📦"}</span>
+                <div>
+                  <div class="sub-name-text">${sub.name}</div>
+                  <div class="sub-provider-tag">${sub.billingProvider}</div>
+                </div>
               </div>
-              <div class="sub-price">$${sub.monthlyPrice.toFixed(2)}/mo</div>
+              <div class="sub-price-tag">$${sub.monthlyPrice.toFixed(2)}<span style="font-size: 11px; font-weight: 500; color: var(--text-muted);">/mo</span></div>
             </div>
-            <div class="sub-meta-row">
+
+            <div class="sub-footer-meta">
               <div style="display: flex; align-items: center; gap: 8px;">
                 ${badgeHtml}
-                <span>Renews: ${sub.renewalDate}</span>
+                <span>Renews: <strong>${sub.renewalDate}</strong></span>
               </div>
               ${
                 sub.status !== "AUTO_RENEW_BLOCKED"
-                  ? `<button class="btn-cancel-sub" onclick="cancelSubscription('${sub.id}', '${sub.name}')">Block Renewal</button>`
-                  : `<span style="font-size: 11px; color: var(--accent-success); font-weight: 600;">Saved $${sub.monthlyPrice.toFixed(2)}</span>`
+                  ? `<button class="btn-block-action" onclick="cancelSubscription('${sub.id}', '${sub.name}')">Block Auto-Renewal</button>`
+                  : `<span style="font-size: 11px; color: var(--accent-success); font-weight: 700;">Saved $${sub.monthlyPrice.toFixed(2)}/mo</span>`
               }
             </div>
           `;
-          listContainer.appendChild(card);
+          container.appendChild(row);
         });
-      } catch (e) {
-        console.error("Failed to load subscriptions", e);
+      } catch (err) {
+        console.error("Failed to load subscriptions", err);
       }
     }
 
@@ -1154,7 +1609,7 @@
         });
         const result = await res.json();
         speakText(result.alexaVoiceConfirmation);
-        document.getElementById("spokenText").textContent = `"${result.alexaVoiceConfirmation}"`;
+        document.getElementById("spokenDialogueText").textContent = `"${result.alexaVoiceConfirmation}"`;
         document.getElementById("metaTool").textContent = "cancel_subscription_alert";
         loadSubscriptions();
       } catch (err) {
@@ -1168,14 +1623,26 @@
       loadSubscriptions();
     }
 
-    // MCP Inspector: Load Payload Presets
+    // SMS Scenarios for ScamShield
+    const SMS_SCENARIOS = {
+      chase: "Urgent: Unauthorized wire of $499 from your Chase card. Verify at http://chase-security-alert.xyz within 24 hours.",
+      usps: "USPS: Package detained at regional facility due to unpaid fee of $2.19. Please update address at http://usps-redelivery.xyz",
+      grandkid: "Grandma, I had an accident and I am in jail. Please do not tell mom. Buy $2,000 in Apple gift cards and text me codes for bail.",
+      safe: "Hi Mom, see you for Sunday dinner at 5pm. Love you!"
+    };
+
+    function loadSmsScenario() {
+      // Prepared scenario
+    }
+
+    async function scanSelectedSms() {
+      const select = document.getElementById("smsScenarioSelect");
+      const text = SMS_SCENARIOS[select.value];
+      await runPrompt(`Alexa, check if this text is a scam: ${text}`);
+    }
+
+    // MCP Inspector: Presets
     const MCP_PRESETS = {
-      "tools/list": {
-        jsonrpc: "2.0",
-        id: "msg-tools-1",
-        method: "tools/list",
-        params: {}
-      },
       "call_list_active": {
         jsonrpc: "2.0",
         id: "msg-list-5",
@@ -1191,9 +1658,7 @@
         method: "tools/call",
         params: {
           name: "get_cancellation_reminders",
-          arguments: {
-            timeframeDays: 7
-          }
+          arguments: { timeframeDays: 7 }
         }
       },
       "call_scam": {
@@ -1207,27 +1672,29 @@
           }
         }
       },
-      "call_subs": {
-        jsonrpc: "2.0",
-        id: "msg-subs-3",
-        method: "tools/call",
-        params: {
-          name: "get_active_subscriptions",
-          arguments: {
-            timeframeDays: 7
-          }
-        }
-      },
       "call_cancel": {
         jsonrpc: "2.0",
         id: "msg-cancel-4",
         method: "tools/call",
         params: {
           name: "cancel_subscription_alert",
-          arguments: {
-            subscriptionId: "sub-bg-101"
-          }
+          arguments: { subscriptionId: "sub-bg-101" }
         }
+      },
+      "call_subs": {
+        jsonrpc: "2.0",
+        id: "msg-subs-3",
+        method: "tools/call",
+        params: {
+          name: "get_active_subscriptions",
+          arguments: { timeframeDays: 7 }
+        }
+      },
+      "tools/list": {
+        jsonrpc: "2.0",
+        id: "msg-tools-1",
+        method: "tools/list",
+        params: {}
       },
       "initialize": {
         jsonrpc: "2.0",
@@ -1243,10 +1710,9 @@
 
     function loadPresetPayload() {
       const select = document.getElementById("mcpMethodSelect");
-      const key = select.value;
-      const payload = MCP_PRESETS[key];
+      const payload = MCP_PRESETS[select.value];
       const consoleEl = document.getElementById("mcpStreamConsole");
-      consoleEl.textContent = `// Prepared Request to POST /mcp\n${JSON.stringify(payload, null, 2)}`;
+      consoleEl.textContent = `// Prepared JSON-RPC 2.0 Request for POST /mcp\n${JSON.stringify(payload, null, 2)}`;
     }
 
     async function sendRawMcpStream() {
@@ -1255,7 +1721,7 @@
       const consoleEl = document.getElementById("mcpStreamConsole");
 
       const startTime = performance.now();
-      consoleEl.textContent = `> POST /mcp (Streamable HTTP Transport)\n> Headers: Accept: application/json, text/event-stream\n> Payload:\n${JSON.stringify(payload, null, 2)}\n\nWaiting for response stream...`;
+      consoleEl.textContent = `> POST http://localhost:3000/mcp (Streamable HTTP Transport)\n> Headers: Accept: application/json, text/event-stream\n> Payload:\n${JSON.stringify(payload, null, 2)}\n\nStreaming response packets...`;
 
       try {
         const res = await fetch("/mcp", {
@@ -1271,8 +1737,7 @@
         const headers = Array.from(res.headers.entries()).map(([k, v]) => `  ${k}: ${v}`).join("\n");
         const bodyText = await res.text();
 
-        consoleEl.textContent = `< HTTP/1.1 ${res.status} ${res.statusText} (${elapsed} ms)\n< Headers:\n${headers}\n\n< Stream Data (Raw Event Stream Chunk):\n${bodyText}`;
-        fetchTelemetry();
+        consoleEl.textContent = `< HTTP/1.1 ${res.status} ${res.statusText} (${elapsed} ms)\n< Response Headers:\n${headers}\n\n< Streamable HTTP Stream Data:\n${bodyText}`;
       } catch (err) {
         consoleEl.textContent += `\n\n[Error sending to /mcp]: ${err.message}`;
       }
@@ -1283,28 +1748,29 @@
       try {
         const res = await fetch("/health");
         const data = await res.json();
-        document.getElementById("totalMcpCount").textContent = data.totalMcpRequests || 0;
-        document.getElementById("telemetryConsole").textContent = JSON.stringify(data, null, 2);
-
-        const badge = document.getElementById("bedrockBadge");
+        const pill = document.getElementById("bedrockPill");
         if (data.bedrock && data.bedrock.configured) {
-          badge.innerHTML = "<span>⚡ Bedrock Claude 3: Connected</span>";
-          badge.style.color = "var(--accent-success)";
-        } else {
-          badge.innerHTML = "<span>🛡️ Neural Guard: Active (Local Fallback)</span>";
-          badge.style.color = "var(--alexa-cyan)";
+          pill.innerHTML = "<span>⚡ Bedrock Claude 3: Connected</span>";
+          pill.style.borderColor = "var(--accent-success)";
         }
       } catch (e) {
-        console.error("Telemetry poll failed", e);
+        console.error("Telemetry failed", e);
       }
     }
 
     // Initial Bootstrap
     window.addEventListener("DOMContentLoaded", () => {
       loadSubscriptions();
-      fetchTelemetry();
       loadPresetPayload();
-      setInterval(fetchTelemetry, 8000);
+      fetchTelemetry();
+      // Set initial sample threat meter
+      renderThreatMeter({
+        verdict: "DANGEROUS_SCAM",
+        threatRiskScore: 63,
+        signals: [
+          { description: "Untraceable or non-standard payment method demand: 'wire transfer'" }
+        ]
+      });
     });
   </script>
 </body>
