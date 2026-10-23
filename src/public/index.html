@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SubTrack & ElderGuard MCP Server | Alexa+ Interactive Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: #111827;
+      --bg-card: rgba(17, 24, 39, 0.75);
+      --bg-card-hover: rgba(26, 36, 56, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(0, 202, 255, 0.4);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --alexa-cyan: #00caff;
+      --alexa-blue: #0077ff;
+      --alexa-glow: rgba(0, 202, 255, 0.35);
+      --accent-danger: #ef4444;
+      --accent-danger-glow: rgba(239, 68, 68, 0.25);
+      --accent-warning: #f59e0b;
+      --accent-warning-glow: rgba(245, 158, 11, 0.2);
+      --accent-success: #10b981;
+      --accent-success-glow: rgba(16, 185, 129, 0.2);
+      --accent-purple: #8b5cf6;
+      --font-main: 'Outfit', sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(0, 202, 255, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.07) 0%, transparent 40%);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation */
+    header {
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #00caff 0%, #0051ff 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 0 20px var(--alexa-glow);
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #ffffff 40%, var(--alexa-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .badge-streamable {
+      background: rgba(0, 202, 255, 0.1);
+      border-color: rgba(0, 202, 255, 0.3);
+      color: var(--alexa-cyan);
+    }
+
+    .badge-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--alexa-cyan);
+      box-shadow: 0 0 10px var(--alexa-cyan);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    @media (min-width: 1024px) {
+      main {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+    }
+
+    /* Common Card Styles */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 202, 255, 0.4), transparent);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Section 1: Alexa Voice Simulator Interactive Hub */
+    .voice-hub-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 30px 20px;
+      background: radial-gradient(circle at 50% 30%, rgba(0, 202, 255, 0.12) 0%, transparent 70%);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0, 202, 255, 0.15);
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    /* Alexa Glowing Ring */
+    .alexa-ring-wrapper {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 18px;
+      cursor: pointer;
+    }
+
+    .alexa-ring-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #00caff, #0051ff, #8b5cf6, #00caff);
+      animation: rotateRing 6s linear infinite;
+      box-shadow: 0 0 35px var(--alexa-glow);
+    }
+
+    .alexa-ring-inner {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+    }
+
+    .alexa-ring-wrapper.speaking .alexa-ring-outer {
+      animation: rotateRing 1.5s linear infinite;
+      box-shadow: 0 0 50px rgba(0, 202, 255, 0.8);
+    }
+
+    @keyframes rotateRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .alexa-status-text {
+      font-size: 13px;
+      color: var(--alexa-cyan);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .alexa-sub-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 460px;
+    }
+
+    /* Preset Voice Prompt Buttons */
+    .preset-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    @media (min-width: 640px) {
+      .prompt-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .btn-prompt {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      color: var(--text-main);
+      font-family: var(--font-main);
+      font-size: 13px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+    }
+
+    .btn-prompt:hover {
+      background: rgba(0, 202, 255, 0.08);
+      border-color: var(--border-active);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-prompt-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Voice Input Box */
+    .voice-input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .input-speech {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      color: #fff;
+      font-family: var(--font-main);
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .input-speech:focus {
+      border-color: var(--alexa-cyan);
+      box-shadow: 0 0 12px rgba(0, 202, 255, 0.2);
+    }
+
+    .btn-action-primary {
+      background: linear-gradient(135deg, var(--alexa-cyan) 0%, var(--alexa-blue) 100%);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 24px;
+      font-family: var(--font-main);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 119, 255, 0.35);
+    }
+
+    .btn-action-primary:hover {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-audio-toggle {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      padding: 0 16px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .btn-audio-toggle.active {
+      border-color: var(--alexa-cyan);
+      color: var(--alexa-cyan);
+      background: rgba(0, 202, 255, 0.1);
+    }
+
+    /* Live Alexa Spoken Response Box */
+    .spoken-response-container {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 202, 255, 0.25);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      position: relative;
+      margin-top: 14px;
+    }
+
+    .spoken-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--alexa-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .spoken-content {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #e5e7eb;
+    }
+
+    .meta-indicators {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 10px;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .meta-val {
+      color: var(--text-main);
+      font-weight: 600;
+      font-family: var(--font-code);
+    }
+
+    /* Right Column: Live Streamable HTTP Inspector & Subscriptions */
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-main);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-color);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Subscriptions View */
+    .spend-summary-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .spend-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+    }
+
+    .spend-title {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .spend-amount {
+      font-size: 24px;
+      font-weight: 800;
+      font-family: var(--font-code);
+    }
+
+    .spend-amount.savings {
+      color: var(--accent-success);
+    }
+
+    .subscription-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .sub-item-card {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border 0.2s;
+    }
+
+    .sub-item-card.is-expiring {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.04);
+    }
+
+    .sub-item-card.is-blocked {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(16, 185, 129, 0.04);
+    }
+
+    .sub-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .sub-name {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .sub-price {
+      font-family: var(--font-code);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .sub-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .btn-cancel-sub {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-family: var(--font-main);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-cancel-sub:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fff;
+    }
+
+    .badge-sub-status {
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .status-expiring {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .status-active {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-blocked {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    /* Streamable HTTP Inspector */
+    .inspector-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .select-mcp-method {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 12px;
+      outline: none;
+    }
+
+    .json-console {
+      background: #06090e;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: var(--font-code);
+      font-size: 12px;
+      line-height: 1.5;
+      color: #38bdf8;
+      max-height: 380px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* Threat Meter */
+    .risk-meter-container {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+    }
+
+    .meter-label-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .meter-bar-outer {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .meter-bar-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 6px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .signals-badge-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .signal-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-dim);
+      background: rgba(10, 14, 23, 0.5);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--alexa-cyan);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand-section">
+      <div class="brand-icon">🛡️</div>
+      <div>
+        <div class="brand-title">SubTrack & ElderGuard MCP Server</div>
+        <div class="brand-sub">Alexa+ Track • Streamable HTTP (spec 2025-11-25) • Amazon Bedrock</div>
+      </div>
+    </div>
+    <div class="header-badges">
+      <div class="badge badge-streamable">
+        <div class="badge-pulse-dot"></div>
+        <span>POST /mcp Active</span>
+      </div>
+      <div class="badge" id="bedrockBadge">
+        <span>⚡ Bedrock Claude 3 Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main>
+    <!-- Left Column: Alexa+ Agent Voice Simulator -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <span>🗣️</span>
+          <span>Alexa+ Voice Simulation Agent</span>
+        </div>
+        <button class="btn-audio-toggle active" id="audioToggleBtn" title="Toggle Alexa Spoken Audio Response">
+          🔊
+        </button>
+      </div>
+
+      <!-- Glowing Voice Hub Visualizer -->
+      <div class="voice-hub-hero">
+        <div class="alexa-ring-wrapper" id="alexaRing" onclick="triggerRandomPrompt()">
+          <div class="alexa-ring-outer"></div>
+          <div class="alexa-ring-inner">
+            <span>🎙️</span>
+          </div>
+        </div>
+        <div class="alexa-status-text" id="alexaStatus">Alexa+ Agent Idle</div>
+        <div class="alexa-sub-text">Click any preset voice prompt below or speak to test active MCP skills over Streamable HTTP</div>
+      </div>
+
+      <!-- Sample Voice Prompt Triggers -->
+      <label class="preset-label">Simulate Asking Alexa+ (Click to Test):</label>
+      <div class="prompt-grid">
+        <button class="btn-prompt" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
+          <span class="btn-prompt-icon">🏦</span>
+          <span><strong>Chase Wire Scam:</strong> "Urgent: Unauthorized wire from Chase. Verify at chase-alert-login.cc within 24h"</span>
+        </button>
+        <button class="btn-prompt" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
+          <span class="btn-prompt-icon">📦</span>
+          <span><strong>USPS Smishing:</strong> "USPS: Package detained at depot due to $2.19 unpaid fee. Update at usps-redelivery.xyz"</span>
+        </button>
+        <button class="btn-prompt" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
+          <span class="btn-prompt-icon">👵</span>
+          <span><strong>Grandparent Trap:</strong> "Grandma, I had an accident and need bail money now. Buy Apple cards and text codes"</span>
+        </button>
+        <button class="btn-prompt" onclick="runPrompt('Alexa, what free trials are expiring this week?')">
+          <span class="btn-prompt-icon">💳</span>
+          <span><strong>SubTrack Query:</strong> "Show my active subscriptions and warn me about expiring free trials"</span>
+        </button>
+        <button class="btn-prompt" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
+          <span class="btn-prompt-icon">🛑</span>
+          <span><strong>Cancel Alert:</strong> "Block the renewal charge for BrainGym Memory Pro trial ($29.99/mo)"</span>
+        </button>
+        <button class="btn-prompt" onclick="runPrompt('Alexa, verify message from Mom: Hi honey, see you for Sunday dinner at 5pm.')">
+          <span class="btn-prompt-icon">✅</span>
+          <span><strong>Safe Text:</strong> "Hi honey, see you for Sunday dinner at 5pm. Love you!"</span>
+        </button>
+      </div>
+
+      <!-- Custom Voice / Text Query Bar -->
+      <div class="voice-input-row">
+        <input 
+          type="text" 
+          id="customPromptInput" 
+          class="input-speech" 
+          placeholder="Ask Alexa: e.g. Is this text a scam: Urgent notice from IRS..."
+          onkeydown="if(event.key==='Enter') executeCustomPrompt()"
+        />
+        <button class="btn-action-primary" onclick="executeCustomPrompt()">
+          <span>Invoke MCP</span>
+          <span>⚡</span>
+        </button>
+      </div>
+
+      <!-- Spoken Response Card -->
+      <div class="spoken-response-container">
+        <div class="spoken-tag">
+          <span>🔊 Alexa+ Spoken Response</span>
+          <span id="responseStatusBadge">Ready</span>
+        </div>
+        <div class="spoken-content" id="spokenText">
+          "Hello! I am your ElderGuard & SubTrack assistant. Ask me to check any suspicious text message for scams, or ask me what subscriptions and free trials are coming up for renewal."
+        </div>
+        <div class="meta-indicators">
+          <div class="meta-item">
+            <span>MCP Tool:</span>
+            <span class="meta-val" id="metaTool">None</span>
+          </div>
+          <div class="meta-item">
+            <span>Transport:</span>
+            <span class="meta-val">POST /mcp</span>
+          </div>
+          <div class="meta-item">
+            <span>Latency:</span>
+            <span class="meta-val" id="metaLatency">0 ms</span>
+          </div>
+        </div>
+
+        <!-- Threat Meter Visualizer (Visible on Scam checks) -->
+        <div class="risk-meter-container" id="riskMeterBox" style="display: none;">
+          <div class="meter-label-row">
+            <span>Threat Risk Score:</span>
+            <span id="riskScoreLabel" style="font-family: var(--font-code); font-weight: 700;">0 / 100</span>
+          </div>
+          <div class="meter-bar-outer">
+            <div class="meter-bar-fill" id="riskBarFill"></div>
+          </div>
+          <div class="signals-badge-list" id="signalsBadgeList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: SubTrack Manager & Live MCP Protocol Stream Inspector -->
+    <div class="card">
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('subTab')">💳 SubTrack Subscriptions</button>
+        <button class="tab-btn" onclick="switchTab('mcpTab')">⚡ Live Streamable HTTP</button>
+        <button class="tab-btn" onclick="switchTab('telemetryTab')">📊 AWS & Telemetry</button>
+      </div>
+
+      <!-- Tab 1: SubTrack Subscription Manager -->
+      <div class="tab-panel active" id="subTab">
+        <div class="spend-summary-row">
+          <div class="spend-box">
+            <div class="spend-title">Total Monthly Spend</div>
+            <div class="spend-amount" id="totalSpend">$145.94</div>
+          </div>
+          <div class="spend-box">
+            <div class="spend-title">Potential Trial Savings</div>
+            <div class="spend-amount savings" id="potentialSavings">$69.98</div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Household Subscriptions & Trials</span>
+          <button onclick="resetSubscriptions()" style="background: none; border: 1px solid var(--border-color); color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">
+            🔄 Reset Seed Data
+          </button>
+        </div>
+
+        <div class="subscription-list" id="subscriptionList">
+          <!-- Populated dynamically via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Tab 2: Live Streamable HTTP Inspector -->
+      <div class="tab-panel" id="mcpTab">
+        <div class="inspector-controls">
+          <select id="mcpMethodSelect" class="select-mcp-method" onchange="loadPresetPayload()">
+            <option value="tools/list">Method: tools/list (List MCP Tools)</option>
+            <option value="call_scam">Method: tools/call (analyze_suspicious_message)</option>
+            <option value="call_subs">Method: tools/call (get_active_subscriptions)</option>
+            <option value="call_cancel">Method: tools/call (cancel_subscription_alert)</option>
+            <option value="initialize">Method: initialize (Handshake)</option>
+          </select>
+          <button class="btn-action-primary" style="padding: 0 16px; font-size: 12px;" onclick="sendRawMcpStream()">
+            Send to POST /mcp
+          </button>
+        </div>
+        <div class="json-console" id="mcpStreamConsole">// Live Streamable HTTP Transport Log
+// Ready. Listening on POST http://localhost:3000/mcp
+// Conforming to official MCP 2025-11-25+ specification
+</div>
+      </div>
+
+      <!-- Tab 3: System Health & AWS Bedrock Telemetry -->
+      <div class="tab-panel" id="telemetryTab">
+        <div class="spend-summary-row" style="margin-bottom: 16px;">
+          <div class="spend-box">
+            <div class="spend-title">MCP Protocol Version</div>
+            <div class="spend-amount" style="font-size: 18px; color: var(--alexa-cyan);">2025-11-25+</div>
+          </div>
+          <div class="spend-box">
+            <div class="spend-title">Total MCP Invocations</div>
+            <div class="spend-amount" id="totalMcpCount" style="font-size: 18px;">0</div>
+          </div>
+        </div>
+
+        <div class="json-console" id="telemetryConsole">// Polling server health...</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div>
+      <strong>SubTrack & ElderGuard MCP Server</strong> — Built for the Amazon Hackathon (Alexa+ Track & AWS Builder Challenge).
+    </div>
+    <div class="footer-links">
+      <a href="/mcp" target="_blank">POST /mcp Endpoint</a>
+      <a href="/health" target="_blank">Health Check</a>
+      <a href="https://modelcontextprotocol.io" target="_blank">MCP Docs</a>
+    </div>
+  </footer>
+
+  <script>
+    let isTtsEnabled = true;
+    let currentSpeechUtterance = null;
+
+    // Toggle Audio
+    const audioBtn = document.getElementById("audioToggleBtn");
+    audioBtn.addEventListener("click", () => {
+      isTtsEnabled = !isTtsEnabled;
+      if (isTtsEnabled) {
+        audioBtn.classList.add("active");
+        audioBtn.textContent = "🔊";
+      } else {
+        audioBtn.classList.remove("active");
+        audioBtn.textContent = "🔇";
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+      }
+    });
+
+    // Voice Synthesis
+    function speakText(text) {
+      if (!isTtsEnabled || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.05;
+
+      const ring = document.getElementById("alexaRing");
+      const status = document.getElementById("alexaStatus");
+
+      ring.classList.add("speaking");
+      status.textContent = "Alexa+ Speaking...";
+
+      utterance.onend = () => {
+        ring.classList.remove("speaking");
+        status.textContent = "Alexa+ Agent Idle";
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // Switch Tabs
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      
+      const activeBtn = Array.from(document.querySelectorAll(".tab-btn")).find(b => 
+        b.getAttribute("onclick").includes(tabId)
+      );
+      if (activeBtn) activeBtn.classList.add("active");
+      
+      const panel = document.getElementById(tabId);
+      if (panel) panel.classList.add("active");
+    }
+
+    // Run Preset Voice Prompt
+    async function runPrompt(promptText) {
+      document.getElementById("customPromptInput").value = promptText;
+      await executeCustomPrompt();
+    }
+
+    // Execute Voice Prompt via Alexa Simulator Endpoint
+    async function executeCustomPrompt() {
+      const input = document.getElementById("customPromptInput");
+      const prompt = input.value.trim();
+      if (!prompt) return;
+
+      const ring = document.getElementById("alexaRing");
+      const status = document.getElementById("alexaStatus");
+      const spokenEl = document.getElementById("spokenText");
+      const toolEl = document.getElementById("metaTool");
+      const latencyEl = document.getElementById("metaLatency");
+      const badge = document.getElementById("responseStatusBadge");
+
+      ring.classList.add("speaking");
+      status.textContent = "Invoking MCP Agent Skills...";
+      badge.textContent = "Processing...";
+      badge.style.color = "var(--alexa-cyan)";
+
+      try {
+        const res = await fetch("/api/simulate/voice-prompt", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt }),
+        });
+
+        const data = await res.json();
+
+        ring.classList.remove("speaking");
+        status.textContent = "Alexa+ Agent Idle";
+        badge.textContent = "Completed";
+        badge.style.color = "var(--accent-success)";
+
+        spokenEl.textContent = `"${data.alexaSpokenResponse}"`;
+        toolEl.textContent = data.mcpToolInvoked;
+        latencyEl.textContent = `${data.executionLatencyMs} ms`;
+
+        // Render Threat Meter if scam check was performed
+        const meterBox = document.getElementById("riskMeterBox");
+        if (data.mcpToolInvoked === "analyze_suspicious_message" && data.mcpToolResult) {
+          meterBox.style.display = "block";
+          renderThreatMeter(data.mcpToolResult);
+        } else {
+          meterBox.style.display = "none";
+        }
+
+        // Voice output
+        speakText(data.alexaSpokenResponse);
+
+        // Refresh subscriptions list if cancel or check was run
+        loadSubscriptions();
+        fetchTelemetry();
+
+      } catch (err) {
+        ring.classList.remove("speaking");
+        status.textContent = "Error";
+        badge.textContent = "Failed";
+        badge.style.color = "var(--accent-danger)";
+        spokenEl.textContent = `Error simulating voice prompt: ${err.message}`;
+      }
+    }
+
+    function renderThreatMeter(report) {
+      const fill = document.getElementById("riskBarFill");
+      const label = document.getElementById("riskScoreLabel");
+      const badgeList = document.getElementById("signalsBadgeList");
+
+      const score = report.threatRiskScore || 0;
+      fill.style.width = `${score}%`;
+      label.textContent = `${score} / 100 (${report.verdict})`;
+
+      if (score >= 60) {
+        fill.style.background = "linear-gradient(90deg, #f59e0b, #ef4444)";
+        label.style.color = "var(--accent-danger)";
+      } else if (score >= 30) {
+        fill.style.background = "linear-gradient(90deg, #10b981, #f59e0b)";
+        label.style.color = "var(--accent-warning)";
+      } else {
+        fill.style.background = "var(--accent-success)";
+        label.style.color = "var(--accent-success)";
+      }
+
+      badgeList.innerHTML = "";
+      if (report.signals && report.signals.length > 0) {
+        report.signals.forEach(s => {
+          const pill = document.createElement("div");
+          pill.className = "signal-pill";
+          pill.textContent = `🚩 ${s.description}`;
+          badgeList.appendChild(pill);
+        });
+      } else {
+        const pill = document.createElement("div");
+        pill.className = "signal-pill";
+        pill.style.background = "rgba(16, 185, 129, 0.15)";
+        pill.style.borderColor = "rgba(16, 185, 129, 0.3)";
+        pill.style.color = "#6ee7b7";
+        pill.textContent = "🛡️ Zero Threat Indicators Detected";
+        badgeList.appendChild(pill);
+      }
+    }
+
+    // Load Subscriptions List
+    async function loadSubscriptions() {
+      try {
+        const res = await fetch("/api/subscriptions");
+        const data = await res.json();
+
+        document.getElementById("totalSpend").textContent = `$${data.report.totalMonthlySpend.toFixed(2)}`;
+        document.getElementById("potentialSavings").textContent = `$${data.report.potentialMonthlySavings.toFixed(2)}`;
+
+        const listContainer = document.getElementById("subscriptionList");
+        listContainer.innerHTML = "";
+
+        data.all.forEach(sub => {
+          const card = document.createElement("div");
+          let extraClass = "";
+          let badgeHtml = "";
+
+          if (sub.status === "AUTO_RENEW_BLOCKED") {
+            extraClass = "is-blocked";
+            badgeHtml = `<span class="badge-sub-status status-blocked">🛡️ Renewal Blocked</span>`;
+          } else if (sub.isTrial && sub.trialExpiresInDays !== null) {
+            extraClass = "is-expiring";
+            badgeHtml = `<span class="badge-sub-status status-expiring">⚠️ Trial: ${sub.trialExpiresInDays} Days Left</span>`;
+          } else {
+            badgeHtml = `<span class="badge-sub-status status-active">Active</span>`;
+          }
+
+          card.className = `sub-item-card ${extraClass}`;
+          card.innerHTML = `
+            <div class="sub-header-row">
+              <div>
+                <span class="sub-name">${sub.name}</span>
+                <span style="font-size: 11px; color: var(--text-dim); margin-left: 6px;">[${sub.billingProvider}]</span>
+              </div>
+              <div class="sub-price">$${sub.monthlyPrice.toFixed(2)}/mo</div>
+            </div>
+            <div class="sub-meta-row">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                ${badgeHtml}
+                <span>Renews: ${sub.renewalDate}</span>
+              </div>
+              ${
+                sub.status !== "AUTO_RENEW_BLOCKED"
+                  ? `<button class="btn-cancel-sub" onclick="cancelSubscription('${sub.id}', '${sub.name}')">Block Renewal</button>`
+                  : `<span style="font-size: 11px; color: var(--accent-success); font-weight: 600;">Saved $${sub.monthlyPrice.toFixed(2)}</span>`
+              }
+            </div>
+          `;
+          listContainer.appendChild(card);
+        });
+      } catch (e) {
+        console.error("Failed to load subscriptions", e);
+      }
+    }
+
+    // Cancel Subscription
+    async function cancelSubscription(subId, subName) {
+      try {
+        const res = await fetch("/api/subscriptions/cancel", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ subscriptionId: subId }),
+        });
+        const result = await res.json();
+        speakText(result.alexaVoiceConfirmation);
+        document.getElementById("spokenText").textContent = `"${result.alexaVoiceConfirmation}"`;
+        document.getElementById("metaTool").textContent = "cancel_subscription_alert";
+        loadSubscriptions();
+      } catch (err) {
+        alert("Error cancelling subscription: " + err.message);
+      }
+    }
+
+    // Reset Subscriptions Seed
+    async function resetSubscriptions() {
+      await fetch("/api/subscriptions/reset", { method: "POST" });
+      loadSubscriptions();
+    }
+
+    // MCP Inspector: Load Payload Presets
+    const MCP_PRESETS = {
+      "tools/list": {
+        jsonrpc: "2.0",
+        id: "msg-tools-1",
+        method: "tools/list",
+        params: {}
+      },
+      "call_scam": {
+        jsonrpc: "2.0",
+        id: "msg-scam-2",
+        method: "tools/call",
+        params: {
+          name: "analyze_suspicious_message",
+          arguments: {
+            messageText: "Urgent: Your Chase Bank card is suspended. Verify credentials at http://chase-security-login.xyz immediately."
+          }
+        }
+      },
+      "call_subs": {
+        jsonrpc: "2.0",
+        id: "msg-subs-3",
+        method: "tools/call",
+        params: {
+          name: "get_active_subscriptions",
+          arguments: {
+            timeframeDays: 7
+          }
+        }
+      },
+      "call_cancel": {
+        jsonrpc: "2.0",
+        id: "msg-cancel-4",
+        method: "tools/call",
+        params: {
+          name: "cancel_subscription_alert",
+          arguments: {
+            subscriptionId: "sub-bg-101"
+          }
+        }
+      },
+      "initialize": {
+        jsonrpc: "2.0",
+        id: "msg-init-0",
+        method: "initialize",
+        params: {
+          protocolVersion: "2024-11-05",
+          capabilities: {},
+          clientInfo: { name: "alexa-plus-client", version: "1.0.0" }
+        }
+      }
+    };
+
+    function loadPresetPayload() {
+      const select = document.getElementById("mcpMethodSelect");
+      const key = select.value;
+      const payload = MCP_PRESETS[key];
+      const consoleEl = document.getElementById("mcpStreamConsole");
+      consoleEl.textContent = `// Prepared Request to POST /mcp\n${JSON.stringify(payload, null, 2)}`;
+    }
+
+    async function sendRawMcpStream() {
+      const select = document.getElementById("mcpMethodSelect");
+      const payload = MCP_PRESETS[select.value];
+      const consoleEl = document.getElementById("mcpStreamConsole");
+
+      const startTime = performance.now();
+      consoleEl.textContent = `> POST /mcp (Streamable HTTP Transport)\n> Headers: Accept: application/json, text/event-stream\n> Payload:\n${JSON.stringify(payload, null, 2)}\n\nWaiting for response stream...`;
+
+      try {
+        const res = await fetch("/mcp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json, text/event-stream"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const elapsed = (performance.now() - startTime).toFixed(1);
+        const headers = Array.from(res.headers.entries()).map(([k, v]) => `  ${k}: ${v}`).join("\n");
+        const bodyText = await res.text();
+
+        consoleEl.textContent = `< HTTP/1.1 ${res.status} ${res.statusText} (${elapsed} ms)\n< Headers:\n${headers}\n\n< Stream Data (Raw Event Stream Chunk):\n${bodyText}`;
+        fetchTelemetry();
+      } catch (err) {
+        consoleEl.textContent += `\n\n[Error sending to /mcp]: ${err.message}`;
+      }
+    }
+
+    // Telemetry Polling
+    async function fetchTelemetry() {
+      try {
+        const res = await fetch("/health");
+        const data = await res.json();
+        document.getElementById("totalMcpCount").textContent = data.totalMcpRequests || 0;
+        document.getElementById("telemetryConsole").textContent = JSON.stringify(data, null, 2);
+
+        const badge = document.getElementById("bedrockBadge");
+        if (data.bedrock && data.bedrock.configured) {
+          badge.innerHTML = "<span>⚡ Bedrock Claude 3: Connected</span>";
+          badge.style.color = "var(--accent-success)";
+        } else {
+          badge.innerHTML = "<span>🛡️ Neural Guard: Active (Local Fallback)</span>";
+          badge.style.color = "var(--alexa-cyan)";
+        }
+      } catch (e) {
+        console.error("Telemetry poll failed", e);
+      }
+    }
+
+    // Initial Bootstrap
+    window.addEventListener("DOMContentLoaded", () => {
+      loadSubscriptions();
+      fetchTelemetry();
+      loadPresetPayload();
+      setInterval(fetchTelemetry, 8000);
+    });
+  </script>
+</body>
+</html>
