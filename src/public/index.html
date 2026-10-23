@@ -3,40 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ElderGuard & SubTrack | Alexa+ Family Security & Subscription Shield</title>
+  <title>SubTrack & ElderGuard | Alexa+ Family Security & Subscription Shield</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #070a12;
-      --bg-surface: #0e1424;
-      --bg-card: rgba(18, 26, 46, 0.75);
-      --bg-card-hover: rgba(26, 38, 66, 0.85);
-      --bg-input: #080c16;
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-focus: #00caff;
-      --text-primary: #ffffff;
-      --text-secondary: #94a3b8;
+      /* Minimalist Light Design System Tokens */
+      --bg-page: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f1f5f9;
+      --bg-hover: #f8fafc;
+      
+      --border-subtle: #f1f5f9;
+      --border-default: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
       --text-muted: #64748b;
-      --alexa-cyan: #00caff;
-      --alexa-blue: #0066ff;
-      --alexa-glow: rgba(0, 202, 255, 0.45);
-      --accent-danger: #f43f5e;
-      --accent-danger-glow: rgba(244, 63, 94, 0.3);
-      --accent-warning: #f59e0b;
-      --accent-warning-glow: rgba(245, 158, 11, 0.25);
-      --accent-success: #10b981;
-      --accent-success-glow: rgba(16, 185, 129, 0.25);
-      --accent-purple: #a855f7;
+      --text-tertiary: #94a3b8;
+
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-subtle: #eff6ff;
+      --primary-border: #bfdbfe;
+
+      --accent-alexa: #0284c7;
+      --accent-alexa-subtle: #f0f9ff;
+      --accent-alexa-border: #bae6fd;
+
+      --success: #059669;
+      --success-subtle: #ecfdf5;
+      --success-border: #a7f3d0;
+
+      --warning: #d97706;
+      --warning-subtle: #fffbeb;
+      --warning-border: #fde68a;
+
+      --danger: #dc2626;
+      --danger-subtle: #fef2f2;
+      --danger-border: #fecaca;
+
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
       --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --radius-xl: 28px;
-      --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border-subtle);
-      --shadow-glow: 0 0 25px var(--alexa-glow);
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      --shadow-subtle: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+      --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+      --shadow-elevated: 0 10px 25px -5px rgba(15, 23, 42, 0.07), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
     }
 
     * {
@@ -46,894 +65,838 @@
     }
 
     body {
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 10% 15%, rgba(0, 102, 255, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 90% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 45%),
-        radial-gradient(circle at 50% 85%, rgba(0, 202, 255, 0.08) 0%, transparent 55%);
+      background-color: var(--bg-page);
       color: var(--text-primary);
       font-family: var(--font-sans);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
     }
 
-    /* Ambient Header */
+    /* Minimalist Top App Navigation */
     header {
-      background: rgba(7, 10, 18, 0.82);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-default);
       position: sticky;
       top: 0;
-      z-index: 100;
-      padding: 14px 28px;
+      z-index: 40;
+      padding: 12px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-logo-cube {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #00caff 0%, #0052cc 60%, #8b5cf6 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 0 20px var(--alexa-glow);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .brand-text h1 {
-      font-size: 19px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #ffffff 40%, var(--alexa-cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .brand-badge-tag {
-      font-size: 11px;
-      font-weight: 700;
-      color: #00caff;
-      background: rgba(0, 202, 255, 0.12);
-      border: 1px solid rgba(0, 202, 255, 0.3);
-      padding: 2px 7px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
-
-    .brand-text p {
-      font-size: 12px;
-      color: var(--text-secondary);
-      font-weight: 500;
-      margin-top: 1px;
-    }
-
-    .header-controls {
+    .brand-section {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .status-pill {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-subtle);
-    }
-
-    .status-dot-active {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--alexa-cyan);
-      box-shadow: 0 0 10px var(--alexa-cyan);
-      animation: pulseGlow 1.8s infinite ease-in-out;
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.8); }
-    }
-
-    .btn-audio-circle {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-primary);
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      font-size: 16px;
-      transition: all 0.2s;
+      font-size: 18px;
     }
 
-    .btn-audio-circle.active {
-      background: rgba(0, 202, 255, 0.15);
-      border-color: var(--alexa-cyan);
-      color: var(--alexa-cyan);
-      box-shadow: 0 0 12px rgba(0, 202, 255, 0.3);
-    }
-
-    /* Urgent Alert Strip */
-    .urgent-banner {
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.15) 0%, rgba(244, 63, 94, 0.15) 100%);
-      border-bottom: 1px solid rgba(245, 158, 11, 0.35);
-      padding: 10px 28px;
+    .brand-text h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      font-size: 13px;
+      gap: 8px;
     }
 
-    .urgent-banner-content {
+    .brand-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .tag-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+    }
+
+    .header-actions {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .urgent-btn {
-      background: rgba(245, 158, 11, 0.25);
-      border: 1px solid rgba(245, 158, 11, 0.5);
-      color: #fde68a;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+    .status-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      color: var(--text-secondary);
     }
 
-    .urgent-btn:hover {
-      background: #f59e0b;
-      color: #000;
+    .indicator-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.2);
+    }
+
+    .btn-icon-subtle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-icon-subtle:hover {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .btn-icon-subtle.active {
+      background: var(--primary-subtle);
+      border-color: var(--primary-border);
+      color: var(--primary);
+    }
+
+    /* Minimal Proactive Alert Notice */
+    .notification-bar {
+      background: var(--warning-subtle);
+      border-bottom: 1px solid var(--warning-border);
+      padding: 8px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #92400e;
+    }
+
+    .notification-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-notification-action {
+      background: #ffffff;
+      border: 1px solid #fcd34d;
+      color: #92400e;
+      padding: 3px 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-notification-action:hover {
+      background: #fef3c7;
     }
 
     /* Main Container */
     main {
       flex: 1;
-      max-width: 1480px;
+      max-width: 1280px;
       width: 100%;
       margin: 0 auto;
-      padding: 24px 28px 40px;
+      padding: 24px 28px 48px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
 
-    /* HERO: Alexa Echo Show 15 Smart Display Simulation Console */
-    .echo-station {
-      background: radial-gradient(circle at 50% 10%, rgba(0, 202, 255, 0.14) 0%, rgba(14, 20, 36, 0.85) 60%);
-      border: 1px solid rgba(0, 202, 255, 0.25);
-      border-radius: var(--radius-xl);
-      padding: 28px;
-      box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 202, 255, 0.1);
-      position: relative;
-      overflow: hidden;
+    /* Base Card Style */
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-card);
     }
 
-    .echo-station::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 10%;
-      right: 10%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--alexa-cyan), transparent);
+    /* SECTION 1: ALEXA+ COMPANION HUB */
+    .alexa-companion-card {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
     }
 
-    .echo-header {
+    .companion-meta-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
     }
 
     .device-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 13px;
-      color: var(--text-secondary);
+      font-size: 12px;
       font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .echo-pulse-orb {
-      width: 14px;
-      height: 14px;
+    .device-circle {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--alexa-cyan), #0066ff, #a855f7, var(--alexa-cyan));
-      animation: rotateOrb 3s linear infinite;
-      box-shadow: 0 0 15px var(--alexa-cyan);
+      background: var(--accent-alexa);
     }
 
-    @keyframes rotateOrb {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .state-pill {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      color: var(--text-secondary);
     }
 
-    /* Voice Interaction Row */
-    .echo-interaction-grid {
+    .state-pill.active {
+      background: var(--accent-alexa-subtle);
+      border-color: var(--accent-alexa-border);
+      color: var(--accent-alexa);
+    }
+
+    /* Conversation Display */
+    .conversation-display {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
       align-items: center;
     }
 
-    @media (min-width: 900px) {
-      .echo-interaction-grid {
-        grid-template-columns: auto 1fr;
+    @media (max-width: 640px) {
+      .conversation-display {
+        grid-template-columns: 1fr;
       }
     }
 
-    /* Alexa Glowing Ring Device */
-    .alexa-device-unit {
+    /* Sleek Pulsing Voice Ring */
+    .voice-avatar-wrap {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 10px;
-    }
-
-    .alexa-ring-stage {
-      width: 120px;
-      height: 120px;
-      position: relative;
-      cursor: pointer;
-      margin-bottom: 12px;
-    }
-
-    .alexa-ring-outer {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, #00caff, #0066ff, #9333ea, #00caff);
-      animation: ringSpin 5s linear infinite;
-      box-shadow: 0 0 35px var(--alexa-glow);
-      transition: all 0.3s;
-    }
-
-    .alexa-ring-inner {
-      position: absolute;
-      inset: 7px;
-      border-radius: 50%;
-      background: #090e18;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      color: #fff;
-      transition: all 0.3s;
-    }
-
-    .alexa-ring-stage.speaking .alexa-ring-outer {
-      animation: ringSpin 1.2s linear infinite;
-      box-shadow: 0 0 55px rgba(0, 202, 255, 0.9);
-      filter: brightness(1.2);
-    }
-
-    .alexa-ring-stage.speaking .alexa-ring-inner {
-      background: #0d1527;
-    }
-
-    @keyframes ringSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Sound Waveform Visualizer */
-    .sound-wave-bars {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      height: 18px;
-      margin-top: 6px;
-    }
-
-    .wave-bar {
-      width: 3px;
-      height: 4px;
-      background: var(--alexa-cyan);
-      border-radius: 2px;
-      transition: height 0.15s ease;
-    }
-
-    .speaking .wave-bar:nth-child(1) { animation: wave 0.8s infinite 0.1s; }
-    .speaking .wave-bar:nth-child(2) { animation: wave 0.8s infinite 0.3s; }
-    .speaking .wave-bar:nth-child(3) { animation: wave 0.8s infinite 0.2s; }
-    .speaking .wave-bar:nth-child(4) { animation: wave 0.8s infinite 0.5s; }
-    .speaking .wave-bar:nth-child(5) { animation: wave 0.8s infinite 0.15s; }
-    .speaking .wave-bar:nth-child(6) { animation: wave 0.8s infinite 0.4s; }
-    .speaking .wave-bar:nth-child(7) { animation: wave 0.8s infinite 0.25s; }
-
-    @keyframes wave {
-      0%, 100% { height: 4px; }
-      50% { height: 18px; }
-    }
-
-    .station-state-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--alexa-cyan);
-      text-transform: uppercase;
-    }
-
-    /* Spoken Alexa Dialogue Card */
-    .dialogue-card {
-      background: rgba(8, 12, 22, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-lg);
-      padding: 22px 26px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-
-    .dialogue-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding-bottom: 10px;
-    }
-
-    .dialogue-speaker {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #e2e8f0;
-    }
-
-    .tool-badge {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      background: rgba(0, 202, 255, 0.1);
-      color: var(--alexa-cyan);
-      border: 1px solid rgba(0, 202, 255, 0.3);
-      padding: 3px 8px;
-      border-radius: 6px;
-    }
-
-    .dialogue-bubble {
-      font-size: 16px;
-      line-height: 1.6;
-      color: #f8fafc;
-      font-weight: 400;
-      min-height: 52px;
-    }
-
-    .dialogue-meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .meta-tag {
-      display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .meta-tag strong {
-      color: #cbd5e1;
+    .voice-avatar-ring {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid var(--accent-alexa-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: var(--accent-alexa);
+      cursor: pointer;
+      box-shadow: 0 0 0 4px var(--accent-alexa-subtle);
+      transition: all 0.2s ease;
+    }
+
+    .voice-avatar-ring:hover {
+      border-color: var(--accent-alexa);
+      box-shadow: 0 0 0 6px #e0f2fe;
+    }
+
+    .voice-avatar-ring.speaking {
+      border-color: var(--accent-alexa);
+      box-shadow: 0 0 0 8px rgba(2, 132, 199, 0.15);
+      animation: pulseAura 1.8s infinite ease-in-out;
+    }
+
+    @keyframes pulseAura {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 6px rgba(2, 132, 199, 0.15); }
+      50% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(2, 132, 199, 0.22); }
+    }
+
+    .audio-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 12px;
+    }
+
+    .audio-bar {
+      width: 3px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--accent-alexa);
+      transition: height 0.15s ease;
+    }
+
+    .speaking .audio-bar:nth-child(1) { animation: wave 0.6s infinite 0.1s; }
+    .speaking .audio-bar:nth-child(2) { animation: wave 0.6s infinite 0.3s; }
+    .speaking .audio-bar:nth-child(3) { animation: wave 0.6s infinite 0.15s; }
+    .speaking .audio-bar:nth-child(4) { animation: wave 0.6s infinite 0.45s; }
+
+    @keyframes wave {
+      0%, 100% { height: 3px; }
+      50% { height: 12px; }
+    }
+
+    /* Dialogue Card */
+    .speech-bubble {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .speech-bubble-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .speech-text {
+      font-size: 15px;
+      color: var(--text-primary);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .speech-metadata {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-default);
+      padding-top: 8px;
+    }
+
+    .speech-metadata strong {
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
       font-weight: 600;
     }
 
-    /* Preset Voice Prompt Chips */
-    .prompt-chips-section {
-      margin-top: 18px;
+    /* Voice Prompt Chips */
+    .prompt-pills-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .chips-label {
-      font-size: 12px;
-      font-weight: 700;
+    .pills-label {
+      font-size: 11px;
+      font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.6px;
-      margin-bottom: 10px;
-      display: block;
+      letter-spacing: 0.04em;
     }
 
-    .chips-wrap {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 10px;
-    }
-
-    .voice-chip {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      color: var(--text-primary);
-      font-family: var(--font-sans);
-      font-size: 13px;
-      cursor: pointer;
+    .pills-container {
       display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      text-align: left;
-      line-height: 1.4;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .voice-chip:hover {
-      background: rgba(0, 202, 255, 0.09);
-      border-color: rgba(0, 202, 255, 0.4);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-    }
-
-    .voice-chip-icon {
-      font-size: 18px;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .voice-chip-title {
-      font-weight: 700;
-      color: #fff;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .voice-chip-desc {
+    .voice-pill {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
       font-size: 12px;
+      font-weight: 600;
       color: var(--text-secondary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-subtle);
     }
 
-    /* Custom Input Bar */
-    .custom-query-bar {
+    .voice-pill:hover {
+      background: var(--bg-subtle);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .voice-pill.featured {
+      background: var(--primary-subtle);
+      border-color: var(--primary-border);
+      color: var(--primary);
+    }
+
+    /* Input Bar */
+    .input-bar-container {
       display: flex;
-      gap: 10px;
-      margin-top: 16px;
+      gap: 8px;
     }
 
     .query-input {
       flex: 1;
-      background: #080c16;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius-md);
-      padding: 14px 20px;
-      color: #fff;
+      padding: 10px 16px;
+      font-size: 13px;
       font-family: var(--font-sans);
-      font-size: 14px;
+      color: var(--text-primary);
       outline: none;
-      transition: all 0.2s;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
 
     .query-input:focus {
-      border-color: var(--alexa-cyan);
-      box-shadow: 0 0 15px rgba(0, 202, 255, 0.25);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
     }
 
-    .btn-invoke {
-      background: linear-gradient(135deg, var(--alexa-cyan) 0%, var(--alexa-blue) 100%);
-      color: #fff;
+    .btn-submit {
+      background: var(--primary);
+      color: #ffffff;
       border: none;
       border-radius: var(--radius-md);
-      padding: 0 24px;
+      padding: 0 18px;
+      font-size: 13px;
+      font-weight: 600;
       font-family: var(--font-sans);
-      font-weight: 700;
-      font-size: 14px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-      box-shadow: 0 4px 18px rgba(0, 102, 255, 0.4);
+      gap: 6px;
+      transition: background-color 0.15s ease;
     }
 
-    .btn-invoke:hover {
-      filter: brightness(1.15);
-      transform: translateY(-1px);
+    .btn-submit:hover {
+      background: var(--primary-hover);
     }
 
-    /* TWO-COLUMN CONSUMER APPLICATION GRID */
-    .app-main-grid {
+    /* SECTION 2: TWO COLUMNS (SUBTRACK & SCAMSHIELD) */
+    .core-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 20px;
     }
 
-    @media (min-width: 1080px) {
-      .app-main-grid {
-        grid-template-columns: 1.08fr 0.92fr;
+    @media (min-width: 1024px) {
+      .core-grid {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
-    /* Card Panels */
-    .panel-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-xl);
-      padding: 24px;
-      backdrop-filter: blur(16px);
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      position: relative;
-    }
-
-    .panel-header {
+    .card-header-minimal {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 16px;
+      align-items: flex-start;
+      margin-bottom: 18px;
     }
 
-    .panel-title-block {
+    .card-title-wrap {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .panel-icon-wrap {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+    .card-icon-box {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 16px;
     }
 
-    .icon-subtrack {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      color: #34d399;
+    .card-icon-blue {
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
     }
 
-    .icon-scamshield {
-      background: linear-gradient(135deg, rgba(244, 63, 94, 0.2) 0%, rgba(225, 29, 72, 0.3) 100%);
-      border: 1px solid rgba(244, 63, 94, 0.4);
-      color: #fb7185;
+    .card-icon-rose {
+      background: var(--danger-subtle);
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
     }
 
-    .icon-mcp {
-      background: linear-gradient(135deg, rgba(0, 202, 255, 0.2) 0%, rgba(0, 102, 255, 0.3) 100%);
-      border: 1px solid rgba(0, 202, 255, 0.4);
-      color: var(--alexa-cyan);
-    }
-
-    .panel-title {
-      font-size: 18px;
+    .card-heading-title {
+      font-size: 15px;
       font-weight: 700;
-      color: #fff;
+      color: var(--text-primary);
     }
 
-    .panel-subtitle {
+    .card-heading-subtitle {
       font-size: 12px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
     }
 
-    /* MODULE A: SUBTRACK SUBSCRIPTION MANAGER */
-    .stat-cards-grid {
+    /* SubTrack KPI Tiles */
+    .metrics-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 10px;
+      margin-bottom: 18px;
     }
 
-    .stat-metric-card {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 14px;
+    .metric-box {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
 
-    .stat-label {
+    .metric-caption {
       font-size: 11px;
       font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
-    .stat-value {
-      font-size: 22px;
-      font-weight: 800;
-      font-family: var(--font-mono);
-      color: #fff;
+    .metric-val {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
     }
 
-    .stat-value.savings {
-      color: var(--accent-success);
-    }
-
-    .stat-value.danger {
-      color: var(--accent-danger);
+    .metric-val.green { color: var(--success); }
+    .metric-val.amber { color: var(--warning); }
+    .metric-unit {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
     }
 
     /* Subscriptions List */
-    .sub-filter-row {
+    .list-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 10px;
     }
 
-    .sub-count-badge {
+    .list-title {
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
       color: var(--text-secondary);
     }
 
-    .btn-reset-seed {
+    .btn-link-action {
       background: none;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 11px;
+      border: none;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      padding: 0;
     }
 
-    .btn-reset-seed:hover {
-      border-color: #fff;
-      color: #fff;
+    .btn-link-action:hover {
+      text-decoration: underline;
     }
 
-    .subscriptions-scroll-area {
+    .subscriptions-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      max-height: 480px;
+      gap: 8px;
+      max-height: 420px;
       overflow-y: auto;
       padding-right: 4px;
     }
 
-    .sub-card-row {
-      background: rgba(10, 15, 28, 0.6);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
+    .sub-item {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      transition: all 0.2s;
+      gap: 6px;
+      transition: all 0.15s ease;
+      position: relative;
     }
 
-    .sub-card-row.trial-urgent {
-      background: rgba(245, 158, 11, 0.05);
-      border-color: rgba(245, 158, 11, 0.35);
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
+    .sub-item:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-subtle);
     }
 
-    .sub-card-row.blocked {
-      background: rgba(16, 185, 129, 0.05);
-      border-color: rgba(16, 185, 129, 0.35);
+    .sub-item.trial-alert {
+      border-left: 3px solid var(--warning);
+      background: #fffdf7;
     }
 
-    .sub-card-main {
+    .sub-item.active-sub {
+      border-left: 3px solid var(--success);
+    }
+
+    .sub-item.blocked {
+      border-left: 3px solid var(--border-strong);
+      background: #f8fafc;
+      opacity: 0.8;
+    }
+
+    .sub-main-info {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
     }
 
-    .sub-name-group {
+    .sub-title-group {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .sub-category-icon {
-      font-size: 20px;
+    .sub-item-icon {
+      font-size: 16px;
     }
 
-    .sub-name-text {
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
+    .sub-item-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
     }
 
-    .sub-provider-tag {
+    .sub-item-provider {
       font-size: 11px;
       color: var(--text-muted);
+    }
+
+    .sub-item-price {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .sub-item-price span {
+      font-size: 11px;
       font-weight: 500;
-    }
-
-    .sub-price-tag {
-      font-size: 15px;
-      font-weight: 800;
-      font-family: var(--font-mono);
-      color: #fff;
-    }
-
-    .sub-footer-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
       color: var(--text-muted);
     }
 
-    .sub-badge {
+    .sub-footer-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .status-badge {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 3px 8px;
-      border-radius: 6px;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
     }
 
-    .badge-trial {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.4);
+    .status-badge.amber {
+      background: var(--warning-subtle);
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
     }
 
-    .badge-active {
-      background: rgba(16, 185, 129, 0.15);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+    .status-badge.green {
+      background: var(--success-subtle);
+      color: var(--success);
+      border: 1px solid var(--success-border);
     }
 
-    .badge-blocked {
-      background: rgba(0, 202, 255, 0.15);
-      color: var(--alexa-cyan);
-      border: 1px solid rgba(0, 202, 255, 0.35);
+    .status-badge.blue {
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
     }
 
-    .btn-block-action {
-      background: rgba(244, 63, 94, 0.18);
-      border: 1px solid rgba(244, 63, 94, 0.4);
-      color: #fda4af;
-      padding: 5px 12px;
-      border-radius: 6px;
+    .btn-secondary-action {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      color: var(--danger);
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
       font-size: 11px;
-      font-weight: 700;
-      font-family: var(--font-sans);
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
     }
 
-    .btn-block-action:hover {
-      background: #f43f5e;
-      color: #fff;
+    .btn-secondary-action:hover {
+      background: var(--danger-subtle);
+      border-color: var(--danger-border);
     }
 
-    /* MODULE B: SCAMSHIELD PHISHING DETECTOR */
-    .scam-simulator-box {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 16px;
+    /* SCAMSHIELD STYLING */
+    .scam-section {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .scam-preset-select-row {
+    .test-scenario-container {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .scenario-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .scenario-select-wrap {
       display: flex;
       gap: 8px;
     }
 
-    .select-sms {
+    .scenario-select {
       flex: 1;
-      background: #080c16;
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      color: #fff;
+      font-size: 12px;
       font-family: var(--font-sans);
-      font-size: 13px;
-      padding: 10px 12px;
+      color: var(--text-primary);
+      padding: 7px 10px;
       outline: none;
     }
 
-    .btn-scan-now {
-      background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+    .btn-scan {
+      background: var(--danger);
+      color: #ffffff;
       border: none;
       border-radius: var(--radius-sm);
-      color: #fff;
-      font-weight: 700;
       font-size: 12px;
-      padding: 0 16px;
+      font-weight: 600;
+      padding: 0 14px;
       cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+      transition: background 0.15s ease;
     }
 
-    .btn-scan-now:hover {
-      filter: brightness(1.15);
+    .btn-scan:hover {
+      background: #b91c1c;
     }
 
-    /* Threat Gauge Widget */
-    .threat-gauge-card {
-      background: rgba(8, 12, 22, 0.7);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 18px;
+    /* Minimalist Risk Gauge */
+    .risk-card {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .gauge-header {
+    .risk-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .gauge-title {
-      font-size: 12px;
-      font-weight: 700;
+    .risk-caption {
+      font-size: 11px;
+      font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
-    .gauge-score-value {
-      font-size: 20px;
-      font-weight: 800;
-      font-family: var(--font-mono);
+    .risk-score-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--danger);
     }
 
-    .progress-bar-track {
-      height: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 8px;
+    .progress-track {
+      height: 6px;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-full);
       overflow: hidden;
     }
 
     .progress-bar-fill {
       height: 100%;
       width: 0%;
-      border-radius: 8px;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: var(--radius-full);
+      background: var(--danger);
+      transition: width 0.4s ease;
     }
 
-    .deception-badges-list {
+    .deception-tags-list {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
 
-    .deception-chip {
+    .deception-tag {
       font-size: 11px;
       font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 12px;
-      background: rgba(244, 63, 94, 0.15);
-      border: 1px solid rgba(244, 63, 94, 0.35);
-      color: #fda4af;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--danger-subtle);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
     }
 
-    .action-checklist-box {
-      background: rgba(0, 0, 0, 0.25);
+    .checklist-wrap {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-default);
       border-radius: var(--radius-sm);
       padding: 12px 14px;
       display: flex;
@@ -941,13 +904,12 @@
       gap: 8px;
     }
 
-    .checklist-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: #cbd5e1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .checklist-header {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
     .checklist-item {
@@ -955,383 +917,329 @@
       color: var(--text-secondary);
       display: flex;
       align-items: flex-start;
-      gap: 8px;
+      gap: 6px;
       line-height: 1.4;
     }
 
-    /* BOTTOM DRAWER: LIVE MCP STREAMABLE HTTP INSPECTOR (FOR HACKATHON JUDGES) */
-    .mcp-debugger-drawer {
-      background: #05080e;
-      border: 1px solid rgba(0, 202, 255, 0.2);
-      border-radius: var(--radius-xl);
-      padding: 22px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    /* SECTION 3: LIGHT THEMED PROTOCOL INSPECTOR */
+    .inspector-card {
+      background: #ffffff;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
-    .drawer-top-row {
+    .inspector-top-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .drawer-title-group {
+    .inspector-header-info {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .inspector-actions {
+    .inspector-actions-group {
       display: flex;
+      align-items: center;
       gap: 8px;
     }
 
-    .method-select {
-      background: #0e1424;
-      border: 1px solid var(--border-subtle);
+    .method-selector {
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
       border-radius: var(--radius-sm);
-      color: #fff;
-      font-family: var(--font-mono);
       font-size: 12px;
-      padding: 8px 12px;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      padding: 6px 10px;
       outline: none;
     }
 
-    .btn-send-mcp {
-      background: linear-gradient(135deg, var(--alexa-cyan) 0%, var(--alexa-blue) 100%);
-      border: none;
+    /* Pure Light-Themed Code Console (No Dark Boxes) */
+    .light-code-console {
+      background: #f8fafc;
+      border: 1px solid var(--border-default);
       border-radius: var(--radius-sm);
-      color: #fff;
-      font-weight: 700;
-      font-size: 12px;
-      padding: 0 16px;
-      cursor: pointer;
-    }
-
-    .terminal-console {
-      background: #020408;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: var(--radius-md);
-      padding: 16px;
+      padding: 14px 16px;
       font-family: var(--font-mono);
       font-size: 12px;
       line-height: 1.5;
-      color: #38bdf8;
-      max-height: 280px;
+      color: #0f172a;
+      max-height: 240px;
       overflow-y: auto;
       white-space: pre-wrap;
       word-break: break-all;
     }
 
-    /* Footer */
+    /* Minimalist Clean Footer */
     footer {
-      border-top: 1px solid var(--border-subtle);
-      padding: 20px 28px;
-      background: rgba(7, 10, 18, 0.7);
+      border-top: 1px solid var(--border-default);
+      background: #ffffff;
+      padding: 16px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
       color: var(--text-muted);
-    }
-
-    .footer-left {
-      display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       gap: 12px;
     }
 
     .footer-links {
       display: flex;
-      gap: 18px;
+      gap: 16px;
     }
 
     .footer-links a {
-      color: var(--text-secondary);
+      color: var(--text-muted);
       text-decoration: none;
-      transition: color 0.2s;
+      font-weight: 500;
+      transition: color 0.15s ease;
     }
 
     .footer-links a:hover {
-      color: var(--alexa-cyan);
+      color: var(--primary);
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Header -->
+  <!-- Minimalist Top Navigation -->
   <header>
-    <div class="brand-group">
-      <div class="brand-logo-cube">🛡️</div>
+    <div class="brand-section">
+      <div class="brand-logo">🛡️</div>
       <div class="brand-text">
         <h1>
-          ElderGuard & SubTrack
-          <span class="brand-badge-tag">Alexa+ Agent Skill</span>
+          SubTrack & ElderGuard
+          <span class="tag-badge">Alexa+ Agent Skill</span>
         </h1>
-        <p>Autonomous Senior Phishing Protection & Hidden Subscription Defense over Streamable HTTP</p>
+        <p>Autonomous Senior Phishing Protection & Hidden Subscription Defense</p>
       </div>
     </div>
 
-    <div class="header-controls">
-      <div class="status-pill">
-        <div class="status-dot-active"></div>
-        <span>POST /mcp (Spec 2025-11-25)</span>
+    <div class="header-actions">
+      <div class="status-chip">
+        <div class="indicator-dot"></div>
+        <span>Streamable HTTP 2025-11-25</span>
       </div>
-      <div class="status-pill" id="bedrockPill">
+      <div class="status-chip" id="bedrockPill">
         <span>⚡ Bedrock Claude 3 Ready</span>
       </div>
-      <button class="btn-audio-circle active" id="audioToggleBtn" title="Toggle Alexa Spoken Audio Feedback">
+      <button class="btn-icon-subtle active" id="audioToggleBtn" title="Toggle Alexa Voice Audio">
         🔊
       </button>
     </div>
   </header>
 
-  <!-- Urgent Trial Warning Strip -->
-  <div class="urgent-banner">
-    <div class="urgent-banner-content">
+  <!-- Proactive Alert Notice -->
+  <div class="notification-bar">
+    <div class="notification-content">
       <span>⚠️</span>
-      <span><strong>Attention:</strong> 3 Free Trial Subscriptions are expiring this week ($81.98/mo at risk of auto-charge).</span>
+      <span><strong>Proactive Notice:</strong> Free Trial Subscriptions expire this week ($81.98/mo at risk of auto-charge).</span>
     </div>
-    <button class="urgent-btn" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+    <button class="btn-notification-action" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
       Review Cancellation Reminders
     </button>
   </div>
 
-  <!-- Main Container -->
+  <!-- Main Content Canvas -->
   <main>
 
-    <!-- HERO SECTION: Alexa Echo Show 15 Smart Display Simulation Station -->
-    <div class="echo-station">
-      <div class="echo-header">
+    <!-- SECTION 1: ALEXA+ COMPANION HUB -->
+    <div class="alexa-companion-card">
+      <div class="companion-meta-header">
         <div class="device-badge">
-          <div class="echo-pulse-orb"></div>
+          <div class="device-circle"></div>
           <span>Simulated Echo Show 15 • Living Room Voice Agent</span>
         </div>
-        <div class="station-state-label" id="alexaStatus">Alexa+ Agent Idle</div>
+        <div class="state-pill" id="alexaStatus">Alexa+ Agent Idle</div>
       </div>
 
-      <div class="echo-interaction-grid">
-        <!-- Visual Alexa Glowing Unit -->
-        <div class="alexa-device-unit">
-          <div class="alexa-ring-stage" id="alexaRing" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
-            <div class="alexa-ring-outer"></div>
-            <div class="alexa-ring-inner">
-              <span>🎙️</span>
-            </div>
+      <div class="conversation-display">
+        <!-- Voice Avatar & Waveform -->
+        <div class="voice-avatar-wrap">
+          <div class="voice-avatar-ring" id="alexaSphere" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+            <span>🎙️</span>
           </div>
-          <div class="sound-wave-bars">
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
+          <div class="audio-bars">
+            <div class="audio-bar"></div>
+            <div class="audio-bar"></div>
+            <div class="audio-bar"></div>
+            <div class="audio-bar"></div>
           </div>
         </div>
 
-        <!-- Spoken Dialogue Card -->
-        <div class="dialogue-card">
-          <div class="dialogue-top">
-            <div class="dialogue-speaker">
-              <span>🔊 Alexa+ Voice Response</span>
-            </div>
-            <div class="tool-badge" id="toolBadge">Ready</div>
+        <!-- Spoken Dialogue Content -->
+        <div class="speech-bubble">
+          <div class="speech-bubble-header">
+            <span>Alexa+ Spoken Response</span>
+            <span class="tag-badge" id="toolBadge">Ready</span>
           </div>
-
-          <div class="dialogue-bubble" id="spokenDialogueText">
+          <div class="speech-text" id="spokenDialogueText">
             "Hello! I am your SubTrack & ElderGuard family assistant. Ask me to list your subscriptions, warn you about free trials expiring before auto-charge, or check any suspicious text message for scams."
           </div>
-
-          <div class="dialogue-meta-row">
-            <div class="meta-tag">
-              <span>Active Agent Tool:</span>
-              <strong id="metaTool">None</strong>
-            </div>
-            <div class="meta-tag">
-              <span>Protocol:</span>
-              <strong>POST /mcp (Streamable HTTP)</strong>
-            </div>
-            <div class="meta-tag">
-              <span>Latency:</span>
-              <strong id="metaLatency">0 ms</strong>
-            </div>
+          <div class="speech-metadata">
+            <div>Tool: <strong id="metaTool">None</strong></div>
+            <div>Transport: <strong>POST /mcp (Streamable HTTP)</strong></div>
+            <div>Latency: <strong id="metaLatency">0 ms</strong></div>
           </div>
         </div>
       </div>
 
-      <!-- Preset Voice Action Chips -->
-      <div class="prompt-chips-section">
-        <span class="chips-label">Simulate Asking Alexa+ (Click Any Prompt):</span>
-        <div class="chips-wrap">
-          <button class="voice-chip" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
-            <span class="voice-chip-icon">📋</span>
-            <div>
-              <span class="voice-chip-title">List All Active Subscriptions</span>
-              <span class="voice-chip-desc">Itemizes every subscription, monthly costs, and household total</span>
-            </div>
+      <!-- Voice Prompt Suggestion Pills -->
+      <div class="prompt-pills-row">
+        <span class="pills-label">Try Voice Queries (Click Any):</span>
+        <div class="pills-container">
+          <button class="voice-pill featured" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+            <span>📋</span> List Active Subscriptions
           </button>
-
-          <button class="voice-chip" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
-            <span class="voice-chip-icon">⏰</span>
-            <div>
-              <span class="voice-chip-title">Cancellation Reminders</span>
-              <span class="voice-chip-desc">Proactively warns about expiring trials before auto-renewals trigger</span>
-            </div>
+          <button class="voice-pill featured" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+            <span>⏰</span> Expiring Cancellation Reminders
           </button>
-
-          <button class="voice-chip" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
-            <span class="voice-chip-icon">🏦</span>
-            <div>
-              <span class="voice-chip-title">Scan Fake Chase Wire Text</span>
-              <span class="voice-chip-desc">Catches homoglyph links, fake bank domains, and 24h pressure</span>
-            </div>
+          <button class="voice-pill" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
+            <span>🏦</span> Scan Chase Wire SMS
           </button>
-
-          <button class="voice-chip" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
-            <span class="voice-chip-icon">📦</span>
-            <div>
-              <span class="voice-chip-title">Scan USPS Package Smishing</span>
-              <span class="voice-chip-desc">Detects fraudulent $2.19 customs fee & deceptive .xyz redelivery link</span>
-            </div>
+          <button class="voice-pill" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
+            <span>📦</span> Scan USPS Phishing
           </button>
-
-          <button class="voice-chip" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
-            <span class="voice-chip-icon">🛑</span>
-            <div>
-              <span class="voice-chip-title">Cancel Auto-Renewal Alert</span>
-              <span class="voice-chip-desc">Blocks trial conversion to save $29.99/mo automatically</span>
-            </div>
+          <button class="voice-pill" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
+            <span>🛑</span> Cancel BrainGym Renewal
           </button>
-
-          <button class="voice-chip" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
-            <span class="voice-chip-icon">👵</span>
-            <div>
-              <span class="voice-chip-title">Grandparent Imposter Trap</span>
-              <span class="voice-chip-desc">Detects coercive emergency bail scam demanding gift cards</span>
-            </div>
+          <button class="voice-pill" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
+            <span>👵</span> Grandparent Bail Scam
           </button>
         </div>
       </div>
 
-      <!-- Custom Voice / Text Input -->
-      <div class="custom-query-bar">
+      <!-- Natural Query Input -->
+      <div class="input-bar-container">
         <input 
           type="text" 
           id="customPromptInput" 
           class="query-input" 
-          placeholder="Ask Alexa anything: e.g. Is this text a scam: Urgent notice from IRS..."
+          placeholder="Ask Alexa anything: e.g. Which subscriptions are renewing soon? Is this SMS safe?"
           onkeydown="if(event.key==='Enter') executeCustomPrompt()"
         />
-        <button class="btn-invoke" onclick="executeCustomPrompt()">
+        <button class="btn-submit" onclick="executeCustomPrompt()">
           <span>Invoke Agent Skill</span>
           <span>⚡</span>
         </button>
       </div>
     </div>
 
-    <!-- TWO-COLUMN CONSUMER APPLICATION GRID -->
-    <div class="app-main-grid">
+    <!-- SECTION 2: CORE PILLARS (SUBTRACK & SCAMSHIELD) -->
+    <div class="core-grid">
 
-      <!-- COLUMN 1: SUBTRACK SUBSCRIPTION MANAGER -->
-      <div class="panel-card">
-        <div class="panel-header">
-          <div class="panel-title-block">
-            <div class="panel-icon-wrap icon-subtrack">💳</div>
+      <!-- SUBTRACK COLUMN -->
+      <div class="card">
+        <div class="card-header-minimal">
+          <div class="card-title-wrap">
+            <div class="card-icon-box card-icon-blue">💳</div>
             <div>
-              <div class="panel-title">SubTrack Financial Defense</div>
-              <div class="panel-subtitle">Household Subscriptions, Trial Traps & Spend Control</div>
+              <div class="card-heading-title">SubTrack Financial Defense</div>
+              <div class="card-heading-subtitle">Subscriptions, Free Trials & Spend Monitoring</div>
             </div>
           </div>
-          <button class="btn-reset-seed" onclick="resetSubscriptions()">
-            🔄 Reset Seed Data
+          <button class="btn-link-action" onclick="resetSubscriptions()">
+            Reset Seed Data
           </button>
         </div>
 
-        <!-- 3 Metrics Cards -->
-        <div class="stat-cards-grid">
-          <div class="stat-metric-card">
-            <div class="stat-label">Total Monthly Spend</div>
-            <div class="stat-value" id="totalSpendDisplay">$145.94</div>
+        <!-- 3 KPI Summary Metrics -->
+        <div class="metrics-row">
+          <div class="metric-box">
+            <div class="metric-caption">Monthly Spend</div>
+            <div class="metric-val" id="totalSpendDisplay">$145.94</div>
           </div>
-          <div class="stat-metric-card">
-            <div class="stat-label">Potential Trial Savings</div>
-            <div class="stat-value savings" id="potentialSavingsDisplay">$81.98</div>
+          <div class="metric-box">
+            <div class="metric-caption">Trial Savings</div>
+            <div class="metric-val green" id="potentialSavingsDisplay">$81.98</div>
           </div>
-          <div class="stat-metric-card">
-            <div class="stat-label">Expiring Trials</div>
-            <div class="stat-value danger" id="expiringCountDisplay">3 Trials</div>
+          <div class="metric-box">
+            <div class="metric-caption">Expiring Trials</div>
+            <div class="metric-val amber" id="expiringCountDisplay">
+              <span id="expiringNumber">3</span>
+              <span class="metric-unit">trials</span>
+            </div>
           </div>
         </div>
 
-        <div class="sub-filter-row">
-          <div class="sub-count-badge" id="subListSummary">Active Household Subscriptions (7)</div>
-          <span style="font-size: 11px; color: var(--text-muted);">Protected by Alexa+ Agent</span>
+        <div class="list-header-row">
+          <div class="list-title" id="subListSummary">Active Household Subscriptions (7)</div>
+          <div style="font-size: 11px; color: var(--text-muted);">Protected by Alexa+ Agent</div>
         </div>
 
-        <!-- Interactive Subscriptions List -->
-        <div class="subscriptions-scroll-area" id="subscriptionsContainer">
-          <!-- Populated dynamically via JavaScript -->
+        <!-- Dynamic Subscriptions List -->
+        <div class="subscriptions-list" id="subscriptionsContainer">
+          <!-- Rendered dynamically -->
         </div>
       </div>
 
-      <!-- COLUMN 2: SCAMSHIELD FRAUD DETECTOR -->
-      <div class="panel-card">
-        <div class="panel-header">
-          <div class="panel-title-block">
-            <div class="panel-icon-wrap icon-scamshield">🛡️</div>
+      <!-- SCAMSHIELD COLUMN -->
+      <div class="card">
+        <div class="card-header-minimal">
+          <div class="card-title-wrap">
+            <div class="card-icon-box card-icon-rose">🛡️</div>
             <div>
-              <div class="panel-title">ScamShield Threat Engine</div>
-              <div class="panel-subtitle">Heuristics + Amazon Bedrock Claude 3 Intelligence</div>
+              <div class="card-heading-title">ScamShield Threat Engine</div>
+              <div class="card-heading-subtitle">Heuristics + Bedrock Claude 3 Intelligence</div>
             </div>
           </div>
-          <span class="sub-badge badge-active" id="bedrockEngineTag">Bedrock Claude 3</span>
+          <span class="status-badge blue" id="bedrockEngineTag">Bedrock Claude 3</span>
         </div>
 
-        <!-- Incoming Message Tester -->
-        <div class="scam-simulator-box">
-          <div style="font-size: 12px; font-weight: 700; color: #cbd5e1;">Test Deceptive Message:</div>
-          <div class="scam-preset-select-row">
-            <select id="smsScenarioSelect" class="select-sms" onchange="loadSmsScenario()">
-              <option value="chase">Chase Bank Wire Alert: 'Unauthorized wire... verify credentials'</option>
-              <option value="usps">USPS Smishing: 'Package held at depot, pay $2.19 fee'</option>
-              <option value="grandkid">Grandparent Bail Scam: 'In jail after accident, send Apple cards'</option>
-              <option value="safe">Legitimate Message: 'Hi Mom, see you for Sunday dinner at 5pm'</option>
-            </select>
-            <button class="btn-scan-now" onclick="scanSelectedSms()">Scan Now</button>
-          </div>
-        </div>
-
-        <!-- Live Threat Gauge -->
-        <div class="threat-gauge-card">
-          <div class="gauge-header">
-            <div class="gauge-title">Threat Risk Assessment</div>
-            <div class="gauge-score-value" id="threatGaugeText">63 / 100 (DANGEROUS SCAM)</div>
-          </div>
-          <div class="progress-bar-track">
-            <div class="progress-bar-fill" id="threatProgressBar"></div>
-          </div>
-          <div class="deception-badges-list" id="deceptionBadges"></div>
-        </div>
-
-        <!-- Senior Safety Advice Checklist -->
-        <div class="action-checklist-box">
-          <div class="checklist-title">
-            <span>🛡️</span>
-            <span>Recommended Protection Steps for Senior:</span>
-          </div>
-          <div id="checklistItems">
-            <div class="checklist-item">
-              <span>•</span>
-              <span>Do not click any embedded links or open attachments.</span>
+        <div class="scam-section">
+          <!-- Scenario Tester -->
+          <div class="test-scenario-container">
+            <div class="scenario-label">Simulate Incoming Message:</div>
+            <div class="scenario-select-wrap">
+              <select id="smsScenarioSelect" class="scenario-select" onchange="loadSmsScenario()">
+                <option value="chase">Chase Bank Alert: 'Unauthorized wire... verify credentials'</option>
+                <option value="usps">USPS Smishing: 'Package held at depot, pay $2.19 fee'</option>
+                <option value="grandkid">Grandparent Bail Scam: 'In jail after accident, send Apple cards'</option>
+                <option value="safe">Legitimate Family: 'Hi Mom, see you for Sunday dinner at 5pm'</option>
+              </select>
+              <button class="btn-scan" onclick="scanSelectedSms()">Scan</button>
             </div>
-            <div class="checklist-item">
-              <span>•</span>
-              <span>Never send gift card codes, Zelle transfers, or one-time verification passwords.</span>
+          </div>
+
+          <!-- Risk Assessment Widget -->
+          <div class="risk-card">
+            <div class="risk-header">
+              <div class="risk-caption">Threat Risk Assessment</div>
+              <div class="risk-score-value" id="threatGaugeText">63 / 100 (DANGEROUS SCAM)</div>
             </div>
-            <div class="checklist-item">
-              <span>•</span>
-              <span>If concerned, call the organization directly using the phone number on the back of your card.</span>
+            <div class="progress-track">
+              <div class="progress-bar-fill" id="threatProgressBar"></div>
+            </div>
+            <div class="deception-tags-list" id="deceptionBadges"></div>
+          </div>
+
+          <!-- Senior Safety Checklist -->
+          <div class="checklist-wrap">
+            <div class="checklist-header">Recommended Protection Steps:</div>
+            <div id="checklistItems">
+              <div class="checklist-item">
+                <span>•</span>
+                <span>Do not click any embedded links or open attachments.</span>
+              </div>
+              <div class="checklist-item">
+                <span>•</span>
+                <span>Never send gift card codes, Zelle transfers, or one-time verification passwords.</span>
+              </div>
+              <div class="checklist-item">
+                <span>•</span>
+                <span>If concerned, call the organization directly using the phone number on your card.</span>
+              </div>
             </div>
           </div>
         </div>
@@ -1339,23 +1247,23 @@
 
     </div>
 
-    <!-- HACKATHON EVALUATORS DRAWER: LIVE MCP STREAMABLE HTTP INSPECTOR -->
-    <div class="mcp-debugger-drawer">
-      <div class="drawer-top-row">
-        <div class="drawer-title-group">
-          <div class="panel-icon-wrap icon-mcp" style="width: 32px; height: 32px; font-size: 16px;">⚡</div>
+    <!-- SECTION 3: LIGHT-THEMED MCP PROTOCOL INSPECTOR -->
+    <div class="inspector-card">
+      <div class="inspector-top-row">
+        <div class="inspector-header-info">
+          <div class="card-icon-box card-icon-blue" style="width: 28px; height: 28px; font-size: 14px;">⚡</div>
           <div>
-            <div style="font-size: 14px; font-weight: 800; color: #fff;">
+            <div style="font-size: 13px; font-weight: 700; color: var(--text-primary);">
               Live MCP Streamable HTTP Protocol Inspector
             </div>
             <div style="font-size: 11px; color: var(--text-muted);">
-              JSON-RPC 2.0 streaming via POST /mcp conforming to spec 2025-11-25+
+              Streamable JSON-RPC 2.0 via POST /mcp (Spec 2025-11-25+)
             </div>
           </div>
         </div>
 
-        <div class="inspector-actions">
-          <select id="mcpMethodSelect" class="method-select" onchange="loadPresetPayload()">
+        <div class="inspector-actions-group">
+          <select id="mcpMethodSelect" class="method-selector" onchange="loadPresetPayload()">
             <option value="call_list_active">tools/call: list_active_subscriptions</option>
             <option value="call_reminders">tools/call: get_cancellation_reminders</option>
             <option value="call_scam">tools/call: analyze_suspicious_message</option>
@@ -1364,29 +1272,26 @@
             <option value="tools/list">tools/list: Discover Agent Skills</option>
             <option value="initialize">initialize: Protocol Handshake</option>
           </select>
-          <button class="btn-send-mcp" onclick="sendRawMcpStream()">Send to POST /mcp</button>
+          <button class="btn-submit" style="font-size: 12px; padding: 6px 14px;" onclick="sendRawMcpStream()">Send to POST /mcp</button>
         </div>
       </div>
 
-      <div class="terminal-console" id="mcpStreamConsole">// Ready. MCP Streamable HTTP endpoint active at POST http://localhost:3000/mcp
-// Select any method above and click 'Send to POST /mcp' to inspect streaming packets.
+      <!-- Pure Light Theme Console Output -->
+      <div class="light-code-console" id="mcpStreamConsole">// Ready. MCP Streamable HTTP endpoint active at POST http://localhost:3000/mcp
+// Select any method above and click 'Send to POST /mcp' to test live streaming.
 </div>
     </div>
 
   </main>
 
-  <!-- Ambient Footer -->
+  <!-- Clean Minimalist Footer -->
   <footer>
-    <div class="footer-left">
-      <strong>SubTrack & ElderGuard MCP Server</strong>
-      <span>•</span>
-      <span>Amazon Hackathon Entry (Alexa+ Track & AWS Builder Mini-Challenge)</span>
-      <span>•</span>
-      <span>MIT Open Source</span>
+    <div>
+      <strong>SubTrack & ElderGuard MCP Server</strong> — Built for Amazon Hackathon (Alexa+ Track & AWS Builder Challenge)
     </div>
     <div class="footer-links">
-      <a href="/mcp" target="_blank">POST /mcp</a>
-      <a href="/health" target="_blank">Health Telemetry</a>
+      <a href="/mcp" target="_blank">POST /mcp Endpoint</a>
+      <a href="/health" target="_blank">Health Check</a>
       <a href="https://modelcontextprotocol.io" target="_blank">MCP Specification</a>
     </div>
   </footer>
@@ -1416,15 +1321,17 @@
       utterance.rate = 1.0;
       utterance.pitch = 1.05;
 
-      const ring = document.getElementById("alexaRing");
+      const sphere = document.getElementById("alexaSphere");
       const status = document.getElementById("alexaStatus");
 
-      ring.classList.add("speaking");
+      sphere.classList.add("speaking");
       status.textContent = "Alexa+ Speaking...";
+      status.classList.add("active");
 
       utterance.onend = () => {
-        ring.classList.remove("speaking");
+        sphere.classList.remove("speaking");
         status.textContent = "Alexa+ Agent Idle";
+        status.classList.remove("active");
       };
 
       window.speechSynthesis.speak(utterance);
@@ -1442,18 +1349,17 @@
       const prompt = input.value.trim();
       if (!prompt) return;
 
-      const ring = document.getElementById("alexaRing");
+      const sphere = document.getElementById("alexaSphere");
       const status = document.getElementById("alexaStatus");
       const spokenEl = document.getElementById("spokenDialogueText");
       const toolEl = document.getElementById("metaTool");
       const latencyEl = document.getElementById("metaLatency");
       const badge = document.getElementById("toolBadge");
 
-      ring.classList.add("speaking");
+      sphere.classList.add("speaking");
       status.textContent = "Invoking Agent Skill...";
+      status.classList.add("active");
       badge.textContent = "Processing";
-      badge.style.borderColor = "var(--alexa-cyan)";
-      badge.style.color = "var(--alexa-cyan)";
 
       try {
         const res = await fetch("/api/simulate/voice-prompt", {
@@ -1464,17 +1370,15 @@
 
         const data = await res.json();
 
-        ring.classList.remove("speaking");
+        sphere.classList.remove("speaking");
         status.textContent = "Alexa+ Agent Idle";
+        status.classList.remove("active");
         badge.textContent = "Completed";
-        badge.style.borderColor = "var(--accent-success)";
-        badge.style.color = "var(--accent-success)";
 
         spokenEl.textContent = `"${data.alexaSpokenResponse}"`;
         toolEl.textContent = data.mcpToolInvoked;
         latencyEl.textContent = `${data.executionLatencyMs} ms`;
 
-        // Update Threat Meter if a scam scan was performed
         if (data.mcpToolInvoked === "analyze_suspicious_message" && data.mcpToolResult) {
           renderThreatMeter(data.mcpToolResult);
         }
@@ -1482,10 +1386,10 @@
         speakText(data.alexaSpokenResponse);
         loadSubscriptions();
       } catch (err) {
-        ring.classList.remove("speaking");
+        sphere.classList.remove("speaking");
         status.textContent = "Error";
+        status.classList.remove("active");
         badge.textContent = "Failed";
-        badge.style.color = "var(--accent-danger)";
         spokenEl.textContent = `Error simulating voice prompt: ${err.message}`;
       }
     }
@@ -1501,30 +1405,30 @@
       text.textContent = `${score} / 100 (${report.verdict.replace(/_/g, ' ')})`;
 
       if (score >= 60) {
-        fill.style.background = "linear-gradient(90deg, #f59e0b, #ef4444)";
-        text.style.color = "var(--accent-danger)";
+        fill.style.background = "var(--danger)";
+        text.style.color = "var(--danger)";
       } else if (score >= 30) {
-        fill.style.background = "linear-gradient(90deg, #10b981, #f59e0b)";
-        text.style.color = "var(--accent-warning)";
+        fill.style.background = "var(--warning)";
+        text.style.color = "var(--warning)";
       } else {
-        fill.style.background = "var(--accent-success)";
-        text.style.color = "var(--accent-success)";
+        fill.style.background = "var(--success)";
+        text.style.color = "var(--success)";
       }
 
       badgesContainer.innerHTML = "";
       if (report.signals && report.signals.length > 0) {
         report.signals.forEach(s => {
           const chip = document.createElement("div");
-          chip.className = "deception-chip";
+          chip.className = "deception-tag";
           chip.textContent = `🚩 ${s.description}`;
           badgesContainer.appendChild(chip);
         });
       } else {
         const chip = document.createElement("div");
-        chip.className = "deception-chip";
-        chip.style.background = "rgba(16, 185, 129, 0.15)";
-        chip.style.borderColor = "rgba(16, 185, 129, 0.35)";
-        chip.style.color = "#6ee7b7";
+        chip.className = "deception-tag";
+        chip.style.background = "var(--success-subtle)";
+        chip.style.borderColor = "var(--success-border)";
+        chip.style.color = "var(--success)";
         chip.textContent = "🛡️ Zero Threat Indicators Detected";
         badgesContainer.appendChild(chip);
       }
@@ -1538,7 +1442,7 @@
 
         document.getElementById("totalSpendDisplay").textContent = `$${data.report.totalMonthlySpend.toFixed(2)}`;
         document.getElementById("potentialSavingsDisplay").textContent = `$${data.report.potentialMonthlySavings.toFixed(2)}`;
-        document.getElementById("expiringCountDisplay").textContent = `${data.report.expiringTrialsCount} Trials`;
+        document.getElementById("expiringNumber").textContent = data.report.expiringTrialsCount;
         document.getElementById("subListSummary").textContent = `Active Household Subscriptions (${data.all.length})`;
 
         const container = document.getElementById("subscriptionsContainer");
@@ -1554,41 +1458,39 @@
 
         data.all.forEach(sub => {
           const row = document.createElement("div");
-          let urgentClass = "";
-          let badgeHtml = "";
+          let extraClass = "active-sub";
+          let badgeHtml = `<span class="status-badge green">Active</span>`;
 
           if (sub.status === "AUTO_RENEW_BLOCKED") {
-            urgentClass = "blocked";
-            badgeHtml = `<span class="sub-badge badge-blocked">🛡️ Renewal Blocked</span>`;
+            extraClass = "blocked";
+            badgeHtml = `<span class="status-badge blue">🛡️ Blocked</span>`;
           } else if (sub.isTrial && sub.trialExpiresInDays !== null) {
-            urgentClass = "trial-urgent";
-            badgeHtml = `<span class="sub-badge badge-trial">⚠️ Trial: ${sub.trialExpiresInDays} Days Left</span>`;
-          } else {
-            badgeHtml = `<span class="sub-badge badge-active">Active</span>`;
+            extraClass = "trial-alert";
+            badgeHtml = `<span class="status-badge amber">⚠️ Trial: ${sub.trialExpiresInDays}d left</span>`;
           }
 
-          row.className = `sub-card-row ${urgentClass}`;
+          row.className = `sub-item ${extraClass}`;
           row.innerHTML = `
-            <div class="sub-card-main">
-              <div class="sub-name-group">
-                <span class="sub-category-icon">${categoryIcons[sub.category] || "📦"}</span>
+            <div class="sub-main-info">
+              <div class="sub-title-group">
+                <span class="sub-item-icon">${categoryIcons[sub.category] || "📦"}</span>
                 <div>
-                  <div class="sub-name-text">${sub.name}</div>
-                  <div class="sub-provider-tag">${sub.billingProvider}</div>
+                  <div class="sub-item-name">${sub.name}</div>
+                  <div class="sub-item-provider">${sub.billingProvider}</div>
                 </div>
               </div>
-              <div class="sub-price-tag">$${sub.monthlyPrice.toFixed(2)}<span style="font-size: 11px; font-weight: 500; color: var(--text-muted);">/mo</span></div>
+              <div class="sub-item-price">$${sub.monthlyPrice.toFixed(2)}<span>/mo</span></div>
             </div>
 
-            <div class="sub-footer-meta">
-              <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="sub-footer-info">
+              <div style="display: flex; align-items: center; gap: 6px;">
                 ${badgeHtml}
                 <span>Renews: <strong>${sub.renewalDate}</strong></span>
               </div>
               ${
                 sub.status !== "AUTO_RENEW_BLOCKED"
-                  ? `<button class="btn-block-action" onclick="cancelSubscription('${sub.id}', '${sub.name}')">Block Auto-Renewal</button>`
-                  : `<span style="font-size: 11px; color: var(--accent-success); font-weight: 700;">Saved $${sub.monthlyPrice.toFixed(2)}/mo</span>`
+                  ? `<button class="btn-secondary-action" onclick="cancelSubscription('${sub.id}', '${sub.name}')">Block Renewal</button>`
+                  : `<span style="font-size: 11px; color: var(--success); font-weight: 600;">Saved $${sub.monthlyPrice.toFixed(2)}/mo</span>`
               }
             </div>
           `;
@@ -1632,7 +1534,7 @@
     };
 
     function loadSmsScenario() {
-      // Prepared scenario
+      // Prepared
     }
 
     async function scanSelectedSms() {
@@ -1751,7 +1653,6 @@
         const pill = document.getElementById("bedrockPill");
         if (data.bedrock && data.bedrock.configured) {
           pill.innerHTML = "<span>⚡ Bedrock Claude 3: Connected</span>";
-          pill.style.borderColor = "var(--accent-success)";
         }
       } catch (e) {
         console.error("Telemetry failed", e);
@@ -1763,7 +1664,6 @@
       loadSubscriptions();
       loadPresetPayload();
       fetchTelemetry();
-      // Set initial sample threat meter
       renderThreatMeter({
         verdict: "DANGEROUS_SCAM",
         threatRiskScore: 63,
