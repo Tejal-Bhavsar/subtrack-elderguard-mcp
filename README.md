@@ -317,7 +317,7 @@ subtrack-elderguard-mcp/
 ## 📜 Submission Documents
 - [FRICTION_LOG.md](./FRICTION_LOG.md) — 3 in-depth engineering logs analyzing Streamable HTTP headers, Zod registration, and AWS Bedrock streaming.
 - [FEEDBACK.md](./FEEDBACK.md) — Product feedback on `@modelcontextprotocol/sdk` and developer onboarding.
-- [VIDEO_SCRIPT.md](./VIDEO_SCRIPT.md) — Complete 2-minute-30-second presentation script.
+
 
 ---
 
