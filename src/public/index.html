@@ -1234,6 +1234,14 @@
       font-weight: 700;
     }
 
+    .voice-query-pill.pill-active {
+      background: #0284c7 !important;
+      border-color: #0284c7 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3) !important;
+      transform: translateY(-1px);
+    }
+
     .spotlight-input-row {
       display: flex;
       gap: 10px;
@@ -2277,22 +2285,22 @@
         <div class="voice-chips-deck">
           <span class="chips-heading-label">Try Asking Alexa (Click to Simulate Voice Skill):</span>
           <div class="chips-pill-flow">
-            <button class="voice-query-pill featured" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+            <button class="voice-query-pill featured" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.', this)">
               <span>📋</span> List Active Subscriptions
             </button>
-            <button class="voice-query-pill featured" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+            <button class="voice-query-pill featured" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.', this)">
               <span>⏰</span> Expiring Cancellation Reminders
             </button>
-            <button class="voice-query-pill" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.', this)">
               <span>🏦</span> Scan Chase Wire SMS
             </button>
-            <button class="voice-query-pill" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.', this)">
               <span>📦</span> Scan USPS Phishing
             </button>
-            <button class="voice-query-pill" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.', this)">
               <span>🛑</span> Cancel BrainGym Renewal
             </button>
-            <button class="voice-query-pill" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.', this)">
               <span>👵</span> Grandparent Bail Scam
             </button>
           </div>
@@ -2639,6 +2647,12 @@
       }, 50);
     }
 
+    function ensureDashboardView() {
+      if (currentActiveView !== 'dashboard') {
+        switchView('dashboard');
+      }
+    }
+
     // Toggle Audio
     const audioBtn = document.getElementById("audioToggleBtn");
     audioBtn.addEventListener("click", () => {
@@ -2852,16 +2866,23 @@
     }
 
     // Run Prompt Simulation
-    async function runPrompt(promptText) {
+    async function runPrompt(promptText, btnEl) {
       ensureDashboardView();
+
+      const input = document.getElementById("customPromptInput");
+      if (input) input.value = promptText;
+
+      document.querySelectorAll(".voice-query-pill").forEach(p => p.classList.remove("pill-active"));
+      if (btnEl) btnEl.classList.add("pill-active");
+
       const status = document.getElementById("alexaStatus");
       const spokenText = document.getElementById("spokenDialogueText");
       const badge = document.getElementById("toolBadge");
       const metaTool = document.getElementById("metaTool");
       const metaLatency = document.getElementById("metaLatency");
 
-      status.textContent = "Processing Voice Skill...";
-      badge.textContent = "Invoking Skill...";
+      if (status) status.textContent = "Processing Voice Skill...";
+      if (badge) badge.textContent = "Invoking Skill...";
 
       const t0 = performance.now();
       try {
@@ -2873,32 +2894,42 @@
         const data = await res.json();
         const latency = Math.round(performance.now() - t0);
 
-        status.textContent = "Alexa+ Response Ready";
-        badge.textContent = data.tool;
-        metaTool.textContent = data.tool;
-        metaLatency.textContent = `${latency} ms`;
-        spokenText.textContent = `"${data.spokenResponse}"`;
+        const toolName = data.mcpToolInvoked || data.tool || "mcp_skill";
+        const spoken = data.alexaSpokenResponse || data.spokenResponse || "Voice skill processed.";
+        const toolRes = data.mcpToolResult || data.rawResult;
 
-        speakText(data.spokenResponse);
+        if (status) status.textContent = "Alexa+ Response Ready";
+        if (badge) badge.textContent = toolName;
+        if (metaTool) metaTool.textContent = toolName;
+        if (metaLatency) metaLatency.textContent = `${latency} ms`;
+        if (spokenText) spokenText.textContent = `"${spoken}"`;
 
-        if (data.tool === "analyze_suspicious_message") {
-          updateThreatCard(data.rawResult);
-        } else if (data.tool === "get_cancellation_reminders" || data.tool === "list_active_subscriptions" || data.tool === "get_active_subscriptions") {
+        speakText(spoken);
+
+        if (toolName === "analyze_suspicious_message") {
+          updateThreatCard(toolRes);
+        } else if (
+          toolName === "get_cancellation_reminders" ||
+          toolName === "list_active_subscriptions" ||
+          toolName === "get_active_subscriptions" ||
+          toolName === "cancel_subscription_alert"
+        ) {
           await loadSubscriptions();
         }
       } catch (err) {
-        status.textContent = "Error communicating with server";
-        spokenText.textContent = "I'm having trouble connecting right now.";
+        console.error("Voice prompt simulation error:", err);
+        if (status) status.textContent = "Error communicating with server";
+        if (spokenText) spokenText.textContent = "I'm having trouble connecting right now.";
       }
     }
 
     // Execute Custom Spotlight Input
     function executeCustomPrompt() {
       const input = document.getElementById("customPromptInput");
+      if (!input) return;
       const prompt = input.value.trim();
       if (!prompt) return;
       runPrompt(prompt);
-      input.value = "";
     }
 
     // SMS Scenarios
@@ -2954,33 +2985,42 @@
 
     // Update Threat Card (Light Theme)
     function updateThreatCard(result) {
+      if (!result) return;
       const gaugeText = document.getElementById("threatGaugeText");
       const progressBar = document.getElementById("threatProgressBar");
       const badgesContainer = document.getElementById("deceptionBadges");
 
-      const score = result.threatScore || 0;
-      const level = result.threatLevel || "SAFE";
-      gaugeText.textContent = `${score} / 100 (${level})`;
-
-      progressBar.style.width = `${score}%`;
-      if (score >= 70) {
-        gaugeText.style.color = "var(--danger-red)";
-      } else if (score >= 40) {
-        gaugeText.style.color = "#d97706";
-      } else {
-        gaugeText.style.color = "var(--success-green)";
+      const score = result.threatScore ?? result.threatRiskScore ?? 0;
+      const level = result.threatLevel || result.verdict || (score >= 60 ? "DANGEROUS SCAM" : score >= 30 ? "SUSPICIOUS" : "SAFE");
+      if (gaugeText) {
+        gaugeText.textContent = `${score} / 100 (${level})`;
+        if (score >= 60) {
+          gaugeText.style.color = "var(--danger-red)";
+        } else if (score >= 35) {
+          gaugeText.style.color = "#d97706";
+        } else {
+          gaugeText.style.color = "var(--success-green)";
+        }
       }
 
-      badgesContainer.innerHTML = "";
-      if (result.deceptionSignals && result.deceptionSignals.length > 0) {
-        result.deceptionSignals.forEach(sig => {
-          const chip = document.createElement("span");
-          chip.className = `signal-chip ${score >= 60 ? 'red' : 'amber'}`;
-          chip.innerHTML = `<span>⚠️</span> ${sig}`;
-          badgesContainer.appendChild(chip);
-        });
-      } else {
-        badgesContainer.innerHTML = `<span class="signal-chip" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;"><span>✅</span> No malicious deception signals detected</span>`;
+      if (progressBar) {
+        progressBar.style.width = `${Math.min(100, Math.max(5, score))}%`;
+      }
+
+      if (badgesContainer) {
+        badgesContainer.innerHTML = "";
+        const rawSignals = result.deceptionSignals || result.signals || [];
+        if (rawSignals && rawSignals.length > 0) {
+          rawSignals.forEach(sig => {
+            const sigText = typeof sig === "string" ? sig : (sig.description || sig.matchedText || JSON.stringify(sig));
+            const chip = document.createElement("span");
+            chip.className = `signal-chip ${score >= 60 ? 'red' : 'amber'}`;
+            chip.innerHTML = `<span>⚠️</span> ${sigText}`;
+            badgesContainer.appendChild(chip);
+          });
+        } else {
+          badgesContainer.innerHTML = `<span class="signal-chip" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;"><span>✅</span> No malicious deception signals detected</span>`;
+        }
       }
 
       // Reset playbook buttons
