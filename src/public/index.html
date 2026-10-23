@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Subly & Lumio Color Palette */
+      /* Subly & Lumio Light Palette */
       --canvas-bg: #f4f7fa;
       --surface-white: #ffffff;
       --surface-subtle: #f8fafc;
@@ -21,14 +21,12 @@
       --text-muted: #64748b;
       --text-light: #94a3b8;
 
-      /* Lumio Deep Atmospheric Teal Gradients */
+      /* Lumio Deep Atmospheric Teal (For Landing Page Hero) */
       --teal-hero-bg: linear-gradient(135deg, #061c24 0%, #0a2d3a 50%, #115064 100%);
-      --teal-card-bg: linear-gradient(145deg, #08212c 0%, #0d3848 60%, #134e5e 100%);
       --teal-accent: #0284c7;
       --teal-accent-subtle: #f0f9ff;
       --teal-accent-border: #bae6fd;
       --cyan-bright: #38bdf8;
-      --cyan-glow: rgba(56, 189, 248, 0.35);
 
       /* Subly Sky Blue AI Card & Accents */
       --subly-sky-card: linear-gradient(145deg, #0284c7 0%, #0369a1 100%);
@@ -58,8 +56,7 @@
 
       --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
       --shadow-card: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 1px 3px 0 rgba(15, 23, 42, 0.03);
-      --shadow-hover: 0 20px 32px -8px rgba(15, 23, 42, 0.08), 0 8px 16px -4px rgba(15, 23, 42, 0.03);
-      --shadow-island: 0 20px 40px -10px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05);
+      --shadow-hover: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
     }
 
     * {
@@ -83,12 +80,12 @@
       line-height: 1.5;
     }
 
-    /* TOP FROSTED NAVBAR (Subly / Lumio Style) */
+    /* TOP FROSTED NAVBAR */
     .top-nav-bar {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--surface-border);
@@ -108,25 +105,32 @@
       align-items: center;
     }
 
+    /* Logo link switches to Landing Page */
     .nav-brand {
       display: flex;
       align-items: center;
       gap: 12px;
       text-decoration: none;
       color: inherit;
+      cursor: pointer;
     }
 
     .brand-icon-pill {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: var(--radius-sm);
       background: linear-gradient(135deg, #0284c7 0%, #0f766e 100%);
       color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 19px;
       box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .nav-brand:hover .brand-icon-pill {
+      transform: scale(1.06);
     }
 
     .brand-name-wrap {
@@ -164,7 +168,7 @@
       gap: 2px;
     }
 
-    @media (min-width: 900px) {
+    @media (min-width: 960px) {
       .nav-tabs-pill { display: flex; }
     }
 
@@ -179,6 +183,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      cursor: pointer;
     }
 
     .nav-tab-link:hover {
@@ -197,6 +202,29 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .btn-view-toggle {
+      height: 34px;
+      padding: 0 16px;
+      border-radius: var(--radius-full);
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-view-toggle:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
     }
 
     .status-badge-mcp {
@@ -238,10 +266,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .btn-audio-pill:hover {
-      background: var(--surface-subtle);
-    }
-
     .btn-audio-pill.active {
       background: var(--teal-accent-subtle);
       border-color: var(--teal-accent-border);
@@ -270,18 +294,39 @@
       transform: translateY(-1px);
     }
 
-    /* SECTION 1: LUMIO-INSPIRED ATMOSPHERIC HERO BANNER */
-    .hero-lumio-wrap {
+    /* VIEW SWITCHER WRAPPER */
+    .view-container {
+      display: none;
+      width: 100%;
+    }
+
+    .view-container.active {
+      display: block;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================================
+       VIEW 1: DEDICATED LANDING PAGE
+       ========================================================================= */
+    .landing-page-wrap {
       max-width: 1400px;
       width: 100%;
-      margin: 20px auto 0;
+      margin: 24px auto 80px;
       padding: 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
     }
 
     .hero-lumio-banner {
       background: var(--teal-hero-bg);
       border-radius: var(--radius-xl);
-      padding: 40px 48px;
+      padding: 44px 50px;
       color: #ffffff;
       box-shadow: var(--shadow-card);
       position: relative;
@@ -295,7 +340,7 @@
     @media (min-width: 1024px) {
       .hero-lumio-banner {
         grid-template-columns: 1.25fr 0.95fr;
-        padding: 48px 56px;
+        padding: 52px 60px;
       }
     }
 
@@ -326,7 +371,7 @@
       z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
 
     .hero-kicker-pill {
@@ -334,7 +379,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 5px 14px;
+      padding: 6px 16px;
       border-radius: var(--radius-full);
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -346,7 +391,7 @@
 
     .hero-main-heading {
       font-family: var(--font-display);
-      font-size: 34px;
+      font-size: 36px;
       font-weight: 800;
       letter-spacing: -0.025em;
       line-height: 1.2;
@@ -354,14 +399,14 @@
     }
 
     @media (min-width: 768px) {
-      .hero-main-heading { font-size: 42px; }
+      .hero-main-heading { font-size: 44px; }
     }
 
     .hero-description {
       font-size: 15px;
       line-height: 1.6;
       color: #cbd5e1;
-      max-width: 600px;
+      max-width: 620px;
     }
 
     .hero-cta-row {
@@ -376,9 +421,9 @@
       color: #0f172a;
       border: none;
       border-radius: var(--radius-full);
-      padding: 12px 24px;
+      padding: 12px 26px;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       font-family: var(--font-sans);
       cursor: pointer;
       display: inline-flex;
@@ -396,9 +441,9 @@
     }
 
     .btn-hero-glass {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
       color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: var(--radius-full);
       padding: 12px 24px;
       font-size: 13px;
@@ -414,11 +459,10 @@
     }
 
     .btn-hero-glass:hover {
-      background: rgba(255, 255, 255, 0.16);
-      border-color: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.2);
     }
 
-    /* RIGHT: SUBLY SKY-BLUE AI SAVINGS CARD WITH 3D STARS & PUFFY CLOUDS */
+    /* Subly Sky-Blue AI Card with 3D Stars */
     .hero-subly-card {
       position: relative;
       z-index: 2;
@@ -481,7 +525,6 @@
       font-weight: 800;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      backdrop-filter: blur(4px);
     }
 
     .subly-card-title {
@@ -529,15 +572,10 @@
     .btn-subly-action:hover {
       background: #f8fafc;
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
-    /* STATS SUMMARY BAR */
+    /* Landing Stats Strip */
     .hero-stats-strip {
-      max-width: 1400px;
-      width: 100%;
-      margin: 16px auto 0;
-      padding: 0 32px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
@@ -547,7 +585,7 @@
       background: var(--surface-white);
       border: 1px solid var(--surface-border);
       border-radius: var(--radius-md);
-      padding: 14px 20px;
+      padding: 16px 20px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -555,13 +593,13 @@
     }
 
     .hero-stat-icon-wrap {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 20px;
     }
 
     .icon-bg-blue { background: #e0f2fe; color: #0284c7; }
@@ -570,7 +608,7 @@
 
     .stat-pill-number {
       font-family: var(--font-display);
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 800;
       color: var(--text-main);
       line-height: 1.2;
@@ -582,257 +620,12 @@
       font-weight: 500;
     }
 
-    /* MAIN CONTENT WRAPPER */
-    main {
-      max-width: 1400px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 24px 32px 100px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    /* SECTION 2: LUMIO / SUBLY STATS METRIC ROW */
-    .metrics-lumio-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    @media (min-width: 900px) {
-      .metrics-lumio-grid {
-        grid-template-columns: 1.15fr 0.95fr 1.15fr;
-      }
-    }
-
-    .lumio-stat-card {
-      background: var(--surface-white);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-lg);
-      padding: 22px 24px;
-      box-shadow: var(--shadow-card);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 14px;
-      transition: all 0.2s ease;
-    }
-
-    .lumio-stat-card:hover {
-      box-shadow: var(--shadow-hover);
-      border-color: #cbd5e1;
-    }
-
-    .stat-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .stat-caption {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .stat-number-row {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-    }
-
-    .stat-hero-number {
-      font-family: var(--font-mono);
-      font-size: 30px;
-      font-weight: 800;
-      color: var(--text-main);
-      letter-spacing: -0.02em;
-    }
-
-    .stat-trend-tag {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--success-green);
-      display: inline-flex;
-      align-items: center;
-      gap: 3px;
-    }
-
-    /* SUBLY MINI BAR CHART WITH DIAGONAL STRIPES */
-    .mini-chart-wrap {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-      height: 64px;
-      padding-top: 14px;
-      border-bottom: 1px solid var(--surface-border-subtle);
-      padding-bottom: 6px;
-    }
-
-    .chart-bar-col {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      height: 100%;
-      justify-content: flex-end;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .chart-bar-fill {
-      width: 100%;
-      border-radius: var(--radius-xs);
-      background: #e2e8f0;
-      transition: height 0.3s ease, background-color 0.2s ease;
-    }
-
-    .chart-bar-col:hover .chart-bar-fill {
-      background: #cbd5e1;
-    }
-
-    .chart-bar-fill.active-hatch {
-      background: repeating-linear-gradient(
-        45deg,
-        #0284c7,
-        #0284c7 4px,
-        #38bdf8 4px,
-        #38bdf8 8px
-      ) !important;
-    }
-
-    .chart-day-label {
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--text-light);
-    }
-
-    .chart-floating-pill {
-      position: absolute;
-      top: -26px;
-      background: #0f172a;
-      color: #ffffff;
-      padding: 3px 8px;
-      border-radius: var(--radius-full);
-      font-size: 10px;
-      font-weight: 800;
-      font-family: var(--font-mono);
-      white-space: nowrap;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-      z-index: 10;
-    }
-
-    .chart-floating-pill::after {
-      content: "";
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 4px 4px 0 4px;
-      border-style: solid;
-      border-color: #0f172a transparent transparent transparent;
-    }
-
-    /* SUBLY SEGMENTED SEMI-CIRCULAR RADIAL GAUGE */
-    .radial-gauge-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      position: relative;
-      padding-top: 4px;
-    }
-
-    .radial-arc-svg {
-      width: 180px;
-      height: 96px;
-      overflow: visible;
-    }
-
-    .radial-score-display {
-      position: absolute;
-      bottom: 4px;
-      text-align: center;
-    }
-
-    .radial-number {
-      font-family: var(--font-mono);
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--text-main);
-      line-height: 1;
-    }
-
-    .radial-unit {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-    }
-
-    /* LUMIO CATEGORY PROGRESS BARS */
-    .category-bars-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .cat-bar-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .cat-bar-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-
-    .cat-bar-track {
-      height: 9px;
-      background: #f1f5f9;
-      border-radius: var(--radius-full);
-      overflow: hidden;
-    }
-
-    .cat-bar-fill-hatch {
-      height: 100%;
-      border-radius: var(--radius-full);
-      transition: width 0.4s ease;
-    }
-
-    .hatch-blue {
-      background: repeating-linear-gradient(
-        45deg,
-        #0284c7,
-        #0284c7 3px,
-        #38bdf8 3px,
-        #38bdf8 6px
-      );
-    }
-
-    .hatch-orange {
-      background: repeating-linear-gradient(
-        45deg,
-        #f97316,
-        #f97316 3px,
-        #fb923c 3px,
-        #fb923c 6px
-      );
-    }
-
-    /* SUBLY 4-FEATURE HIGHLIGHTS GRID ("Less Subscription Stress. More Financial Control.") */
+    /* Subly 4-Feature Grid */
     .subly-stress-free-section {
       background: var(--surface-white);
       border: 1px solid var(--surface-border);
       border-radius: var(--radius-xl);
-      padding: 36px 38px;
+      padding: 38px 42px;
       box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
@@ -841,7 +634,7 @@
 
     .subly-section-intro {
       text-align: center;
-      max-width: 680px;
+      max-width: 700px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -858,7 +651,7 @@
 
     .subly-section-headline {
       font-family: var(--font-display);
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text-main);
@@ -933,100 +726,341 @@
       gap: 6px;
     }
 
-    /* LUMIO ACCELERATION BANNER */
-    .lumio-acceleration-banner {
-      background: linear-gradient(135deg, #092c35 0%, #0d4655 100%);
-      border-radius: var(--radius-lg);
-      padding: 24px 30px;
+    /* Landing Launch CTA Card */
+    .landing-launch-banner {
+      background: linear-gradient(135deg, #0284c7 0%, #0f766e 100%);
+      border-radius: var(--radius-xl);
+      padding: 36px 42px;
       color: #ffffff;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      align-items: flex-start;
       box-shadow: var(--shadow-card);
-      position: relative;
-      overflow: hidden;
     }
 
     @media (min-width: 860px) {
-      .lumio-acceleration-banner {
+      .landing-launch-banner {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
       }
     }
 
-    .lumio-accel-tag {
-      font-size: 11px;
-      font-weight: 800;
-      color: #38bdf8;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .lumio-accel-title {
+    .landing-launch-banner h3 {
       font-family: var(--font-display);
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 800;
-      margin-top: 2px;
     }
 
-    .lumio-accel-sub {
-      font-size: 13px;
-      color: #cbd5e1;
-      max-width: 700px;
+    .landing-launch-banner p {
+      font-size: 14px;
+      color: #e0f2fe;
+      max-width: 650px;
       margin-top: 4px;
-      line-height: 1.5;
     }
 
-    .btn-lumio-analysis {
+    .btn-launch-large {
       background: #ffffff;
       color: #0f172a;
       border: none;
       border-radius: var(--radius-full);
-      padding: 10px 22px;
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: all 0.15s ease;
+      padding: 14px 30px;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: var(--font-sans);
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      gap: 8px;
+      white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+      transition: all 0.15s ease;
     }
 
-    .btn-lumio-analysis:hover {
+    .btn-launch-large:hover {
       background: #f8fafc;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     }
 
     /* =========================================================================
-       SECTION 4: ALEXA+ ECHO SHOW 15 LIVING ROOM SMART DISPLAY (LUMIO / HARDWARE)
+       VIEW 2: LIVE APPLICATION DASHBOARD
        ========================================================================= */
-    .alexa-companion-panel {
-      background: var(--teal-card-bg);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      border-radius: var(--radius-xl);
-      padding: 30px 34px;
-      box-shadow: 0 20px 40px -10px rgba(6, 28, 36, 0.45);
+    .app-dashboard-wrap {
+      max-width: 1400px;
+      width: 100%;
+      margin: 24px auto 80px;
+      padding: 0 32px;
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 24px;
+    }
+
+    /* SECTION 2: THE 3 METRIC CARDS (FIXED SPACING & NO TEXT OVERLAPPING) */
+    .metrics-lumio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 900px) {
+      .metrics-lumio-grid {
+        grid-template-columns: 1.15fr 0.95fr 1.15fr;
+      }
+    }
+
+    .lumio-stat-card {
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      padding: 24px 26px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all 0.2s ease;
+      min-height: 240px;
+    }
+
+    .lumio-stat-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #cbd5e1;
+    }
+
+    .stat-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-caption {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-number-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .stat-hero-number {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-trend-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--success-green);
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* SUBLY MINI BAR CHART (AMPED UP HEIGHT & CLEAR SPACING) */
+    .mini-chart-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      height: 95px;
+      padding-top: 28px;
+      border-bottom: 1px solid var(--surface-border-subtle);
+      padding-bottom: 8px;
       position: relative;
+    }
+
+    .chart-bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      height: 100%;
+      justify-content: flex-end;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .chart-bar-fill {
+      width: 100%;
+      border-radius: var(--radius-full);
+      background: #e2e8f0;
+      min-height: 12px;
+      transition: height 0.3s ease, background-color 0.2s ease;
+    }
+
+    .chart-bar-col:hover .chart-bar-fill {
+      background: #cbd5e1;
+    }
+
+    .chart-bar-fill.active-hatch {
+      background: repeating-linear-gradient(
+        45deg,
+        #0284c7,
+        #0284c7 4px,
+        #38bdf8 4px,
+        #38bdf8 8px
+      ) !important;
+      border-radius: var(--radius-full);
+    }
+
+    .chart-day-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .chart-floating-pill {
+      position: absolute;
+      top: -28px;
+      background: #0f172a;
       color: #ffffff;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      z-index: 10;
+    }
+
+    .chart-floating-pill::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 4px 4px 0 4px;
+      border-style: solid;
+      border-color: #0f172a transparent transparent transparent;
+    }
+
+    /* SUBLY RADIAL HEALTH GAUGE (EXPANDED TO PREVENT ANY TEXT OVERLAP) */
+    .radial-gauge-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding-top: 6px;
+    }
+
+    .radial-arc-svg {
+      width: 220px;
+      height: 115px;
+      overflow: visible;
+    }
+
+    .radial-score-display {
+      position: absolute;
+      bottom: 24px;
+      text-align: center;
+    }
+
+    .radial-number {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1;
+    }
+
+    .radial-unit {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Clean non-overlapping badge below the gauge */
+    .radial-subtext-badge {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ea580c;
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+    }
+
+    /* LUMIO CATEGORY PROGRESS BARS */
+    .category-bars-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .cat-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .cat-bar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+    }
+
+    .cat-bar-track {
+      height: 11px;
+      background: #f1f5f9;
+      border-radius: var(--radius-full);
       overflow: hidden;
     }
 
-    /* Echo Show Glowing LED Lightbar */
-    .alexa-companion-panel::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 10%;
-      right: 10%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #38bdf8 30%, #38bdf8 70%, transparent);
-      box-shadow: 0 0 16px #38bdf8, 0 0 28px rgba(56, 189, 248, 0.8);
+    .cat-bar-fill-hatch {
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 0.4s ease;
+    }
+
+    .hatch-blue {
+      background: repeating-linear-gradient(
+        45deg,
+        #0284c7,
+        #0284c7 3px,
+        #38bdf8 3px,
+        #38bdf8 6px
+      );
+    }
+
+    .hatch-orange {
+      background: repeating-linear-gradient(
+        45deg,
+        #f97316,
+        #f97316 3px,
+        #fb923c 3px,
+        #fb923c 6px
+      );
+    }
+
+    /* SECTION 3: ECHO SHOW 15 LIVING ROOM VOICE STATION */
+    .alexa-companion-panel {
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-xl);
+      padding: 28px 32px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
     }
 
     .companion-top-meta {
@@ -1041,29 +1075,33 @@
       gap: 10px;
       font-size: 12px;
       font-weight: 800;
-      color: #7dd3fc;
+      color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
 
     .companion-cyan-led {
       width: 9px;
       height: 9px;
       border-radius: 50%;
-      background: #38bdf8;
-      box-shadow: 0 0 12px #38bdf8;
+      background: #0284c7;
+      box-shadow: 0 0 10px #0284c7;
       animation: pulseLed 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseLed {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
     }
 
     .companion-agent-status {
       font-size: 11px;
       font-weight: 700;
-      color: #bae6fd;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-muted);
+      background: var(--surface-subtle);
+      border: 1px solid var(--surface-border);
       padding: 4px 12px;
       border-radius: var(--radius-full);
-      backdrop-filter: blur(8px);
     }
 
     .alexa-voice-row {
@@ -1088,11 +1126,11 @@
     }
 
     .alexa-luminous-orb {
-      width: 92px;
-      height: 92px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #0284c7 50%, #0369a1 100%);
-      box-shadow: 0 0 28px rgba(56, 189, 248, 0.55), inset 0 2px 6px rgba(255, 255, 255, 0.7);
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.45), inset 0 2px 6px rgba(255, 255, 255, 0.7);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1104,8 +1142,8 @@
     }
 
     .alexa-luminous-orb:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 36px rgba(56, 189, 248, 0.8);
+      transform: scale(1.05);
+      box-shadow: 0 0 36px rgba(56, 189, 248, 0.7);
     }
 
     .alexa-luminous-orb.speaking {
@@ -1113,8 +1151,8 @@
     }
 
     @keyframes orbPulseSpeaking {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 28px rgba(56, 189, 248, 0.6); }
-      50% { transform: scale(1.08); box-shadow: 0 0 44px rgba(56, 189, 248, 0.95); }
+      0%, 100% { transform: scale(1); box-shadow: 0 0 28px rgba(56, 189, 248, 0.5); }
+      50% { transform: scale(1.08); box-shadow: 0 0 44px rgba(56, 189, 248, 0.85); }
     }
 
     .wave-bars-row {
@@ -1127,20 +1165,19 @@
     .wave-bar {
       width: 3px;
       height: 6px;
-      background: #38bdf8;
+      background: #0284c7;
       border-radius: var(--radius-full);
       transition: height 0.15s ease;
     }
 
     .dialogue-speech-card {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: var(--surface-subtle);
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-lg);
       padding: 22px 26px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      backdrop-filter: blur(14px);
     }
 
     .dialogue-top-meta {
@@ -1154,9 +1191,9 @@
     }
 
     .dialogue-spoken-text {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--text-main);
       line-height: 1.5;
       min-height: 48px;
     }
@@ -1166,8 +1203,8 @@
       flex-wrap: wrap;
       gap: 16px;
       font-size: 11px;
-      color: #94a3b8;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      border-top: 1px solid var(--surface-border);
       padding-top: 10px;
     }
 
@@ -1179,10 +1216,10 @@
 
     .chips-heading-label {
       font-size: 11px;
-      font-weight: 800;
-      color: #7dd3fc;
+      font-weight: 700;
+      color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
     }
 
     .chips-pill-flow {
@@ -1192,31 +1229,32 @@
     }
 
     .voice-query-pill {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-full);
       padding: 8px 16px;
       font-size: 12px;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--text-main);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.15s ease;
-      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow-sm);
     }
 
     .voice-query-pill:hover {
-      background: rgba(255, 255, 255, 0.22);
-      border-color: #38bdf8;
+      border-color: #0284c7;
+      background: var(--teal-accent-subtle);
+      color: #0284c7;
       transform: translateY(-1px);
     }
 
     .voice-query-pill.featured {
-      background: rgba(56, 189, 248, 0.18);
-      border-color: rgba(56, 189, 248, 0.5);
-      color: #e0f2fe;
+      background: #f0f9ff;
+      border-color: #bae6fd;
+      color: #0284c7;
       font-weight: 700;
     }
 
@@ -1224,18 +1262,17 @@
       display: flex;
       gap: 10px;
       align-items: center;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: var(--surface-subtle);
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-full);
       padding: 6px 8px 6px 18px;
       transition: all 0.2s ease;
-      backdrop-filter: blur(10px);
     }
 
     .spotlight-input-row:focus-within {
-      background: rgba(255, 255, 255, 0.16);
-      border-color: #38bdf8;
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+      background: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
     }
 
     .spotlight-input {
@@ -1245,38 +1282,36 @@
       outline: none;
       font-size: 14px;
       font-family: var(--font-sans);
-      color: #ffffff;
+      color: var(--text-main);
     }
 
     .spotlight-input::placeholder {
-      color: #94a3b8;
+      color: var(--text-light);
     }
 
     .btn-invoke-skill {
-      background: #38bdf8;
-      color: #071f28;
+      background: #0284c7;
+      color: #ffffff;
       border: none;
       border-radius: var(--radius-full);
       padding: 10px 22px;
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
       font-family: var(--font-sans);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.15s ease;
-      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
+      box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
     }
 
     .btn-invoke-skill:hover {
-      background: #7dd3fc;
+      background: #0369a1;
       transform: translateY(-1px);
     }
 
-    /* =========================================================================
-       SECTION 5: TWO PILLAR APPLICATION SUITE (SUBLY + LUMIO)
-       ========================================================================= */
+    /* SECTION 4: TWO PILLAR APPLICATION SUITE */
     .pillars-two-col {
       display: grid;
       grid-template-columns: 1fr;
@@ -1321,6 +1356,9 @@
       justify-content: center;
       font-size: 20px;
     }
+
+    .avatar-blue { background: #e0f2fe; color: #0284c7; }
+    .avatar-rose { background: #ffe4e6; color: #e11d48; }
 
     .pillar-heading-title {
       font-family: var(--font-display);
@@ -1467,7 +1505,7 @@
       box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
     }
 
-    /* SubTrack Subscriptions Deck (Subly "This Month" style) */
+    /* SubTrack Subscriptions Deck */
     .subscriptions-scroll-deck {
       display: flex;
       flex-direction: column;
@@ -1584,14 +1622,13 @@
       transform: translateY(-1px);
     }
 
-    /* SCAMSHIELD & SUBLY PLAYBOOK */
+    /* SCAMSHIELD LIGHT THEME */
     .scamshield-content-deck {
       display: flex;
       flex-direction: column;
       gap: 16px;
     }
 
-    /* Subly Interactive Scenario Chips */
     .scenario-chips-container {
       display: flex;
       flex-direction: column;
@@ -1632,17 +1669,17 @@
       box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
     }
 
-    /* Threat Gauge Card (Lumio High-End Dark Style) */
+    /* Threat Gauge Card (PURE LIGHT THEME) */
     .threat-gauge-card {
-      background: #071f28;
-      border: 1px solid rgba(56, 189, 248, 0.2);
+      background: #ffffff;
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-lg);
       padding: 20px 22px;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      color: #ffffff;
-      box-shadow: 0 10px 25px rgba(7, 31, 40, 0.25);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
     }
 
     .threat-gauge-header {
@@ -1655,13 +1692,14 @@
       font-family: var(--font-mono);
       font-size: 15px;
       font-weight: 800;
-      color: #fb7185;
+      color: var(--danger-red);
       letter-spacing: -0.01em;
     }
 
     .threat-progress-track {
       height: 10px;
-      background: rgba(255, 255, 255, 0.1);
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
       border-radius: var(--radius-full);
       overflow: hidden;
     }
@@ -1691,15 +1729,15 @@
     }
 
     .signal-chip.red {
-      background: rgba(225, 29, 72, 0.2);
-      color: #fca5a5;
-      border: 1px solid rgba(225, 29, 72, 0.4);
+      background: var(--danger-subtle);
+      color: var(--danger-red);
+      border: 1px solid var(--danger-border);
     }
 
     .signal-chip.amber {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fde68a;
-      border: 1px solid rgba(245, 158, 11, 0.4);
+      background: var(--subly-amber-subtle);
+      color: #b45309;
+      border: 1px solid #fde68a;
     }
 
     /* Subly 3-Step Senior Safety Playbook */
@@ -1809,17 +1847,17 @@
       color: var(--success-green);
     }
 
-    /* SECTION 6: LIVE MCP STREAMABLE HTTP INSPECTOR (LUMIO SCREEN) */
+    /* SECTION 5: LIVE MCP STREAMABLE HTTP INSPECTOR (PURE LIGHT THEME) */
     .mcp-protocol-deck {
-      background: #061820;
-      border: 1px solid rgba(56, 189, 248, 0.2);
+      background: var(--surface-white);
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-xl);
       padding: 26px 30px;
-      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
       gap: 16px;
-      color: #ffffff;
+      color: var(--text-main);
     }
 
     .mcp-deck-top {
@@ -1831,58 +1869,18 @@
     }
 
     .mcp-deck-screen {
-      background: #030f14;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #f8fafc;
+      border: 1px solid var(--surface-border);
       border-radius: var(--radius-md);
       padding: 18px 22px;
       font-family: var(--font-mono);
       font-size: 12px;
       line-height: 1.6;
-      color: #38bdf8;
+      color: #0f172a;
       max-height: 250px;
       overflow-y: auto;
       white-space: pre-wrap;
       word-break: break-all;
-    }
-
-    /* SUBLY FLOATING BOTTOM ISLAND BAR */
-    .floating-island-bar {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #0f172a;
-      border-radius: var(--radius-full);
-      padding: 6px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: var(--shadow-island);
-      z-index: 99;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .island-link-item {
-      padding: 8px 18px;
-      border-radius: var(--radius-full);
-      font-size: 12px;
-      font-weight: 700;
-      color: #94a3b8;
-      text-decoration: none;
-      transition: all 0.15s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .island-link-item:hover {
-      color: #ffffff;
-    }
-
-    .island-link-item.active {
-      background: #ffffff;
-      color: #0f172a;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     /* BADGES */
@@ -1926,7 +1924,7 @@
       border-radius: var(--radius-full);
       font-size: 13px;
       font-weight: 600;
-      box-shadow: var(--shadow-island);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -1974,10 +1972,11 @@
 </head>
 <body>
 
-  <!-- TOP FROSTED NAVBAR (Subly / Lumio Style) -->
+  <!-- TOP FROSTED NAVBAR -->
   <header class="top-nav-bar">
     <div class="nav-inner">
-      <a href="#" class="nav-brand">
+      <!-- Click Logo to Go to Landing Page -->
+      <a href="#landing" class="nav-brand" onclick="switchView('landing'); return false;" title="Click to view Landing Page">
         <div class="brand-icon-pill">🛡️</div>
         <div class="brand-name-wrap">
           <span class="brand-title">SubTrack & ElderGuard</span>
@@ -1985,17 +1984,24 @@
         </div>
       </a>
 
-      <!-- Center Segmented Pill Nav -->
-      <nav class="nav-tabs-pill">
-        <a href="#alexa-hub" class="nav-tab-link active"><span>🎙️</span> Voice Hub</a>
-        <a href="#subtrack-section" class="nav-tab-link"><span>💳</span> SubTrack</a>
-        <a href="#scamshield-section" class="nav-tab-link"><span>🛡️</span> ScamShield</a>
-        <a href="#features-deck" class="nav-tab-link"><span>✨</span> Features</a>
-        <a href="#mcp-inspector" class="nav-tab-link"><span>⚡</span> MCP Spec</a>
+      <!-- Center Segmented Pill Controller (App Navigation) -->
+      <nav class="nav-tabs-pill" id="centerNavTabs">
+        <a class="nav-tab-link" onclick="switchView('landing')" id="tabNavLanding"><span>🌐</span> Landing Page</a>
+        <a class="nav-tab-link active" onclick="switchView('dashboard')" id="tabNavDashboard"><span>📱</span> App Dashboard</a>
+        <a href="#alexa-hub" class="nav-tab-link" onclick="ensureDashboardView()"><span>🎙️</span> Voice Station</a>
+        <a href="#subtrack-section" class="nav-tab-link" onclick="ensureDashboardView()"><span>💳</span> SubTrack</a>
+        <a href="#scamshield-section" class="nav-tab-link" onclick="ensureDashboardView()"><span>🛡️</span> ScamShield</a>
+        <a href="#mcp-inspector" class="nav-tab-link" onclick="ensureDashboardView()"><span>⚡</span> MCP Inspector</a>
       </nav>
 
       <!-- Right Actions -->
       <div class="nav-actions">
+        <!-- View Toggle Pill Button -->
+        <button class="btn-view-toggle" id="btnViewToggle" onclick="toggleView()">
+          <span id="btnViewToggleIcon">🌐</span>
+          <span id="btnViewToggleText">Landing Page</span>
+        </button>
+
         <div class="status-badge-mcp" title="Model Context Protocol Streamable HTTP Transport Active">
           <div class="pulse-dot-active"></div>
           <span>Streamable HTTP</span>
@@ -2012,558 +2018,544 @@
     </div>
   </header>
 
-  <!-- SECTION 1: LUMIO-INSPIRED ATMOSPHERIC HERO BANNER -->
-  <section class="hero-lumio-wrap">
-    <div class="hero-lumio-banner">
-      <!-- Left Hero Pitch -->
-      <div class="hero-left-content">
-        <span class="hero-kicker-pill">
-          <span>✨</span> Amazon Hackathon — Alexa+ Track & AWS Builder Challenge
-        </span>
-        <h1 class="hero-main-heading">
-          You Can Take Control Of Every Subscription & Scam.
-        </h1>
-        <p class="hero-description">
-          Empowering families and seniors with autonomous voice-first vigilance against deceptive subscription auto-renewals, USPS smishing, and imposter wire fraud over the open Model Context Protocol standard.
-        </p>
-        <div class="hero-cta-row">
-          <a href="#alexa-hub" class="btn-hero-primary">
-            <span>Simulate Alexa+ Voice</span>
-            <span>🎙️</span>
-          </a>
-          <a href="#mcp-inspector" class="btn-hero-glass">
-            <span>Inspect Streamable HTTP Spec</span>
-            <span>⚡</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Right: Subly-Style Sky-Blue AI Savings Card with Floating 3D Stars -->
-      <div class="hero-subly-card">
-        <!-- SVG Puffy Cloud Vector -->
-        <svg class="subly-cloud-svg" viewBox="0 0 200 120" fill="none">
-          <path d="M40 90 A25 25 0 0 1 70 50 A35 35 0 0 1 130 45 A30 30 0 0 1 170 80 A25 25 0 0 1 160 100 L40 100 Z" fill="#ffffff" fill-opacity="0.15" />
-        </svg>
-
-        <!-- Floating 3D Stars from Subly -->
-        <div class="subly-star star-1">⭐</div>
-        <div class="subly-star star-2">✨</div>
-        <div class="subly-star star-3">🌟</div>
-
-        <div class="subly-card-header">
-          <span class="subly-tag-badge">+ AI SAVINGS</span>
-          <span style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9);">Alexa Agent</span>
-        </div>
-        <div class="subly-card-title">Save $81.98 this month</div>
-        <p class="subly-card-desc">
-          Alexa AI identified 3 free trial subscriptions scheduled to auto-renew and charge your household cards within 7 days.
-        </p>
-        <div class="subly-card-actions">
-          <button class="btn-subly-action" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
-            Review Reminders →
-          </button>
-          <span style="font-size: 11px; opacity: 0.95; font-weight: 700; color: #ffffff;">3 Trials Expiring</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS SUMMARY PILLS -->
-  <section class="hero-stats-strip">
-    <div class="hero-stat-pill-box">
-      <div class="hero-stat-icon-wrap icon-bg-blue">🛡️</div>
-      <div>
-        <div class="stat-pill-number">50+ Scams & Traps</div>
-        <div class="stat-pill-label">Detected by Bedrock Claude 3 Heuristics</div>
-      </div>
-    </div>
-    <div class="hero-stat-pill-box">
-      <div class="hero-stat-icon-wrap icon-bg-green">🎙️</div>
-      <div>
-        <div class="stat-pill-number">24/7 Voice Vigilance</div>
-        <div class="stat-pill-label">Autonomous Alexa+ Companion Protection</div>
-      </div>
-    </div>
-    <div class="hero-stat-pill-box">
-      <div class="hero-stat-icon-wrap icon-bg-amber">⚡</div>
-      <div>
-        <div class="stat-pill-number">100% MCP Streamable</div>
-        <div class="stat-pill-label">Official Spec 2025-11-25+ HTTP Standard</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAIN CANVAS -->
-  <main>
-
-    <!-- SECTION 2: LUMIO / SUBLY STATS METRIC ROW -->
-    <section class="metrics-lumio-grid">
+  <!-- =========================================================================
+       VIEW 1: DEDICATED PRODUCT LANDING PAGE (SEPARATED)
+       ========================================================================= -->
+  <div id="landingView" class="view-container">
+    <div class="landing-page-wrap">
       
-      <!-- Card 1: Total Spend & Subly Mini Bar Chart with Caret Tooltip -->
-      <div class="lumio-stat-card">
-        <div class="stat-header-row">
-          <span class="stat-caption">Total Subscription Spend</span>
-          <span style="font-size: 14px;">💳</span>
-        </div>
-        <div class="stat-number-row">
-          <span class="stat-hero-number" id="totalSpendDisplay">$145.94</span>
-          <span class="stat-trend-tag">↗ 18.4% vs last month</span>
-        </div>
-        <!-- Subly Mini Bar Chart -->
-        <div class="mini-chart-wrap">
-          <div class="chart-bar-col" onclick="selectDay('Sun', '$18.40')">
-            <div class="chart-bar-fill" style="height: 35%;"></div>
-            <span class="chart-day-label">Sun</span>
-          </div>
-          <div class="chart-bar-col" onclick="selectDay('Mon', '$24.99')">
-            <div class="chart-bar-fill" style="height: 48%;"></div>
-            <span class="chart-day-label">Mon</span>
-          </div>
-          <div class="chart-bar-col" onclick="selectDay('Tue', '$12.99')">
-            <div class="chart-bar-fill" style="height: 30%;"></div>
-            <span class="chart-day-label">Tue</span>
-          </div>
-          <div class="chart-bar-col" onclick="selectDay('Wed', '$34.98')">
-            <div class="chart-bar-fill" style="height: 60%;"></div>
-            <span class="chart-day-label">Wed</span>
-          </div>
-          <div class="chart-bar-col" onclick="selectDay('Thu', '$81.98')">
-            <div class="chart-floating-pill" id="chartPillSavings">$81.98 at risk</div>
-            <div class="chart-bar-fill active-hatch" style="height: 90%;"></div>
-            <span class="chart-day-label" style="font-weight: 700; color: #0284c7;">Thu</span>
-          </div>
-          <div class="chart-bar-col" onclick="selectDay('Fri', '$29.99')">
-            <div class="chart-bar-fill" style="height: 45%;"></div>
-            <span class="chart-day-label">Fri</span>
-          </div>
-          <div class="chart-bar-col" onclick="selectDay('Sat', '$15.99')">
-            <div class="chart-bar-fill" style="height: 25%;"></div>
-            <span class="chart-day-label">Sat</span>
+      <!-- Hero Banner -->
+      <section class="hero-lumio-banner">
+        <div class="hero-left-content">
+          <span class="hero-kicker-pill">
+            <span>✨</span> Amazon Hackathon — Alexa+ Track & AWS Builder Challenge
+          </span>
+          <h1 class="hero-main-heading">
+            You Can Take Control Of Every Subscription & Scam.
+          </h1>
+          <p class="hero-description">
+            Empowering families and elders with autonomous voice-first vigilance against deceptive subscription auto-renewals, USPS smishing, and imposter wire fraud over the open Model Context Protocol standard.
+          </p>
+          <div class="hero-cta-row">
+            <button class="btn-hero-primary" onclick="switchView('dashboard')">
+              <span>Launch Live Application</span>
+              <span>🚀</span>
+            </button>
+            <button class="btn-hero-glass" onclick="switchView('dashboard'); setTimeout(() => { document.getElementById('mcp-inspector').scrollIntoView({behavior:'smooth'}); }, 100);">
+              <span>Inspect Streamable HTTP Spec</span>
+              <span>⚡</span>
+            </button>
           </div>
         </div>
-      </div>
 
-      <!-- Card 2: Subly Semi-Circular Radial Health Arc with Segmented Radial Ticks -->
-      <div class="lumio-stat-card">
-        <div class="stat-header-row">
-          <span class="stat-caption">Subscription Health</span>
-          <span class="badge-chip green">Protected</span>
-        </div>
-        <div class="radial-gauge-container">
-          <svg class="radial-arc-svg" viewBox="0 0 180 96">
-            <g id="radialGaugeTicks"></g>
+        <!-- Subly Sky-Blue AI Savings Card -->
+        <div class="hero-subly-card">
+          <svg class="subly-cloud-svg" viewBox="0 0 200 120" fill="none">
+            <path d="M40 90 A25 25 0 0 1 70 50 A35 35 0 0 1 130 45 A30 30 0 0 1 170 80 A25 25 0 0 1 160 100 L40 100 Z" fill="#ffffff" fill-opacity="0.15" />
           </svg>
-          <div class="radial-score-display">
-            <div class="radial-number" id="radialHealthNumber">74<span class="radial-unit">/100</span></div>
-            <div style="font-size: 11px; font-weight: 700; color: #f97316;">Trial Trap Vigilance (Good ⓘ)</div>
+          <div class="subly-star star-1">⭐</div>
+          <div class="subly-star star-2">✨</div>
+          <div class="subly-star star-3">🌟</div>
+
+          <div class="subly-card-header">
+            <span class="subly-tag-badge">+ AI SAVINGS</span>
+            <span style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.9);">Alexa Agent</span>
+          </div>
+          <div class="subly-card-title">Save $81.98 this month</div>
+          <p class="subly-card-desc">
+            Alexa AI identified 3 free trial subscriptions scheduled to auto-renew and charge your household cards within 7 days.
+          </p>
+          <div class="subly-card-actions">
+            <button class="btn-subly-action" onclick="switchView('dashboard'); runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.');">
+              Review Reminders →
+            </button>
+            <span style="font-size: 11px; opacity: 0.95; font-weight: 700; color: #ffffff;">3 Trials Expiring</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Card 3: Lumio Category Allocation Bars -->
-      <div class="lumio-stat-card">
-        <div class="stat-header-row">
-          <span class="stat-caption">Household Category Allocation</span>
-          <span style="font-size: 11px; font-weight: 700; color: #0284c7;">Save $81.98</span>
-        </div>
-        <div class="category-bars-list">
-          <div class="cat-bar-item">
-            <div class="cat-bar-header">
-              <span>Brain & Cognitive Training</span>
-              <span style="font-family: var(--font-mono);">$29.99 (42%)</span>
-            </div>
-            <div class="cat-bar-track">
-              <div class="cat-bar-fill-hatch hatch-blue" style="width: 42%;"></div>
-            </div>
-          </div>
-          <div class="cat-bar-item">
-            <div class="cat-bar-header">
-              <span>Family & Ancestry Trees</span>
-              <span style="font-family: var(--font-mono);">$39.99 (35%)</span>
-            </div>
-            <div class="cat-bar-track">
-              <div class="cat-bar-fill-hatch hatch-orange" style="width: 35%;"></div>
-            </div>
-          </div>
-          <div class="cat-bar-item">
-            <div class="cat-bar-header">
-              <span>Medical Alert & Telemetry</span>
-              <span style="font-family: var(--font-mono);">$34.98 (23%)</span>
-            </div>
-            <div class="cat-bar-track">
-              <div class="cat-bar-fill-hatch hatch-blue" style="width: 23%;"></div>
-            </div>
+      <!-- Stats Summary Strip -->
+      <section class="hero-stats-strip">
+        <div class="hero-stat-pill-box">
+          <div class="hero-stat-icon-wrap icon-bg-blue">🛡️</div>
+          <div>
+            <div class="stat-pill-number">50+ Scams & Traps</div>
+            <div class="stat-pill-label">Detected by Bedrock Claude 3 Heuristics</div>
           </div>
         </div>
-      </div>
-
-    </section>
-
-    <!-- SECTION 3: SUBLY "LESS SUBSCRIPTION STRESS" 4-FEATURE HIGHLIGHTS GRID -->
-    <section class="subly-stress-free-section" id="features-deck">
-      <div class="subly-section-intro">
-        <span class="kicker-subtle">Family Security & Clarity</span>
-        <h2 class="subly-section-headline">Less Subscription Stress. More Financial Control.</h2>
-        <p class="subly-section-sub">SubTrack & ElderGuard turns messy recurring charges and deceptive smishing into an autonomous, voice-controlled defense shield.</p>
-      </div>
-      <div class="subly-four-card-grid">
-        <div class="subly-mini-feature-card">
-          <div class="feature-icon-avatar avatar-blue">📂</div>
-          <h3>All in One Place</h3>
-          <p>One unified dashboard for household cards, subscription trials, and recurring senior care telemetry.</p>
-          <div class="feature-card-bullet">• Real-time price tracking</div>
-          <div class="feature-card-bullet">• Instant renewal calendar</div>
-        </div>
-        <div class="subly-mini-feature-card">
-          <div class="feature-icon-avatar avatar-amber">⏰</div>
-          <h3>Know Before Renewal</h3>
-          <p>Alexa speaks up 3 days before deceptive trial traps convert to paid annual renewals.</p>
-          <div class="feature-card-bullet">• Auto-renew cancellation reminders</div>
-          <div class="feature-card-bullet">• 1-click voice deactivation</div>
-        </div>
-        <div class="subly-mini-feature-card">
-          <div class="feature-icon-avatar avatar-cyan">✨</div>
-          <h3>AI-Powered Savings</h3>
-          <p>Autonomous savings agent powered by AWS Bedrock Claude 3 discovers forgotten subscriptions and pauses waste.</p>
-          <div class="feature-card-bullet">• $81.98 identified at risk</div>
-          <div class="feature-card-bullet">• Annual billing switch savings</div>
-        </div>
-        <div class="subly-mini-feature-card">
-          <div class="feature-icon-avatar avatar-rose">🛡️</div>
-          <h3>Elder Imposter Shield</h3>
-          <p>Instant SMS heuristic scanner intercepts USPS smishing, grandparent bail scams, and bank phishing.</p>
-          <div class="feature-card-bullet">• Domain spoofing detection</div>
-          <div class="feature-card-bullet">• 3-step senior safety playbook</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LUMIO FEATURE ACCELERATION BANNER -->
-    <div class="lumio-acceleration-banner">
-      <div>
-        <div class="lumio-accel-tag">🛡️ Real-Time Household Shield</div>
-        <div class="lumio-accel-title">Protection is accelerating this week.</div>
-        <div class="lumio-accel-sub">ElderGuard intercepted 1 high-risk USPS delivery smishing text and safeguarded $2,400 in potential bank imposter fraud. SubTrack detected 3 expiring free trial traps.</div>
-      </div>
-      <div>
-        <a href="#scamshield-section" class="btn-lumio-analysis">View Safety Analysis →</a>
-      </div>
-    </div>
-
-    <!-- =========================================================================
-         SECTION 4: ALEXA+ LIVING ROOM VOICE STATION (ECHO SHOW 15 TITANIUM DESIGN)
-         ========================================================================= -->
-    <section class="alexa-companion-panel" id="alexa-hub">
-      <div class="companion-top-meta">
-        <div class="companion-hardware-badge">
-          <div class="companion-cyan-led"></div>
-          <span>Echo Show 15 • Living Room Voice Station</span>
-        </div>
-        <div class="companion-agent-status" id="alexaStatus">Alexa+ Agent Idle</div>
-      </div>
-
-      <div class="alexa-voice-row">
-        <!-- Luminescent Multi-Layer Alexa Voice Orb -->
-        <div class="orb-interactive-wrap">
-          <div class="alexa-luminous-orb" id="alexaSphere" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')" title="Click to test voice synthesis">
-            <span>🎙️</span>
-          </div>
-          <div class="wave-bars-row">
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-            <div class="wave-bar"></div>
+        <div class="hero-stat-pill-box">
+          <div class="hero-stat-icon-wrap icon-bg-green">🎙️</div>
+          <div>
+            <div class="stat-pill-number">24/7 Voice Vigilance</div>
+            <div class="stat-pill-label">Autonomous Alexa+ Companion Protection</div>
           </div>
         </div>
-
-        <!-- Dialogue Speech Card -->
-        <div class="dialogue-speech-card">
-          <div class="dialogue-top-meta">
-            <span style="color: #38bdf8; font-weight: 800;">🔊 Alexa+ Spoken Dialogue</span>
-            <span class="badge-chip blue" id="toolBadge">Ready</span>
-          </div>
-          <div class="dialogue-spoken-text" id="spokenDialogueText">
-            "Hello! I am your SubTrack & ElderGuard family assistant. Ask me: 'Which subscriptions renew this week?', 'List my active subscriptions', or paste any suspicious text message to scan for scams."
-          </div>
-          <div class="dialogue-telemetry-row">
-            <div>Active Tool: <strong id="metaTool" style="color: #38bdf8;">None</strong></div>
-            <div>Transport: <strong style="color: #ffffff;">POST /mcp (Streamable HTTP 2025-11-25+)</strong></div>
-            <div>Latency: <strong id="metaLatency" style="color: #38bdf8;">0 ms</strong></div>
+        <div class="hero-stat-pill-box">
+          <div class="hero-stat-icon-wrap icon-bg-amber">⚡</div>
+          <div>
+            <div class="stat-pill-number">100% MCP Streamable</div>
+            <div class="stat-pill-label">Official Spec 2025-11-25+ HTTP Standard</div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Quick Suggestion Chips (Subly Frosted Pills) -->
-      <div class="voice-chips-deck">
-        <span class="chips-heading-label">Try Asking Alexa (Click to Simulate Voice Skill):</span>
-        <div class="chips-pill-flow">
-          <button class="voice-query-pill featured" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
-            <span>📋</span> List Active Subscriptions
-          </button>
-          <button class="voice-query-pill featured" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
-            <span>⏰</span> Expiring Cancellation Reminders
-          </button>
-          <button class="voice-query-pill" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
-            <span>🏦</span> Scan Chase Wire SMS
-          </button>
-          <button class="voice-query-pill" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
-            <span>📦</span> Scan USPS Phishing
-          </button>
-          <button class="voice-query-pill" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
-            <span>🛑</span> Cancel BrainGym Renewal
-          </button>
-          <button class="voice-query-pill" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
-            <span>👵</span> Grandparent Bail Scam
-          </button>
+      <!-- Subly 4-Feature Grid -->
+      <section class="subly-stress-free-section">
+        <div class="subly-section-intro">
+          <span class="kicker-subtle">Family Security & Clarity</span>
+          <h2 class="subly-section-headline">Less Subscription Stress. More Financial Control.</h2>
+          <p class="subly-section-sub">SubTrack & ElderGuard turns messy recurring charges and deceptive smishing into an autonomous, voice-controlled defense shield.</p>
         </div>
-      </div>
+        <div class="subly-four-card-grid">
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-blue">📂</div>
+            <h3>All in One Place</h3>
+            <p>One unified dashboard for household cards, subscription trials, and recurring senior care telemetry.</p>
+            <div class="feature-card-bullet">• Real-time price tracking</div>
+            <div class="feature-card-bullet">• Instant renewal calendar</div>
+          </div>
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-amber">⏰</div>
+            <h3>Know Before Renewal</h3>
+            <p>Alexa speaks up 3 days before deceptive trial traps convert to paid annual renewals.</p>
+            <div class="feature-card-bullet">• Auto-renew cancellation reminders</div>
+            <div class="feature-card-bullet">• 1-click voice deactivation</div>
+          </div>
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-cyan">✨</div>
+            <h3>AI-Powered Savings</h3>
+            <p>Autonomous savings agent powered by AWS Bedrock Claude 3 discovers forgotten subscriptions and pauses waste.</p>
+            <div class="feature-card-bullet">• $81.98 identified at risk</div>
+            <div class="feature-card-bullet">• Annual billing switch savings</div>
+          </div>
+          <div class="subly-mini-feature-card">
+            <div class="feature-icon-avatar avatar-rose">🛡️</div>
+            <h3>Elder Imposter Shield</h3>
+            <p>Instant SMS heuristic scanner intercepts USPS smishing, grandparent bail scams, and bank phishing.</p>
+            <div class="feature-card-bullet">• Domain spoofing detection</div>
+            <div class="feature-card-bullet">• 3-step senior safety playbook</div>
+          </div>
+        </div>
+      </section>
 
-      <!-- Spotlight Input Bar -->
-      <div class="spotlight-input-row">
-        <span style="font-size: 16px;">🔍</span>
-        <input 
-          type="text" 
-          id="customPromptInput" 
-          class="spotlight-input" 
-          placeholder="Ask Alexa anything: e.g. Which subscriptions renew this week? Is this message safe?"
-          onkeydown="if(event.key==='Enter') executeCustomPrompt()"
-        />
-        <button class="btn-invoke-skill" onclick="executeCustomPrompt()">
-          <span>Invoke Agent Skill</span>
-          <span>⚡</span>
+      <!-- Launch Interactive App Callout Banner -->
+      <div class="landing-launch-banner">
+        <div>
+          <h3>Ready to test the live Alexa+ voice shield?</h3>
+          <p>Open the interactive living room station to simulate spoken voice skills, monitor household subscription runs, and scan suspicious SMS messages.</p>
+        </div>
+        <button class="btn-launch-large" onclick="switchView('dashboard')">
+          <span>Open Application Dashboard</span>
+          <span>🚀</span>
         </button>
       </div>
-    </section>
-
-    <!-- =========================================================================
-         SECTION 5: TWO PILLAR APPLICATION SUITE (SUBLY HISTORY & SMART PLAYBOOK)
-         ========================================================================= -->
-    <div class="pillars-two-col">
-
-      <!-- PILLAR 1: SUBTRACK FINANCIAL DEFENSE (SUBLY "THIS MONTH" & SMART AGENT) -->
-      <section class="pillar-panel-card" id="subtrack-section">
-        <div class="pillar-header-group">
-          <div class="pillar-identity">
-            <div class="icon-square-avatar avatar-blue">💳</div>
-            <div>
-              <div class="pillar-heading-title">SubTrack Financial Defense</div>
-              <div class="pillar-heading-sub">Subscriptions, Hidden Trial Traps & Spend Control</div>
-            </div>
-          </div>
-          <button class="btn-step-action" onclick="resetSubscriptions()">
-            🔄 Reset Data
-          </button>
-        </div>
-
-        <!-- Subly Smart Savings Agent Card (from Image 1, right screen) -->
-        <div class="smart-savings-agent-card">
-          <div class="savings-agent-header">
-            <div class="savings-agent-badge">
-              <span>💼</span> Smart Savings Agent
-            </div>
-            <div class="savings-agent-meta">
-              <span class="pill-status-warm">● In Progress</span>
-              <span class="pill-status-urgent">Urgent</span>
-            </div>
-          </div>
-          <div class="savings-progress-bar-wrap">
-            <div class="savings-progress-labels">
-              <span>3 of 8 reviewed (41%)</span>
-              <span>Savings Health: 72%</span>
-            </div>
-            <div class="savings-segmented-track">
-              <div class="savings-track-segment-blue" title="Reviewed Subscriptions"></div>
-              <div class="savings-track-segment-orange" title="Savings Health Potential"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Subly Segmented Filter Tabs -->
-        <div class="segmented-filter-bar">
-          <button class="filter-tab-btn active" id="tabAll" onclick="setSubFilter('ALL')">All (7)</button>
-          <button class="filter-tab-btn" id="tabTrials" onclick="setSubFilter('TRIALS')">⚠️ Expiring Trials (3)</button>
-          <button class="filter-tab-btn" id="tabActive" onclick="setSubFilter('ACTIVE')">Active (4)</button>
-          <button class="filter-tab-btn" id="tabBlocked" onclick="setSubFilter('BLOCKED')">🛡️ Blocked</button>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-top: -6px;">
-          <span style="font-weight: 700; color: var(--text-main);" id="subListSummary">Active Household Subscriptions (7)</span>
-          <span style="color: var(--text-muted); font-size: 11px;">Protected by Alexa+ Agent</span>
-        </div>
-
-        <!-- Dynamic Subscriptions Deck (Pure White Subly Cards) -->
-        <div class="subscriptions-scroll-deck" id="subscriptionsContainer">
-          <!-- Populated dynamically via JS -->
-        </div>
-      </section>
-
-      <!-- PILLAR 2: SCAMSHIELD THREAT ENGINE & 3-STEP PLAYBOOK -->
-      <section class="pillar-panel-card" id="scamshield-section">
-        <div class="pillar-header-group">
-          <div class="pillar-identity">
-            <div class="icon-square-avatar avatar-rose">🛡️</div>
-            <div>
-              <div class="pillar-heading-title">ScamShield Threat Engine</div>
-              <div class="pillar-heading-sub">Heuristics + Bedrock Claude 3 Intelligence</div>
-            </div>
-          </div>
-          <span class="badge-chip blue" id="bedrockEngineTag">Bedrock Claude 3</span>
-        </div>
-
-        <div class="scamshield-content-deck">
-          <!-- Subly Interactive Scenario Chips -->
-          <div class="scenario-chips-container">
-            <span class="scenario-caption">Select Threat Scenario to Test:</span>
-            <div class="scenario-chip-buttons-row">
-              <button class="scenario-chip-btn active" id="chipChase" onclick="selectScenario('chase')">
-                <span>🏦</span> Chase Bank Wire
-              </button>
-              <button class="scenario-chip-btn" id="chipUsps" onclick="selectScenario('usps')">
-                <span>📦</span> USPS Smishing
-              </button>
-              <button class="scenario-chip-btn" id="chipGrandkid" onclick="selectScenario('grandkid')">
-                <span>👵</span> Grandparent Bail
-              </button>
-              <button class="scenario-chip-btn" id="chipSafe" onclick="selectScenario('safe')">
-                <span>💚</span> Legitimate SMS
-              </button>
-            </div>
-          </div>
-
-          <!-- Dynamic Threat Risk Card (Lumio High-End Dark Style) -->
-          <div class="threat-gauge-card">
-            <div class="threat-gauge-header">
-              <span style="font-size: 11px; font-weight: 700; color: #7dd3fc; text-transform: uppercase; letter-spacing: 0.05em;">Threat Risk Assessment</span>
-              <div class="threat-score-headline" id="threatGaugeText">63 / 100 (DANGEROUS SCAM)</div>
-            </div>
-            <div class="threat-progress-track">
-              <div class="threat-progress-fill" id="threatProgressBar"></div>
-            </div>
-            <div class="deception-signals-row" id="deceptionBadges"></div>
-          </div>
-
-          <!-- Subly Smart Security Agent Playbook (3-Step Clarity) -->
-          <div class="smart-agent-playbook">
-            <div class="playbook-agent-header">
-              <div class="playbook-agent-title">
-                <span>🛡️</span> Smart Security Playbook for Seniors
-              </div>
-              <span class="badge-chip amber" style="font-size: 10px;">Agent Action Ready</span>
-            </div>
-
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <!-- Step 1 -->
-              <div class="playbook-step-row" id="step1Card">
-                <div class="step-left-info">
-                  <div class="step-num-bubble">1</div>
-                  <div>
-                    <div class="step-title-text">Quarantine Link & Block Sender</div>
-                    <div class="step-desc-text">Isolates deceptive domain & prevents clicks on senior's device</div>
-                  </div>
-                </div>
-                <button class="btn-step-action" id="step1Btn" onclick="executeStepAction(1, 'Sender number & link quarantined.')">
-                  <span>🔒 Block Sender</span>
-                </button>
-              </div>
-
-              <!-- Step 2 -->
-              <div class="playbook-step-row" id="step2Card">
-                <div class="step-left-info">
-                  <div class="step-num-bubble">2</div>
-                  <div>
-                    <div class="step-title-text">Verify via Official Channel</div>
-                    <div class="step-desc-text">Directly connect to official fraud line (Chase: 1-800-935-9935)</div>
-                  </div>
-                </div>
-                <button class="btn-step-action" id="step2Btn" onclick="executeStepAction(2, 'Alexa is calling verified Chase customer support.')">
-                  <span>📞 Call Verified Bank</span>
-                </button>
-              </div>
-
-              <!-- Step 3 -->
-              <div class="playbook-step-row" id="step3Card">
-                <div class="step-left-info">
-                  <div class="step-num-bubble">3</div>
-                  <div>
-                    <div class="step-title-text">Notify Family Guardian</div>
-                    <div class="step-desc-text">Dispatches high-priority summary to caregiver via Alexa notification</div>
-                  </div>
-                </div>
-                <button class="btn-step-action" id="step3Btn" onclick="executeStepAction(3, 'Caregiver alert sent to daughter via Alexa Notification.')">
-                  <span>📲 Alert Family</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
     </div>
+  </div>
 
-    <!-- =========================================================================
-         SECTION 6: LIVE MCP STREAMABLE HTTP INSPECTOR (LUMIO SCREEN)
-         ========================================================================= -->
-    <section class="mcp-protocol-deck" id="mcp-inspector">
-      <div class="mcp-deck-top">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <!-- macOS Window Control Dots -->
-          <div style="display: flex; gap: 6px;">
-            <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
-            <div style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></div>
-            <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></div>
+  <!-- =========================================================================
+       VIEW 2: LIVE APPLICATION DASHBOARD (SEPARATED)
+       ========================================================================= -->
+  <div id="dashboardView" class="view-container active">
+    <main class="app-dashboard-wrap">
+
+      <!-- SECTION 2: THE 3 METRIC CARDS (FIXED SPACING & NO TEXT OVERLAP) -->
+      <section class="metrics-lumio-grid">
+        
+        <!-- Card 1: Total Spend & Subly Mini Bar Chart with Caret Tooltip -->
+        <div class="lumio-stat-card">
+          <div class="stat-header-row">
+            <span class="stat-caption">Total Subscription Spend</span>
+            <span style="font-size: 14px;">💳</span>
           </div>
-          <div>
-            <div style="font-family: var(--font-display); font-size: 15px; font-weight: 800; color: #ffffff;">
-              Live MCP Streamable HTTP Protocol Inspector
+          <div class="stat-number-row">
+            <span class="stat-hero-number" id="totalSpendDisplay">$145.94</span>
+            <span class="stat-trend-tag">↗ 18.4% vs last month</span>
+          </div>
+          <!-- Subly Mini Bar Chart with Caret Tooltip -->
+          <div class="mini-chart-wrap">
+            <div class="chart-bar-col" onclick="selectDay('Sun', '$18.40')">
+              <div class="chart-bar-fill" style="height: 14px;"></div>
+              <span class="chart-day-label">Sun</span>
             </div>
-            <div style="font-size: 11px; color: #7dd3fc;">
-              Streamable JSON-RPC 2.0 via POST /mcp (Spec 2025-11-25+)
+            <div class="chart-bar-col" onclick="selectDay('Mon', '$24.99')">
+              <div class="chart-bar-fill" style="height: 18px;"></div>
+              <span class="chart-day-label">Mon</span>
+            </div>
+            <div class="chart-bar-col" onclick="selectDay('Tue', '$12.99')">
+              <div class="chart-bar-fill" style="height: 12px;"></div>
+              <span class="chart-day-label">Tue</span>
+            </div>
+            <div class="chart-bar-col" onclick="selectDay('Wed', '$34.98')">
+              <div class="chart-bar-fill" style="height: 16px;"></div>
+              <span class="chart-day-label">Wed</span>
+            </div>
+            <div class="chart-bar-col" onclick="selectDay('Thu', '$81.98')">
+              <div class="chart-floating-pill" id="chartPillSavings">$81.98 at risk</div>
+              <div class="chart-bar-fill active-hatch" style="height: 38px;"></div>
+              <span class="chart-day-label" style="font-weight: 700; color: #0284c7;">Thu</span>
+            </div>
+            <div class="chart-bar-col" onclick="selectDay('Fri', '$29.99')">
+              <div class="chart-bar-fill" style="height: 16px;"></div>
+              <span class="chart-day-label">Fri</span>
+            </div>
+            <div class="chart-bar-col" onclick="selectDay('Sat', '$15.99')">
+              <div class="chart-bar-fill" style="height: 12px;"></div>
+              <span class="chart-day-label">Sat</span>
             </div>
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 8px;">
-          <select id="mcpMethodSelect" class="scenario-dropdown" style="font-family: var(--font-mono); font-size: 11px; padding: 7px 12px; background: #071f28; color: #ffffff; border-color: rgba(255,255,255,0.2);" onchange="loadPresetPayload()">
-            <option value="call_list_active">tools/call: list_active_subscriptions</option>
-            <option value="call_reminders">tools/call: get_cancellation_reminders</option>
-            <option value="call_scam">tools/call: analyze_suspicious_message</option>
-            <option value="call_cancel">tools/call: cancel_subscription_alert</option>
-            <option value="call_subs">tools/call: get_active_subscriptions</option>
-            <option value="tools/list">tools/list: Discover Agent Skills</option>
-            <option value="initialize">initialize: Protocol Handshake</option>
-          </select>
-          <button class="btn-invoke-skill" style="font-size: 12px; padding: 7px 18px;" onclick="sendRawMcpStream()">
-            Send to POST /mcp
+        <!-- Card 2: Subly Semi-Circular Radial Health Arc (EXPANDED TO PREVENT ANY TEXT OVERLAP) -->
+        <div class="lumio-stat-card">
+          <div class="stat-header-row">
+            <span class="stat-caption">Subscription Health</span>
+            <span class="badge-chip green">Protected</span>
+          </div>
+          <div class="radial-gauge-container">
+            <svg class="radial-arc-svg" viewBox="0 0 220 115">
+              <g id="radialGaugeTicks"></g>
+            </svg>
+            <div class="radial-score-display">
+              <div class="radial-number" id="radialHealthNumber">64<span class="radial-unit">/100</span></div>
+            </div>
+          </div>
+          <!-- Clean Non-Overlapping Label below the gauge -->
+          <div style="text-align: center;">
+            <div class="radial-subtext-badge">
+              <span>🛡️</span> Trial Trap Vigilance (Good ⓘ)
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Lumio Category Allocation Bars -->
+        <div class="lumio-stat-card">
+          <div class="stat-header-row">
+            <span class="stat-caption">Household Category Allocation</span>
+            <span style="font-size: 11px; font-weight: 700; color: #0284c7;">Save $81.98</span>
+          </div>
+          <div class="category-bars-list">
+            <div class="cat-bar-item">
+              <div class="cat-bar-header">
+                <span>Brain & Cognitive Training</span>
+                <span style="font-family: var(--font-mono);">$29.99 (42%)</span>
+              </div>
+              <div class="cat-bar-track">
+                <div class="cat-bar-fill-hatch hatch-blue" style="width: 42%;"></div>
+              </div>
+            </div>
+            <div class="cat-bar-item">
+              <div class="cat-bar-header">
+                <span>Family & Ancestry Trees</span>
+                <span style="font-family: var(--font-mono);">$39.99 (35%)</span>
+              </div>
+              <div class="cat-bar-track">
+                <div class="cat-bar-fill-hatch hatch-orange" style="width: 35%;"></div>
+              </div>
+            </div>
+            <div class="cat-bar-item">
+              <div class="cat-bar-header">
+                <span>Medical Alert & Telemetry</span>
+                <span style="font-family: var(--font-mono);">$34.98 (23%)</span>
+              </div>
+              <div class="cat-bar-track">
+                <div class="cat-bar-fill-hatch hatch-blue" style="width: 23%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SECTION 3: ALEXA+ LIVING ROOM VOICE STATION -->
+      <section class="alexa-companion-panel" id="alexa-hub">
+        <div class="companion-top-meta">
+          <div class="companion-hardware-badge">
+            <div class="companion-cyan-led"></div>
+            <span>Echo Show 15 • Living Room Voice Station</span>
+          </div>
+          <div class="companion-agent-status" id="alexaStatus">Alexa+ Agent Idle</div>
+        </div>
+
+        <div class="alexa-voice-row">
+          <!-- Luminescent Alexa Voice Orb -->
+          <div class="orb-interactive-wrap">
+            <div class="alexa-luminous-orb" id="alexaSphere" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')" title="Click to test voice synthesis">
+              <span>🎙️</span>
+            </div>
+            <div class="wave-bars-row">
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+              <div class="wave-bar"></div>
+            </div>
+          </div>
+
+          <!-- Dialogue Speech Card -->
+          <div class="dialogue-speech-card">
+            <div class="dialogue-top-meta">
+              <span style="color: #0284c7; font-weight: 800;">🔊 Alexa+ Spoken Dialogue</span>
+              <span class="badge-chip blue" id="toolBadge">Ready</span>
+            </div>
+            <div class="dialogue-spoken-text" id="spokenDialogueText">
+              "Hello! I am your SubTrack & ElderGuard family assistant. Ask me: 'Which subscriptions renew this week?', 'List my active subscriptions', or paste any suspicious text message to scan for scams."
+            </div>
+            <div class="dialogue-telemetry-row">
+              <div>Active Tool: <strong id="metaTool" style="color: #0284c7;">None</strong></div>
+              <div>Transport: <strong style="color: var(--text-main);">POST /mcp (Streamable HTTP 2025-11-25+)</strong></div>
+              <div>Latency: <strong id="metaLatency" style="color: #0284c7;">0 ms</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Suggestion Chips -->
+        <div class="voice-chips-deck">
+          <span class="chips-heading-label">Try Asking Alexa (Click to Simulate Voice Skill):</span>
+          <div class="chips-pill-flow">
+            <button class="voice-query-pill featured" onclick="runPrompt('Alexa, tell me which active subscriptions I have and list them down.')">
+              <span>📋</span> List Active Subscriptions
+            </button>
+            <button class="voice-query-pill featured" onclick="runPrompt('Alexa, remind me which subscription I have to cancel before getting charged.')">
+              <span>⏰</span> Expiring Cancellation Reminders
+            </button>
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, check if this text about an urgent Chase wire transfer is a scam.')">
+              <span>🏦</span> Scan Chase Wire SMS
+            </button>
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, someone sent me a USPS package delivery link saying my package is held.')">
+              <span>📦</span> Scan USPS Phishing
+            </button>
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, cancel my BrainGym Memory Pro auto-renewal.')">
+              <span>🛑</span> Cancel BrainGym Renewal
+            </button>
+            <button class="voice-query-pill" onclick="runPrompt('Alexa, check message: Your grandson is in jail and needs $2,000 in Apple gift cards.')">
+              <span>👵</span> Grandparent Bail Scam
+            </button>
+          </div>
+        </div>
+
+        <!-- Spotlight Input Bar -->
+        <div class="spotlight-input-row">
+          <span style="font-size: 16px;">🔍</span>
+          <input 
+            type="text" 
+            id="customPromptInput" 
+            class="spotlight-input" 
+            placeholder="Ask Alexa anything: e.g. Which subscriptions renew this week? Is this message safe?"
+            onkeydown="if(event.key==='Enter') executeCustomPrompt()"
+          />
+          <button class="btn-invoke-skill" onclick="executeCustomPrompt()">
+            <span>Invoke Agent Skill</span>
+            <span>⚡</span>
           </button>
         </div>
+      </section>
+
+      <!-- SECTION 4: TWO PILLAR APPLICATION SUITE -->
+      <div class="pillars-two-col">
+
+        <!-- PILLAR 1: SUBTRACK FINANCIAL DEFENSE (SUBLY STYLE) -->
+        <section class="pillar-panel-card" id="subtrack-section">
+          <div class="pillar-header-group">
+            <div class="pillar-identity">
+              <div class="icon-square-avatar avatar-blue">💳</div>
+              <div>
+                <div class="pillar-heading-title">SubTrack Financial Defense</div>
+                <div class="pillar-heading-sub">Subscriptions, Hidden Trial Traps & Spend Control</div>
+              </div>
+            </div>
+            <button class="btn-step-action" onclick="resetSubscriptions()">
+              🔄 Reset Data
+            </button>
+          </div>
+
+          <!-- Subly Smart Savings Agent Card -->
+          <div class="smart-savings-agent-card">
+            <div class="savings-agent-header">
+              <div class="savings-agent-badge">
+                <span>💼</span> Smart Savings Agent
+              </div>
+              <div class="savings-agent-meta">
+                <span class="pill-status-warm">● In Progress</span>
+                <span class="pill-status-urgent">Urgent</span>
+              </div>
+            </div>
+            <div class="savings-progress-bar-wrap">
+              <div class="savings-progress-labels">
+                <span>3 of 8 reviewed (41%)</span>
+                <span>Savings Health: 72%</span>
+              </div>
+              <div class="savings-segmented-track">
+                <div class="savings-track-segment-blue" title="Reviewed Subscriptions"></div>
+                <div class="savings-track-segment-orange" title="Savings Health Potential"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subly Segmented Filter Tabs -->
+          <div class="segmented-filter-bar">
+            <button class="filter-tab-btn active" id="tabAll" onclick="setSubFilter('ALL')">All (7)</button>
+            <button class="filter-tab-btn" id="tabTrials" onclick="setSubFilter('TRIALS')">⚠️ Expiring Trials (3)</button>
+            <button class="filter-tab-btn" id="tabActive" onclick="setSubFilter('ACTIVE')">Active (4)</button>
+            <button class="filter-tab-btn" id="tabBlocked" onclick="setSubFilter('BLOCKED')">🛡️ Blocked</button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-top: -6px;">
+            <span style="font-weight: 700; color: var(--text-main);" id="subListSummary">Active Household Subscriptions (7)</span>
+            <span style="color: var(--text-muted); font-size: 11px;">Protected by Alexa+ Agent</span>
+          </div>
+
+          <!-- Dynamic Subscriptions Deck -->
+          <div class="subscriptions-scroll-deck" id="subscriptionsContainer">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </section>
+
+        <!-- PILLAR 2: SCAMSHIELD THREAT ENGINE & 3-STEP PLAYBOOK (LIGHT THEME) -->
+        <section class="pillar-panel-card" id="scamshield-section">
+          <div class="pillar-header-group">
+            <div class="pillar-identity">
+              <div class="icon-square-avatar avatar-rose">🛡️</div>
+              <div>
+                <div class="pillar-heading-title">ScamShield Threat Engine</div>
+                <div class="pillar-heading-sub">Heuristics + Bedrock Claude 3 Intelligence</div>
+              </div>
+            </div>
+            <span class="badge-chip blue" id="bedrockEngineTag">Bedrock Claude 3</span>
+          </div>
+
+          <div class="scamshield-content-deck">
+            <!-- Subly Interactive Scenario Chips -->
+            <div class="scenario-chips-container">
+              <span class="stat-caption">Select Threat Scenario to Test:</span>
+              <div class="scenario-chip-buttons-row">
+                <button class="scenario-chip-btn active" id="chipChase" onclick="selectScenario('chase')">
+                  <span>🏦</span> Chase Bank Wire
+                </button>
+                <button class="scenario-chip-btn" id="chipUsps" onclick="selectScenario('usps')">
+                  <span>📦</span> USPS Smishing
+                </button>
+                <button class="scenario-chip-btn" id="chipGrandkid" onclick="selectScenario('grandkid')">
+                  <span>👵</span> Grandparent Bail
+                </button>
+                <button class="scenario-chip-btn" id="chipSafe" onclick="selectScenario('safe')">
+                  <span>💚</span> Legitimate SMS
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Threat Risk Card (PURE LIGHT THEME) -->
+            <div class="threat-gauge-card">
+              <div class="threat-gauge-header">
+                <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Threat Risk Assessment</span>
+                <div class="threat-score-headline" id="threatGaugeText">63 / 100 (DANGEROUS SCAM)</div>
+              </div>
+              <div class="threat-progress-track">
+                <div class="threat-progress-fill" id="threatProgressBar"></div>
+              </div>
+              <div class="deception-signals-row" id="deceptionBadges"></div>
+            </div>
+
+            <!-- Subly Smart Security Agent Playbook (3-Step Clarity) -->
+            <div class="smart-agent-playbook">
+              <div class="playbook-agent-header">
+                <div class="playbook-agent-title">
+                  <span>🛡️</span> Smart Security Playbook for Seniors
+                </div>
+                <span class="badge-chip amber" style="font-size: 10px;">Agent Action Ready</span>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <!-- Step 1 -->
+                <div class="playbook-step-row" id="step1Card">
+                  <div class="step-left-info">
+                    <div class="step-num-bubble">1</div>
+                    <div>
+                      <div class="step-title-text">Quarantine Link & Block Sender</div>
+                      <div class="step-desc-text">Isolates deceptive domain & prevents clicks on senior's device</div>
+                    </div>
+                  </div>
+                  <button class="btn-step-action" id="step1Btn" onclick="executeStepAction(1, 'Sender number & link quarantined.')">
+                    <span>🔒 Block Sender</span>
+                  </button>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="playbook-step-row" id="step2Card">
+                  <div class="step-left-info">
+                    <div class="step-num-bubble">2</div>
+                    <div>
+                      <div class="step-title-text">Verify via Official Channel</div>
+                      <div class="step-desc-text">Directly connect to official fraud line (Chase: 1-800-935-9935)</div>
+                    </div>
+                  </div>
+                  <button class="btn-step-action" id="step2Btn" onclick="executeStepAction(2, 'Alexa is calling verified Chase customer support.')">
+                    <span>📞 Call Verified Bank</span>
+                  </button>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="playbook-step-row" id="step3Card">
+                  <div class="step-left-info">
+                    <div class="step-num-bubble">3</div>
+                    <div>
+                      <div class="step-title-text">Notify Family Guardian</div>
+                      <div class="step-desc-text">Dispatches high-priority summary to caregiver via Alexa notification</div>
+                    </div>
+                  </div>
+                  <button class="btn-step-action" id="step3Btn" onclick="executeStepAction(3, 'Caregiver alert sent to daughter via Alexa Notification.')">
+                    <span>📲 Alert Family</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
 
-      <!-- Pure Dark IDE / Console Screen -->
-      <div class="mcp-deck-screen" id="mcpStreamConsole">// Ready. MCP Streamable HTTP endpoint active at POST http://localhost:3000/mcp
+      <!-- SECTION 5: LIVE MCP STREAMABLE HTTP INSPECTOR (LIGHT THEME) -->
+      <section class="mcp-protocol-deck" id="mcp-inspector">
+        <div class="mcp-deck-top">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div style="display: flex; gap: 6px;">
+              <div style="width: 10px; height: 10px; border-radius: 50%; background: #ef4444;"></div>
+              <div style="width: 10px; height: 10px; border-radius: 50%; background: #f59e0b;"></div>
+              <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></div>
+            </div>
+            <div>
+              <div style="font-family: var(--font-display); font-size: 15px; font-weight: 800; color: var(--text-main);">
+                Live MCP Streamable HTTP Protocol Inspector
+              </div>
+              <div style="font-size: 11px; color: #0284c7; font-weight: 600;">
+                Streamable JSON-RPC 2.0 via POST /mcp (Spec 2025-11-25+)
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <select id="mcpMethodSelect" class="scenario-dropdown" style="font-family: var(--font-mono); font-size: 11px; padding: 7px 12px; background: #ffffff; color: var(--text-main); border: 1px solid var(--surface-border); border-radius: var(--radius-md);" onchange="loadPresetPayload()">
+              <option value="call_list_active">tools/call: list_active_subscriptions</option>
+              <option value="call_reminders">tools/call: get_cancellation_reminders</option>
+              <option value="call_scam">tools/call: analyze_suspicious_message</option>
+              <option value="call_cancel">tools/call: cancel_subscription_alert</option>
+              <option value="call_subs">tools/call: get_active_subscriptions</option>
+              <option value="tools/list">tools/list: Discover Agent Skills</option>
+              <option value="initialize">initialize: Protocol Handshake</option>
+            </select>
+            <button class="btn-invoke-skill" style="font-size: 12px; padding: 7px 18px;" onclick="sendRawMcpStream()">
+              Send to POST /mcp
+            </button>
+          </div>
+        </div>
+
+        <!-- Pure Light Screen / Console -->
+        <div class="mcp-deck-screen" id="mcpStreamConsole">// Ready. MCP Streamable HTTP endpoint active at POST http://localhost:3000/mcp
 // Select any method above and click 'Send to POST /mcp' to test live streaming packets.
 </div>
-    </section>
+      </section>
 
-  </main>
-
-  <!-- SUBLY SIGNATURE FLOATING BOTTOM ISLAND PILL -->
-  <nav class="floating-island-bar">
-    <a href="#alexa-hub" class="island-link-item active" id="islandVoice">
-      <span>🎙️</span> Voice Hub
-    </a>
-    <a href="#subtrack-section" class="island-link-item" id="islandSubTrack">
-      <span>💳</span> SubTrack
-    </a>
-    <a href="#scamshield-section" class="island-link-item" id="islandScamShield">
-      <span>🛡️</span> ScamShield
-    </a>
-    <a href="#features-deck" class="island-link-item" id="islandFeatures">
-      <span>✨</span> Features
-    </a>
-    <a href="#mcp-inspector" class="island-link-item" id="islandMcp">
-      <span>⚡</span> MCP Spec
-    </a>
-  </nav>
+    </main>
+  </div>
 
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div class="toast-pill-alert" id="toastNotice">
@@ -2588,6 +2580,52 @@
     let currentFilter = 'ALL';
     let cachedSubscriptions = [];
     let currentScenarioKey = 'chase';
+    let currentActiveView = 'dashboard';
+
+    // View Switching: 'landing' vs 'dashboard'
+    function switchView(viewName) {
+      currentActiveView = viewName;
+      const landingView = document.getElementById("landingView");
+      const dashboardView = document.getElementById("dashboardView");
+      const tabLanding = document.getElementById("tabNavLanding");
+      const tabDashboard = document.getElementById("tabNavDashboard");
+      const toggleBtnIcon = document.getElementById("btnViewToggleIcon");
+      const toggleBtnText = document.getElementById("btnViewToggleText");
+
+      if (viewName === 'landing') {
+        landingView.classList.add("active");
+        dashboardView.classList.remove("active");
+        tabLanding.classList.add("active");
+        tabDashboard.classList.remove("active");
+        toggleBtnIcon.textContent = "📱";
+        toggleBtnText.textContent = "App Dashboard";
+        window.location.hash = "#landing";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        dashboardView.classList.add("active");
+        landingView.classList.remove("active");
+        tabDashboard.classList.add("active");
+        tabLanding.classList.remove("active");
+        toggleBtnIcon.textContent = "🌐";
+        toggleBtnText.textContent = "Landing Page";
+        window.location.hash = "#dashboard";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+
+    function toggleView() {
+      if (currentActiveView === 'landing') {
+        switchView('dashboard');
+      } else {
+        switchView('landing');
+      }
+    }
+
+    function ensureDashboardView() {
+      if (currentActiveView !== 'dashboard') {
+        switchView('dashboard');
+      }
+    }
 
     // Toggle Audio
     const audioBtn = document.getElementById("audioToggleBtn");
@@ -2638,13 +2676,13 @@
       showToast(`Selected ${day}: ${amount} recurring spend`);
     }
 
-    // Render Subly Segmented Radial Gauge Ticks
+    // Render Subly Segmented Radial Gauge Ticks (Expanded SVG to eliminate text collisions)
     function updateRadialGauge(score) {
       const container = document.getElementById("radialGaugeTicks");
       if (!container) return;
-      const cx = 90, cy = 85;
+      const cx = 110, cy = 105;
       const numTicks = 28;
-      const rInner = 56, rOuter = 72;
+      const rInner = 66, rOuter = 86;
       let html = "";
 
       for (let i = 0; i < numTicks; i++) {
@@ -2656,7 +2694,7 @@
 
         const isLit = (i / (numTicks - 1)) <= (score / 100);
         const strokeColor = isLit ? "#f97316" : "#e2e8f0";
-        const strokeWidth = 3.5;
+        const strokeWidth = 3.8;
 
         html += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${strokeColor}" stroke-width="${strokeWidth}" stroke-linecap="round" />`;
       }
@@ -2694,15 +2732,15 @@
       }
     }
 
-    // Authentic Brand Visuals (Subly Style)
+    // Authentic Brand Visuals
     const brandVisuals = {
-      "BrainGym Memory Pro": { icon: "🧠", bg: "#f3e8ff", fg: "#7e22ce", brand: "Apple" },
-      "Ancestry Heritage Premium": { icon: "🌳", bg: "#e0f2fe", fg: "#0284c7", brand: "Ancestry" },
-      "Senior Daily Puzzles & Crosswords": { icon: "🧩", bg: "#fef3c7", fg: "#b45309", brand: "PayPal" },
-      "Netflix 4K Ultra": { icon: "N", bg: "#000000", fg: "#e50914", brand: "Netflix" },
-      "VitalHealth Medical Telemetry": { icon: "💊", bg: "#ecfdf5", fg: "#059669", brand: "VitalHealth" },
-      "Spotify Family Plan": { icon: "🟢", bg: "#1db954", fg: "#ffffff", brand: "Spotify" },
-      "FitPulse Senior Chair Yoga": { icon: "🧘", bg: "#ffe4e6", fg: "#e11d48", brand: "FitPulse" }
+      "BrainGym Memory Pro": { icon: "🧠", bg: "#f3e8ff", fg: "#7e22ce" },
+      "Ancestry Heritage Premium": { icon: "🌳", bg: "#e0f2fe", fg: "#0284c7" },
+      "Senior Daily Puzzles & Crosswords": { icon: "🧩", bg: "#fef3c7", fg: "#b45309" },
+      "Netflix 4K Ultra": { icon: "N", bg: "#000000", fg: "#e50914" },
+      "VitalHealth Medical Telemetry": { icon: "💊", bg: "#ecfdf5", fg: "#059669" },
+      "Spotify Family Plan": { icon: "🟢", bg: "#1db954", fg: "#ffffff" },
+      "FitPulse Senior Chair Yoga": { icon: "🧘", bg: "#ffe4e6", fg: "#e11d48" }
     };
 
     function renderSubscriptionItems() {
@@ -2734,7 +2772,7 @@
           badgeHtml = `<span class="badge-chip amber">⚠️ Trial: ${sub.trialExpiresInDays}d left</span>`;
         }
 
-        const brand = brandVisuals[sub.name] || { icon: "📦", bg: "#f1f5f9", fg: "#475569", brand: "Service" };
+        const brand = brandVisuals[sub.name] || { icon: "📦", bg: "#f1f5f9", fg: "#475569" };
 
         row.className = `subscription-row-card ${extraClass}`;
         row.innerHTML = `
@@ -2803,7 +2841,7 @@
 
     // Run Prompt Simulation
     async function runPrompt(promptText) {
-      const orb = document.getElementById("alexaSphere");
+      ensureDashboardView();
       const status = document.getElementById("alexaStatus");
       const spokenText = document.getElementById("spokenDialogueText");
       const badge = document.getElementById("toolBadge");
@@ -2902,6 +2940,7 @@
       }
     }
 
+    // Update Threat Card (Light Theme)
     function updateThreatCard(result) {
       const gaugeText = document.getElementById("threatGaugeText");
       const progressBar = document.getElementById("threatProgressBar");
@@ -2913,11 +2952,11 @@
 
       progressBar.style.width = `${score}%`;
       if (score >= 70) {
-        gaugeText.style.color = "#fb7185";
+        gaugeText.style.color = "var(--danger-red)";
       } else if (score >= 40) {
-        gaugeText.style.color = "#fbbf24";
+        gaugeText.style.color = "#d97706";
       } else {
-        gaugeText.style.color = "#34d399";
+        gaugeText.style.color = "var(--success-green)";
       }
 
       badgesContainer.innerHTML = "";
@@ -2929,7 +2968,7 @@
           badgesContainer.appendChild(chip);
         });
       } else {
-        badgesContainer.innerHTML = `<span class="signal-chip" style="background:rgba(16, 185, 129, 0.2); color:#a7f3d0; border:1px solid rgba(16, 185, 129, 0.4);"><span>✅</span> No malicious deception signals detected</span>`;
+        badgesContainer.innerHTML = `<span class="signal-chip" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;"><span>✅</span> No malicious deception signals detected</span>`;
       }
 
       // Reset playbook buttons
@@ -3013,9 +3052,7 @@
       }
     };
 
-    function loadPresetPayload() {
-      // Intentionally lightweight
-    }
+    function loadPresetPayload() {}
 
     async function sendRawMcpStream() {
       const method = document.getElementById("mcpMethodSelect").value;
@@ -3055,36 +3092,17 @@
       }
     }
 
-    // Floating Island active link update on scroll
-    window.addEventListener("scroll", () => {
-      const scrollPos = window.scrollY + 200;
-      const sections = [
-        { id: "alexa-hub", linkId: "islandVoice" },
-        { id: "subtrack-section", linkId: "islandSubTrack" },
-        { id: "scamshield-section", linkId: "islandScamShield" },
-        { id: "features-deck", linkId: "islandFeatures" },
-        { id: "mcp-inspector", linkId: "islandMcp" }
-      ];
-
-      sections.forEach(sec => {
-        const el = document.getElementById(sec.id);
-        const link = document.getElementById(sec.linkId);
-        if (el && link) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            document.querySelectorAll(".island-link-item").forEach(l => l.classList.remove("active"));
-            link.classList.add("active");
-          }
-        }
-      });
-    });
-
-    // Initial Load
+    // Initial Load & Hash Route Detection
     window.addEventListener("DOMContentLoaded", () => {
       loadSubscriptions();
-      updateRadialGauge(74);
+      updateRadialGauge(64);
       scanSelectedSms();
+
+      if (window.location.hash === "#landing") {
+        switchView("landing");
+      } else {
+        switchView("dashboard");
+      }
     });
   </script>
 </body>
