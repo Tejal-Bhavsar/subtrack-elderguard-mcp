@@ -842,16 +842,40 @@
       gap: 3px;
     }
 
-    /* SUBLY MINI BAR CHART (AMPED UP HEIGHT & CLEAR SPACING) */
+    /* SUBLY FINTECH MINI BAR CHART (ULTRA-PREMIUM, DYNAMIC & GLIDING TOOLTIP) */
+    .mini-chart-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      margin-top: 4px;
+    }
+
     .mini-chart-wrap {
       display: flex;
       align-items: flex-end;
-      gap: 10px;
-      height: 95px;
-      padding-top: 28px;
-      border-bottom: 1px solid var(--surface-border-subtle);
-      padding-bottom: 8px;
+      gap: 8px;
+      height: 105px;
+      padding: 32px 4px 6px;
+      border-bottom: 1px solid var(--surface-border);
       position: relative;
+      background: linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, rgba(241, 245, 249, 0.45) 100%);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    /* Subtle background gridlines */
+    .mini-chart-gridline {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      border-top: 1px dashed rgba(203, 213, 225, 0.6);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .mini-chart-gridline.top-50 {
+      top: 54px;
     }
 
     .chart-bar-col {
@@ -859,23 +883,25 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
       height: 100%;
       justify-content: flex-end;
       position: relative;
       cursor: pointer;
+      z-index: 2;
+      padding: 0 1px;
     }
 
     .chart-bar-fill {
       width: 100%;
-      border-radius: var(--radius-full);
+      max-width: 32px;
+      border-radius: 6px 6px 3px 3px;
       background: #e2e8f0;
-      min-height: 12px;
-      transition: height 0.3s ease, background-color 0.2s ease;
+      transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, transform 0.15s ease;
     }
 
     .chart-bar-col:hover .chart-bar-fill {
-      background: #cbd5e1;
+      background: #94a3b8;
+      transform: scaleY(1.04);
     }
 
     .chart-bar-fill.active-hatch {
@@ -886,28 +912,50 @@
         #38bdf8 4px,
         #38bdf8 8px
       ) !important;
-      border-radius: var(--radius-full);
+      border-radius: 6px 6px 3px 3px !important;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.28);
+    }
+
+    .chart-bar-col:hover .chart-bar-fill.active-hatch {
+      transform: scaleY(1.03);
+      filter: brightness(1.05);
     }
 
     .chart-day-label {
       font-size: 11px;
       font-weight: 600;
       color: var(--text-light);
+      margin-top: 6px;
+      transition: all 0.15s ease;
     }
 
+    .chart-bar-col:hover .chart-day-label {
+      color: var(--text-main);
+    }
+
+    .chart-day-label.active-day {
+      font-weight: 800;
+      color: #0284c7;
+    }
+
+    /* Gliding Dynamic Tooltip */
     .chart-floating-pill {
       position: absolute;
-      top: -28px;
+      top: 0px;
+      left: 64.29%; /* Over Thursday by default */
+      transform: translateX(-50%);
       background: #0f172a;
       color: #ffffff;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: var(--radius-full);
       font-size: 11px;
       font-weight: 800;
       font-family: var(--font-mono);
       white-space: nowrap;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
       z-index: 10;
+      pointer-events: none;
+      transition: left 0.22s cubic-bezier(0.16, 1, 0.3, 1), top 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .chart-floating-pill::after {
@@ -2145,36 +2193,43 @@
             <span class="stat-hero-number" id="totalSpendDisplay">$145.94</span>
             <span class="stat-trend-tag">↗ 18.4% vs last month</span>
           </div>
-          <!-- Subly Mini Bar Chart with Caret Tooltip -->
-          <div class="mini-chart-wrap">
-            <div class="chart-bar-col" onclick="selectDay('Sun', '$18.40')">
-              <div class="chart-bar-fill" style="height: 14px;"></div>
-              <span class="chart-day-label">Sun</span>
-            </div>
-            <div class="chart-bar-col" onclick="selectDay('Mon', '$24.99')">
-              <div class="chart-bar-fill" style="height: 18px;"></div>
-              <span class="chart-day-label">Mon</span>
-            </div>
-            <div class="chart-bar-col" onclick="selectDay('Tue', '$12.99')">
-              <div class="chart-bar-fill" style="height: 12px;"></div>
-              <span class="chart-day-label">Tue</span>
-            </div>
-            <div class="chart-bar-col" onclick="selectDay('Wed', '$34.98')">
-              <div class="chart-bar-fill" style="height: 16px;"></div>
-              <span class="chart-day-label">Wed</span>
-            </div>
-            <div class="chart-bar-col" onclick="selectDay('Thu', '$81.98')">
+          <!-- Subly Interactive Fintech Mini Bar Chart with Gliding Caret Tooltip -->
+          <div class="mini-chart-container" onmouseleave="resetDayChart()">
+            <div class="mini-chart-wrap" id="miniChartWrap">
+              <!-- Background Reference Gridline -->
+              <div class="mini-chart-gridline top-50" title="$50 baseline"></div>
+
+              <!-- Gliding Tooltip (Defaults to Thursday $81.98 at risk) -->
               <div class="chart-floating-pill" id="chartPillSavings">$81.98 at risk</div>
-              <div class="chart-bar-fill active-hatch" style="height: 38px;"></div>
-              <span class="chart-day-label" style="font-weight: 700; color: #0284c7;">Thu</span>
-            </div>
-            <div class="chart-bar-col" onclick="selectDay('Fri', '$29.99')">
-              <div class="chart-bar-fill" style="height: 16px;"></div>
-              <span class="chart-day-label">Fri</span>
-            </div>
-            <div class="chart-bar-col" onclick="selectDay('Sat', '$15.99')">
-              <div class="chart-bar-fill" style="height: 12px;"></div>
-              <span class="chart-day-label">Sat</span>
+
+              <div class="chart-bar-col" id="barCol-Sun" onmouseenter="hoverDay('Sun', '$18.40', 28, 7.14)" onclick="selectDay('Sun', '$18.40', 28, 7.14)">
+                <div class="chart-bar-fill" style="height: 28px;"></div>
+                <span class="chart-day-label">Sun</span>
+              </div>
+              <div class="chart-bar-col" id="barCol-Mon" onmouseenter="hoverDay('Mon', '$24.99', 38, 21.43)" onclick="selectDay('Mon', '$24.99', 38, 21.43)">
+                <div class="chart-bar-fill" style="height: 38px;"></div>
+                <span class="chart-day-label">Mon</span>
+              </div>
+              <div class="chart-bar-col" id="barCol-Tue" onmouseenter="hoverDay('Tue', '$12.99', 20, 35.71)" onclick="selectDay('Tue', '$12.99', 20, 35.71)">
+                <div class="chart-bar-fill" style="height: 20px;"></div>
+                <span class="chart-day-label">Tue</span>
+              </div>
+              <div class="chart-bar-col" id="barCol-Wed" onmouseenter="hoverDay('Wed', '$34.98', 52, 50.0)" onclick="selectDay('Wed', '$34.98', 52, 50.0)">
+                <div class="chart-bar-fill" style="height: 52px;"></div>
+                <span class="chart-day-label">Wed</span>
+              </div>
+              <div class="chart-bar-col" id="barCol-Thu" onmouseenter="hoverDay('Thu', '$81.98 at risk', 84, 64.29)" onclick="selectDay('Thu', '$81.98 at risk', 84, 64.29)">
+                <div class="chart-bar-fill active-hatch" style="height: 84px;"></div>
+                <span class="chart-day-label active-day">Thu</span>
+              </div>
+              <div class="chart-bar-col" id="barCol-Fri" onmouseenter="hoverDay('Fri', '$29.99', 46, 78.57)" onclick="selectDay('Fri', '$29.99', 46, 78.57)">
+                <div class="chart-bar-fill" style="height: 46px;"></div>
+                <span class="chart-day-label">Fri</span>
+              </div>
+              <div class="chart-bar-col" id="barCol-Sat" onmouseenter="hoverDay('Sat', '$15.99', 24, 92.86)" onclick="selectDay('Sat', '$15.99', 24, 92.86)">
+                <div class="chart-bar-fill" style="height: 24px;"></div>
+                <span class="chart-day-label">Sat</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2695,11 +2750,43 @@
       setTimeout(() => toast.classList.remove("show"), 3500);
     }
 
-    // Subly Day Chart Click Selector
-    function selectDay(day, amount) {
+    // Subly Day Bar Chart Dynamic Gliding Tooltip & Selection
+    function hoverDay(day, amount, barHeight, percentLeft) {
       const tooltip = document.getElementById("chartPillSavings");
-      tooltip.textContent = `${amount} (${day})`;
-      showToast(`Selected ${day}: ${amount} recurring spend`);
+      if (!tooltip) return;
+      tooltip.style.left = `${percentLeft}%`;
+      // Position smoothly above the bar (height 105px)
+      const topOffset = Math.max(0, 105 - barHeight - 34);
+      tooltip.style.top = `${topOffset}px`;
+      tooltip.textContent = day === 'Thu' ? `$81.98 at risk` : `${amount} · ${day}`;
+
+      document.querySelectorAll(".chart-day-label").forEach(l => l.classList.remove("active-day"));
+      const col = document.getElementById(`barCol-${day}`);
+      if (col) {
+        const lbl = col.querySelector(".chart-day-label");
+        if (lbl) lbl.classList.add("active-day");
+      }
+    }
+
+    function selectDay(day, amount, barHeight, percentLeft) {
+      hoverDay(day, amount, barHeight, percentLeft);
+      showToast(`${day}: ${amount} scheduled household billing`);
+    }
+
+    function resetDayChart() {
+      // Gracefully glide back to Thursday ($81.98 at risk)
+      const tooltip = document.getElementById("chartPillSavings");
+      if (!tooltip) return;
+      tooltip.style.left = `64.29%`;
+      tooltip.style.top = `0px`;
+      tooltip.textContent = `$81.98 at risk`;
+
+      document.querySelectorAll(".chart-day-label").forEach(l => l.classList.remove("active-day"));
+      const thuCol = document.getElementById("barCol-Thu");
+      if (thuCol) {
+        const lbl = thuCol.querySelector(".chart-day-label");
+        if (lbl) lbl.classList.add("active-day");
+      }
     }
 
     // Render Subly Segmented Radial Gauge Ticks (Expanded SVG to eliminate text collisions)
